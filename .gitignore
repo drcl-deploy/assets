@@ -1,1 +1,6 @@
 *.usd
+*.egg-info/
+*.dist-info/
+__pycache__/
+*.py[cod]
+*$py.class
