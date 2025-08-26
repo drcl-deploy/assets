@@ -1,5 +1,6 @@
 <?xml version="0.0" ?>
 <robot name="hector_v2">
+
 	<link name="torso">
 		<inertial>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
@@ -9,13 +10,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/torso.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/torso.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/torso.stl" scale="1.00000 1.00000 1.00000" />
+				<mesh filename="../meshes/torso.stl" scale="1.00000 1.00000 1.00000" />
 			</geometry>
 			<material name="space_grey">
                 <color rgba="0.4 0.4 0.4 1"/> <!-- Red with 50% transparency -->
@@ -31,13 +32,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_hip1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_hip1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_hip1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_hip1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/>
@@ -53,13 +54,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_hip2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_hip2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_hip2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_hip2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -75,13 +76,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_thigh.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_thigh.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_thigh.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_thigh.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -97,13 +98,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -119,13 +120,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -141,13 +142,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_hip1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_hip1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_hip1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_hip1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -163,13 +164,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_hip2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_hip2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_hip2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_hip2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -185,13 +186,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 -0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_thigh.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_thigh.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 -0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_thigh.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_thigh.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -207,13 +208,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/calf.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -229,13 +230,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/foot.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -251,13 +252,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -273,13 +274,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -295,13 +296,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/l_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/l_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -317,13 +318,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -340,13 +341,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_shoulder1.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -362,13 +363,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_shoulder2.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -384,13 +385,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/r_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/r_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
@@ -406,13 +407,13 @@
 		<collision>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
-				<mesh filename="package://hector_mujoco/assets/hector_v2/meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
+				<mesh filename="../meshes/lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
