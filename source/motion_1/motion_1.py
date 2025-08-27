@@ -89,7 +89,7 @@ MPCL = [
 
 print(ASSETS_DIR)
 # implicit actuator
-MOTION1_CFG = ArticulationCfg(
+MOTION_1_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=os.path.join(ASSETS_DIR, "motion_1/m1A_1v5_23dof_FixArm.urdf"),
         activate_contact_sensors=True,
@@ -102,7 +102,7 @@ MOTION1_CFG = ArticulationCfg(
             max_angular_velocity=1000.0,
             max_depenetration_velocity=1.0,
         ),
-        fix_base=True,
+        fix_base=False,
         joint_drive=sim_utils.UrdfConverterCfg.JointDriveCfg(
             drive_type="force",
             target_type="position",
@@ -135,8 +135,8 @@ MOTION1_CFG = ArticulationCfg(
             "right_wrist_roll_joint": 0.0,
             "left_knee_joint": 1.0,
             "right_knee_joint": 1.0,
-            "left_ankle_pitch_joint": -0.5,
-            "right_ankle_pitch_joint": -0.5,
+            "left_ankle_pitch_joint": -0.49,
+            "right_ankle_pitch_joint": -0.49,
             "left_ankle_roll_joint": 0.0,
             "right_ankle_roll_joint": 0.0,
         },
@@ -169,7 +169,7 @@ MOTION1_CFG = ArticulationCfg(
                 "left_ankle_roll_joint",
                 "right_ankle_roll_joint",
             ],
-            effort_limit={
+            effort_limit_sim={
                 "left_shoulder_pitch_joint": 17.0,
                 "right_shoulder_pitch_joint": 17.0,
                 "waist_yaw_joint": 60.0,
@@ -194,7 +194,7 @@ MOTION1_CFG = ArticulationCfg(
                 "left_ankle_roll_joint": 34.0,
                 "right_ankle_roll_joint": 34.0,
             },
-            velocity_limit={
+            velocity_limit_sim={
                 "left_shoulder_pitch_joint": 32.9,
                 "right_shoulder_pitch_joint": 32.9,
                 "waist_yaw_joint": 20.4,

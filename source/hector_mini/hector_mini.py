@@ -70,7 +70,7 @@ HECTOR_MINI_CFG = ArticulationCfg(
             max_angular_velocity=1000.0,
             max_depenetration_velocity=1.0,
         ),
-        fix_base=True,
+        fix_base=False,
         joint_drive=sim_utils.UrdfConverterCfg.JointDriveCfg(
             drive_type="force",
             target_type="position",
