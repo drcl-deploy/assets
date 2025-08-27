@@ -1,8 +1,55 @@
 import isaaclab.sim as sim_utils
 from isaaclab.assets.articulation import ArticulationCfg
 from isaaclab.actuators import ImplicitActuatorCfg
+from assets.hector_v2.actuators import HectorV2ImplicitPDActuatorCfg
+import os
 
-# TODO (lkrajan): add shared paramters across models as dicts.
+ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
+
+# common joint parameters
+JOINT_NAME_EXPR = [
+    "l_hip_yaw",
+    "l_shoulder_yaw",
+    "r_hip_yaw",
+    "r_shoulder_yaw",
+    "l_hip_roll",
+    "l_shoulder_pitch",
+    "r_hip_roll",
+    "r_shoulder_pitch",
+    "l_hip_pitch",
+    "l_shoulder_roll",
+    "r_hip_pitch",
+    "r_shoulder_roll",
+    "l_knee",
+    "l_elbow",
+    "r_knee",
+    "r_elbow",
+    "l_ankle",
+    "r_ankle",
+]
+
+DEFAULT_JOINT_POS = {
+    "l_hip_yaw": 0.0,
+    "l_shoulder_yaw": 0.0,
+    "r_hip_yaw": 0.0,
+    "r_shoulder_yaw": 0.0,
+    "l_hip_roll": 0.0,
+    "l_shoulder_pitch": 0.785,
+    "r_hip_roll": 0.0,
+    "r_shoulder_pitch": 0.785,
+    "l_hip_pitch": 0.7848373651504517,
+    "l_shoulder_roll": 0.0,
+    "r_hip_pitch": 0.7848373651504517,
+    "r_shoulder_roll": 0.0,
+    "l_knee": -1.57,
+    "l_elbow": -1.57,
+    "r_knee": -1.57,
+    "r_elbow": -1.57,
+    "l_ankle": 0.7848373651504517,
+    "r_ankle": 0.7848373651504517,
+}
+
+# common actuator parameters
 STIFFNESS = {
     "l_hip_yaw": 20.0,
     "l_shoulder_yaw": 10.0,
@@ -23,6 +70,7 @@ STIFFNESS = {
     "l_ankle": 15.0,
     "r_ankle": 15.0,
 }
+
 DAMPING = {
     "l_hip_yaw": 1.0,
     "l_shoulder_yaw": 0.5,
@@ -43,9 +91,70 @@ DAMPING = {
     "l_ankle": 0.5,
     "r_ankle": 0.5,
 }
-import os
 
-ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
+EFFORT_LIMIT = {
+    "l_hip_yaw": 33.5,
+    "l_shoulder_yaw": 17.0,
+    "r_hip_yaw": 33.5,
+    "r_shoulder_yaw": 17.0,
+    "l_hip_roll": 33.5,
+    "l_shoulder_pitch": 17.0,
+    "r_hip_roll": 33.5,
+    "r_shoulder_pitch": 17.0,
+    "l_hip_pitch": 33.5,
+    "l_shoulder_roll": 17.0,
+    "r_hip_pitch": 33.5,
+    "r_shoulder_roll": 17.0,
+    "l_knee": 67.0,  # motor_tau_max*knee_gear_ratio
+    "l_elbow": 24.089,  # motor_tau_max*elbow_gear_ratio
+    "r_knee": 67.0,  # motor_tau_max*knee_gear_ratio
+    "r_elbow": 24.089,  # motor_tau_max*elbow_gear_ratio
+    "l_ankle": 33.5,
+    "r_ankle": 33.5,
+}
+
+VELOCITY_LIMIT = {
+    "l_hip_yaw": 21.0,
+    "l_shoulder_yaw": 32.0,
+    "r_hip_yaw": 21.0,
+    "r_shoulder_yaw": 32.0,
+    "l_hip_roll": 21.0,
+    "l_shoulder_pitch": 32.0,
+    "r_hip_roll": 21.0,
+    "r_shoulder_pitch": 32.0,
+    "l_hip_pitch": 21.0,
+    "l_shoulder_roll": 32.0,
+    "r_hip_pitch": 21.0,
+    "r_shoulder_roll": 32.0,
+    "l_knee": 10.5,  # motor_speed_max/knee_gear_ratio
+    "l_elbow": 22.582921665,  # motor_speed_max/elbow_gear_ratio
+    "r_knee": 10.5,  # motor_speed_max/knee_gear_ratio
+    "r_elbow": 22.582921665,  # motor_speed_max/elbow_gear_ratio
+    "l_ankle": 21.0,
+    "r_ankle": 21.0,
+}
+
+# TODO (lkrajan) : update armature value of robstride motors in arms
+ARMATURE = {
+    "l_hip_yaw": 0.01,
+    "l_shoulder_yaw": 0.0,
+    "r_hip_yaw": 0.01,
+    "r_shoulder_yaw": 0.0,
+    "l_hip_roll": 0.01,
+    "l_shoulder_pitch": 0.0,
+    "r_hip_roll": 0.01,
+    "r_shoulder_pitch": 0.0,
+    "l_hip_pitch": 0.01,
+    "l_shoulder_roll": 0.0,
+    "r_hip_pitch": 0.01,
+    "r_shoulder_roll": 0.0,
+    "l_knee": 0.01,  # motor_speed_max/knee_gear_ratio
+    "l_elbow": 0.0,  # motor_speed_max/elbow_gear_ratio
+    "r_knee": 0.01,  # motor_speed_max/knee_gear_ratio
+    "r_elbow": 0.0,  # motor_speed_max/elbow_gear_ratio
+    "l_ankle": 0.01,
+    "r_ankle": 0.01,
+}
 
 MPCL = [
     [-0.523599, 0.523599],  # l_hip_yaw_joint
@@ -68,6 +177,7 @@ MPCL = [
     [-1.57, 0.7900000214576721],  # r_ankle_joint
 ]
 
+
 # model variants
 WITHOUT_COUPLING_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
@@ -82,7 +192,7 @@ WITHOUT_COUPLING_CFG = ArticulationCfg(
             max_angular_velocity=1000.0,
             max_depenetration_velocity=1.0,
         ),
-        fix_base=True,
+        fix_base=False,
         joint_drive=sim_utils.UrdfConverterCfg.JointDriveCfg(
             drive_type="force",
             target_type="position",
@@ -93,94 +203,64 @@ WITHOUT_COUPLING_CFG = ArticulationCfg(
         ),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
-        # pos=(0.0, 0.0, 0.55), # when fix_root_link=False
-        pos=(0.0, 0.0, 0.65),  # when fix_root_link=True
-        joint_pos={
-            "l_hip_yaw": 0.0,
-            "l_shoulder_yaw": 0.0,
-            "r_hip_yaw": 0.0,
-            "r_shoulder_yaw": 0.0,
-            "l_hip_roll": 0.0,
-            "l_shoulder_pitch": 0.785,
-            "r_hip_roll": 0.0,
-            "r_shoulder_pitch": 0.785,
-            "l_hip_pitch": 0.7848373651504517,
-            "l_shoulder_roll": 0.0,
-            "r_hip_pitch": 0.7848373651504517,
-            "r_shoulder_roll": 0.0,
-            "l_knee": -1.57,
-            "l_elbow": -1.57,
-            "r_knee": -1.57,
-            "r_elbow": -1.57,
-            "l_ankle": 0.7848373651504517,
-            "r_ankle": 0.7848373651504517,
-        },
+        pos=(0.0, 0.0, 0.55),  # when fix_root_link=False
+        joint_pos=DEFAULT_JOINT_POS,
         joint_vel={".*": 0.0},
     ),
     actuators={
         "limbs": ImplicitActuatorCfg(
-            joint_names_expr=[
-                "l_hip_yaw",
-                "l_shoulder_yaw",
-                "r_hip_yaw",
-                "r_shoulder_yaw",
-                "l_hip_roll",
-                "l_shoulder_pitch",
-                "r_hip_roll",
-                "r_shoulder_pitch",
-                "l_hip_pitch",
-                "l_shoulder_roll",
-                "r_hip_pitch",
-                "r_shoulder_roll",
-                "l_knee",
-                "l_elbow",
-                "r_knee",
-                "r_elbow",
-                "l_ankle",
-                "r_ankle",
-            ],
-            effort_limit={
-                "l_hip_yaw": 33.5,
-                "l_shoulder_yaw": 17.0,
-                "r_hip_yaw": 33.5,
-                "r_shoulder_yaw": 17.0,
-                "l_hip_roll": 33.5,
-                "l_shoulder_pitch": 17.0,
-                "r_hip_roll": 33.5,
-                "r_shoulder_pitch": 17.0,
-                "l_hip_pitch": 33.5,
-                "l_shoulder_roll": 17.0,
-                "r_hip_pitch": 33.5,
-                "r_shoulder_roll": 17.0,
-                "l_knee": 67.0,  # motor_tau_max*knee_gear_ratio
-                "l_elbow": 24.089,  # motor_tau_max*elbow_gear_ratio
-                "r_knee": 67.0,  # motor_tau_max*knee_gear_ratio
-                "r_elbow": 24.089,  # motor_tau_max*elbow_gear_ratio
-                "l_ankle": 33.5,
-                "r_ankle": 33.5,
-            },
-            velocity_limit={
-                "l_hip_yaw": 21.0,
-                "l_shoulder_yaw": 32.0,
-                "r_hip_yaw": 21.0,
-                "r_shoulder_yaw": 32.0,
-                "l_hip_roll": 21.0,
-                "l_shoulder_pitch": 32.0,
-                "r_hip_roll": 21.0,
-                "r_shoulder_pitch": 32.0,
-                "l_hip_pitch": 21.0,
-                "l_shoulder_roll": 32.0,
-                "r_hip_pitch": 21.0,
-                "r_shoulder_roll": 32.0,
-                "l_knee": 10.5,  # motor_speed_max/knee_gear_ratio
-                "l_elbow": 22.582921665,  # motor_speed_max/elbow_gear_ratio
-                "r_knee": 10.5,  # motor_speed_max/knee_gear_ratio
-                "r_elbow": 22.582921665,  # motor_speed_max/elbow_gear_ratio
-                "l_ankle": 21.0,
-                "r_ankle": 21.0,
-            },
+            joint_names_expr=JOINT_NAME_EXPR,
+            effort_limit=EFFORT_LIMIT,
+            velocity_limit=VELOCITY_LIMIT,
             stiffness=STIFFNESS,
             damping=DAMPING,
+            armature=ARMATURE,
+        ),
+    },
+)
+
+WITH_COUPLING_CFG = ArticulationCfg(
+    spawn=sim_utils.UrdfFileCfg(
+        asset_path=os.path.join(ASSETS_DIR, "hector_v2/feet/mvmc_reduced.urdf"),
+        activate_contact_sensors=True,
+        rigid_props=sim_utils.RigidBodyPropertiesCfg(
+            disable_gravity=False,
+            retain_accelerations=False,
+            linear_damping=0.0,
+            angular_damping=0.0,
+            max_linear_velocity=1000.0,
+            max_angular_velocity=1000.0,
+            max_depenetration_velocity=1.0,
+        ),
+        fix_base=False,
+        joint_drive=sim_utils.UrdfConverterCfg.JointDriveCfg(
+            drive_type="force",
+            target_type="position",
+            gains=sim_utils.UrdfConverterCfg.JointDriveCfg.PDGainsCfg(
+                stiffness=STIFFNESS,
+                damping=DAMPING,
+            ),
+        ),
+    ),
+    init_state=ArticulationCfg.InitialStateCfg(
+        pos=(0.0, 0.0, 0.55),
+        joint_pos=DEFAULT_JOINT_POS,
+        joint_vel={".*": 0.0},
+    ),
+    actuators={
+        "limbs": HectorV2ImplicitPDActuatorCfg(
+            knee_gear_ratio=2.0,
+            elbow_gear_ratio=1.417,
+            # TODO (lkrajan): set indices from name ?
+            knee_indices=[12, 14],
+            ankle_indices=[16, 17],
+            elbow_indices=[13, 15],
+            joint_names_expr=JOINT_NAME_EXPR,
+            effort_limit=EFFORT_LIMIT,
+            velocity_limit=VELOCITY_LIMIT,
+            stiffness=STIFFNESS,
+            damping=DAMPING,
+            armature=ARMATURE,
         ),
     },
 )
