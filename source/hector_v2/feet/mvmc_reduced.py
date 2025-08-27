@@ -134,6 +134,28 @@ VELOCITY_LIMIT = {
     "r_ankle": 21.0,
 }
 
+# TODO (lkrajan) : update armature value of robstride motors in arms
+ARMATURE = {
+    "l_hip_yaw": 0.01,
+    "l_shoulder_yaw": 0.0,
+    "r_hip_yaw": 0.01,
+    "r_shoulder_yaw": 0.0,
+    "l_hip_roll": 0.01,
+    "l_shoulder_pitch": 0.0,
+    "r_hip_roll": 0.01,
+    "r_shoulder_pitch": 0.0,
+    "l_hip_pitch": 0.01,
+    "l_shoulder_roll": 0.0,
+    "r_hip_pitch": 0.01,
+    "r_shoulder_roll": 0.0,
+    "l_knee": 0.01,  # motor_speed_max/knee_gear_ratio
+    "l_elbow": 0.0,  # motor_speed_max/elbow_gear_ratio
+    "r_knee": 0.01,  # motor_speed_max/knee_gear_ratio
+    "r_elbow": 0.0,  # motor_speed_max/elbow_gear_ratio
+    "l_ankle": 0.01,
+    "r_ankle": 0.01,
+}
+
 MPCL = [
     [-0.523599, 0.523599],  # l_hip_yaw_joint
     [-1.309, 1.309],  # l_shoulder_yaw_joint
@@ -154,6 +176,7 @@ MPCL = [
     [-1.57, 0.7900000214576721],  # l_ankle_joint
     [-1.57, 0.7900000214576721],  # r_ankle_joint
 ]
+
 
 # model variants
 WITHOUT_COUPLING_CFG = ArticulationCfg(
@@ -191,6 +214,7 @@ WITHOUT_COUPLING_CFG = ArticulationCfg(
             velocity_limit=VELOCITY_LIMIT,
             stiffness=STIFFNESS,
             damping=DAMPING,
+            armature=ARMATURE,
         ),
     },
 )
@@ -236,6 +260,7 @@ WITH_COUPLING_CFG = ArticulationCfg(
             velocity_limit=VELOCITY_LIMIT,
             stiffness=STIFFNESS,
             damping=DAMPING,
+            armature=ARMATURE,
         ),
     },
 )
