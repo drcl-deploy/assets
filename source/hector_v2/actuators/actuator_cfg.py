@@ -2,9 +2,7 @@ from dataclasses import MISSING
 
 from isaaclab.utils import configclass
 from isaaclab.actuators import ImplicitActuatorCfg, IdealPDActuatorCfg
-
 from . import actuator_pd
-from .actuator_pd import IdentifiedActuator
 
 
 @configclass
