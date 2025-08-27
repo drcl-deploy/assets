@@ -41,4 +41,8 @@ for example,
 
 ### MuJoCo
 
-TBD 
+run,
+    
+    python -m mujoco.viewer
+
+then drag and drop the `.xml` model to be tested
