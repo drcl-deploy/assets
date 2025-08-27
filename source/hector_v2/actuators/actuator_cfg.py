@@ -1,10 +1,7 @@
-import torch
-from collections.abc import Iterable
 from dataclasses import MISSING
-from typing import Literal
 
 from isaaclab.utils import configclass
-from isaaclab.actuators import DCMotorCfg, ImplicitActuatorCfg, IdealPDActuatorCfg
+from isaaclab.actuators import ImplicitActuatorCfg, IdealPDActuatorCfg
 
 from . import actuator_pd
 from .actuator_pd import IdentifiedActuator
