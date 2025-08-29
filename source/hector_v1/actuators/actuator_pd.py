@@ -10,8 +10,8 @@ from isaaclab.actuators import ImplicitActuator, IdealPDActuator
 
 if TYPE_CHECKING:
     from .actuator_cfg import (
-        HectorV2ImplicitPDActuatorCfg,
-        HectorV2IdealPDActuatorCfg,
+        HectorV1ImplicitPDActuatorCfg,
+        HectorV1IdealPDActuatorCfg,
     )
 
 
@@ -20,10 +20,8 @@ def update_coupling_gear_ratios(
     joint_pos: torch.Tensor,
     joint_vel: torch.Tensor,
     knee_gear_ratio: float,
-    elbow_gear_ratio: float,
     knee_indices: list[int],  # left and right knee indices
     ankle_indices: list[int],  # left and right ankle indices
-    elbow_indices: list[int],  # left and right elbow indices
 ):
 
     # assume the command is in motor space (policy pov) , now transform it to joint space (sim pov)
@@ -43,30 +41,21 @@ def update_coupling_gear_ratios(
             control_action.joint_positions[:, ankle_idx], min=-0.5846853, max=0.977384
         )
         # coupled ankle commands with knee state
-        control_action.joint_positions[:, ankle_idx] -= (knee_joint_pos + 1.5708)
+        control_action.joint_positions[:, ankle_idx] -= knee_joint_pos
         control_action.joint_velocities[:, ankle_idx] -= knee_joint_vel
-
-    for elbow_idx in elbow_indices:
-        # scale elbow
-        control_action.joint_positions[:, elbow_idx] = (
-            control_action.joint_positions[:, elbow_idx] / elbow_gear_ratio
-        )
-        control_action.joint_velocities[:, elbow_idx] = (
-            control_action.joint_velocities[:, elbow_idx] / elbow_gear_ratio
-        )
 
     return control_action
 
 
-class HectorV2ImplicitPDActuator(ImplicitActuator):
-    """Implicit actuator model for Hector V2 robot.
+class HectorV1ImplicitPDActuator(ImplicitActuator):
+    """Implicit actuator model for Hector V1 robot.
 
-    This class implements an implicit actuator model for the Hector V2 robot. The model is based on the
+    This class implements an implicit actuator model for the Hector V1 robot. The model is based on the
     joint stiffness and damping parameters provided in the configuration instance passed to the class.
 
     """
 
-    cfg: HectorV2ImplicitPDActuatorCfg
+    cfg: HectorV1ImplicitPDActuatorCfg
     """The configuration for the actuator model."""
 
     def reset(self, env_ids: Sequence[int]):
@@ -84,12 +73,10 @@ class HectorV2ImplicitPDActuator(ImplicitActuator):
             joint_pos,
             joint_vel,
             self.cfg.knee_gear_ratio,
-            self.cfg.elbow_gear_ratio,
             knee_indices=self.cfg.knee_indices,
             ankle_indices=self.cfg.ankle_indices,
-            elbow_indices=self.cfg.elbow_indices,
         )
-        # approximate torques for reward computation
+        # dummy: store approximate torques for reward computation
         error_pos = control_action.joint_positions - joint_pos
         error_vel = control_action.joint_velocities - joint_vel
 
@@ -105,9 +92,9 @@ class HectorV2ImplicitPDActuator(ImplicitActuator):
         return control_action
 
 
-class HectorV2IdealPDActuator(IdealPDActuator):
+class HectorV1IdealPDActuator(IdealPDActuator):
 
-    cfg: HectorV2IdealPDActuatorCfg
+    cfg: HectorV1IdealPDActuatorCfg
     """The configuration for the actuator model."""
 
     def reset(self, env_ids: Sequence[int]):
@@ -125,11 +112,10 @@ class HectorV2IdealPDActuator(IdealPDActuator):
             joint_pos,
             joint_vel,
             self.cfg.knee_gear_ratio,
-            elbow_gear_ratio=self.cfg.elbow_gear_ratio,
             knee_indices=self.cfg.knee_indices,
             ankle_indices=self.cfg.ankle_indices,
-            elbow_indices=self.cfg.elbow_indices,
         )
+
         # store approximate torques for reward computation
         error_pos = control_action.joint_positions - joint_pos
         error_vel = control_action.joint_velocities - joint_vel
