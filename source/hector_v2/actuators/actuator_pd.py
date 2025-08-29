@@ -43,8 +43,8 @@ def update_coupling_gear_ratios(
             control_action.joint_positions[:, ankle_idx], min=-0.5846853, max=0.977384
         )
         # coupled ankle commands with knee state
-        control_action.joint_positions[:, ankle_idx] += knee_joint_pos + 1.5708
-        control_action.joint_velocities[:, ankle_idx] += knee_joint_vel
+        control_action.joint_positions[:, ankle_idx] -= (knee_joint_pos + 1.5708)
+        control_action.joint_velocities[:, ankle_idx] -= knee_joint_vel
 
     for elbow_idx in elbow_indices:
         # scale elbow
