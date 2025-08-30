@@ -243,7 +243,7 @@
             </material>
 		</visual>
 	</link>
-	<link name="l_shoudler1">
+	<link name="l_shoulder1">
 		<inertial>
 			<origin rpy="0.00000 -0.00000 1.57080" xyz="0.00071 0.02838 0.04835"/>
 			<mass value="0.43560"/>
@@ -507,7 +507,7 @@
 
 	<joint name="l_shoulder_yaw" type="revolute">
 		<parent link="torso"/>
-		<child link="l_shoudler1"/>
+		<child link="l_shoulder1"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.05300 0.12400"/>
 		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
@@ -516,7 +516,7 @@
 	</joint>
 
 	<joint name="l_shoulder_pitch" type="revolute">
-		<parent link="l_shoudler1"/>
+		<parent link="l_shoulder1"/>
 		<child link="l_shoulder2"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.04900 0.05300"/>

@@ -1,4 +1,3 @@
-
 # common joint parameters
 JOINT_NAME_EXPR = [
     "l_hip_yaw",
@@ -170,3 +169,10 @@ MPCL = [
     [-1.57, 0.7900000214576721],  # r_ankle_joint
 ]
 
+BAD_CONTACT_BODIES = [
+    "torso",
+    "r_thigh",
+    "l_thigh",
+    "r_calf",
+    "l_calf",
+]

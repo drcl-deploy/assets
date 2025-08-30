@@ -7,8 +7,8 @@ contains simulation assets in various file formats for different entities like r
 1. every new entity should be at one level depth:: `assets/source/<entity name>/` 
 2. add folder for each variant: `assets/source/<entity name>/<variant name>`
 3. share meshes across variants, avoid duplication
-4. add configs in `.py` for each variant and register in in a `__init__.py` for easy access. 
- 
+4. add configs in `.py` for each variant and register in `__init__.py` for easy access. 
+5. add any entity-specific constants that can be resused in a seperate `constants.py` and register in `__init__.py`
 ## usage
 
     git clone https://github.com/drcl-deploy/assets.git
