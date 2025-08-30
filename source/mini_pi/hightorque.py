@@ -16,7 +16,7 @@ import os
 import isaaclab.sim as sim_utils
 from isaaclab.actuators import ImplicitActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
-from constants import *
+from .constants import *
 
 ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
 
