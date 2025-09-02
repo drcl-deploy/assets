@@ -101,3 +101,13 @@ DEFAULT_JOINT_POS = {
     "l_ankle_joint": 0.0,
     "r_ankle_joint": 0.0,
 }
+
+BAD_CONTACT_BODIES = [
+    "torso",
+    "l_hip",
+    "r_hip",
+    "l_hip2",
+    "r_hip2",
+    "l_thigh",
+    "r_thigh",
+]
