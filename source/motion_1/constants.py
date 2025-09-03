@@ -178,3 +178,10 @@ MPCL = [
     [-3.1, 3.1],  # left_wrist_joint
     [-3.1, 3.1],  # right_wrist_joint
 ]
+
+BAD_CONTACT_BODIES = [
+    "torso_link",
+    "pelvis_link",
+    "left_hip_pitch_link",
+    "right_hip_pitch_link",
+]

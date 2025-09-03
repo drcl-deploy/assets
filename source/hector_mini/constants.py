@@ -88,6 +88,15 @@ VELOCITY_LIMIT = {
     "right_ankle_joint": 22.0,
 }
 
+BAD_CONTACT_BODIES = [
+    "body",
+    "left_hip1",
+    "right_hip1",
+    "left_hip2",
+    "right_hip2",
+    "left_bracket_link",
+    "right_bracket_link",
+]
 
 MPCL = [
     [-1.57, 1.57],  # l_hip_yaw_joint
