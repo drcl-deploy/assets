@@ -9,6 +9,8 @@ contains simulation assets in various file formats for different entities like r
 3. share meshes across variants, avoid duplication
 4. add configs in `.py` for each variant and register in `__init__.py` for easy access. 
 5. add any entity-specific constants that can be resused in a seperate `constants.py` and register in `__init__.py`
+6. resuse `isaaclab_assets` by simply importing it in `__init__.py` and augment with `constants` you want (refer [g1](source/g1) for example). Do not make redundant copies inside this repo. 
+   
 ## usage
 
     git clone https://github.com/drcl-deploy/assets.git
