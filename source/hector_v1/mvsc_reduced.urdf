@@ -37,7 +37,7 @@
   </joint>
   <joint name="l_hip_yaw_joint" type="revolute">
     <origin xyz="0. 0.047 -0.1265" rpy="0. 0. 0."/>
-    <parent link="hector_v1p5"/>
+    <parent link="torso"/>
     <child link="l_hip"/>
     <axis xyz="0. 0. 1."/>
     <limit lower="-0.7853982" upper="0.7853982" effort="33.5" velocity="21.000001"/>
@@ -92,7 +92,7 @@
   </joint>
   <joint name="r_hip_yaw_joint" type="revolute">
     <origin xyz="0. -0.047 -0.1265" rpy="0. 0. 0."/>
-    <parent link="hector_v1p5"/>
+    <parent link="torso"/>
     <child link="r_hip"/>
     <axis xyz="0. 0. 1."/>
     <limit lower="-0.7853982" upper="0.7853982" effort="33.5" velocity="21.000001"/>
@@ -114,7 +114,7 @@
     <parent link="r_thigh"/>
     <child link="r_thigh2_trans"/>
   </joint>
-  <link name="hector_v1p5">
+  <link name="torso">
     <inertial>
       <origin xyz="0. 0. 0." rpy="0. 0. 0."/>
       <mass value="1.0"/>
