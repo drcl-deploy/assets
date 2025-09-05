@@ -34,6 +34,7 @@ MOTION_1_CFG = ArticulationCfg(
                 damping=DAMPING,
             ),
         ),
+        merge_fixed_joints=False,
     ),
     init_state=ArticulationCfg.InitialStateCfg(
         # pos=(0.0, 0.0, 0.8), # when fix_root_link=False
