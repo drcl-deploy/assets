@@ -15,6 +15,7 @@ contains simulation assets in various file formats for different entities like r
 
     git clone https://github.com/drcl-deploy/assets.git
     cd ./assets/
+    git lfs pull # to download mesh files
     pip install -e . # so local changes can take effect 
 
 then add a global variable `SIM_ASSETS_PATH`
