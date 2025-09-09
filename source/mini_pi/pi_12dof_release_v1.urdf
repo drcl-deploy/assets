@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="pi_12dof_release_v1">
+	<mujoco>
+		<compiler meshdir="./meshes/" discardvisual="false"/>
+	</mujoco>
 	<link name="base_link">
 		<inertial>
 			<origin xyz="0.00242324 -5.699E-05 0.04030078" rpy="0 0 0" />

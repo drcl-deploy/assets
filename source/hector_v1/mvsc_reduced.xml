@@ -1,4 +1,4 @@
-<mujoco model="w_coupling">
+<mujoco model="mvsc_reduced">
   <compiler angle="radian" meshdir="./meshes/"/>
   <!-- <option timestep='0.001'/> -->
   <option timestep='0.001' o_solref='-100000 -1000' >
@@ -42,7 +42,6 @@
 		<light name="spotlight1" mode="targetbodycom" target="trunk" pos="0.5 0 10" cutoff="60" />
 		<geom name="floor" size="0 0 .125" type="plane" material="groundplane" conaffinity="15" condim="3" />
 
-    <!-- <body name="trunk" pos="0 0 0.55"> -->
     <body name="trunk" pos="0 0 1.0">
       <freejoint name="root" />
 			<site name="root" class="imu"/>

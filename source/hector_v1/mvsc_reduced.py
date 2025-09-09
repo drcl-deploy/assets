@@ -14,7 +14,7 @@ ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
 # model variants
 
 # implicit actuator
-IMPLICIT_WO_COUPLING = ArticulationCfg(
+IMPLICIT_WO_COUPLING_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=os.path.join(ASSETS_DIR, "hector_v1/mvsc_reduced.urdf"),
         activate_contact_sensors=True,
@@ -54,7 +54,7 @@ IMPLICIT_WO_COUPLING = ArticulationCfg(
 )
 
 # implicit actuator with coupling 
-IMPLICIT_W_COUPLING = ArticulationCfg(
+IMPLICIT_W_COUPLING_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=os.path.join(ASSETS_DIR, "hector_v1/mvsc_reduced.urdf"),
         activate_contact_sensors=True,

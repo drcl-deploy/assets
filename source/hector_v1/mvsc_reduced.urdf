@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot name="w_coupling">
+<robot name="mvsc_reduced">
   <mujoco>
-    <compiler meshdir="./meshes/"
-              discardvisual="false"/>
+    <compiler meshdir="./meshes/" discardvisual="false"/>
   </mujoco>
   <joint name="l_ankle_joint" type="revolute">
     <origin xyz="0. 0. -0.22" rpy="0. 0.7853982 0. "/>
