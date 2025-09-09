@@ -7,4 +7,4 @@
 ### motion_1.py
 
 1. missing `armature` value 
-
+2. may need actuator model for ankle dofs

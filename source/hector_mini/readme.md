@@ -10,4 +10,5 @@
 
 ### hector_mini.py
 
-1. missin `armature` value 
+1. missing `armature` value 
+2. missing actuator model for  gear transmission
