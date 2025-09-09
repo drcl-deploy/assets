@@ -1,6 +1,8 @@
 <?xml version="0.0" ?>
 <robot name="hector_mini">
-
+  <mujoco>
+    <compiler meshdir="./meshes/" discardvisual="false"/>
+  </mujoco>
   <!-- Base link -->
   <link name="body">
     <inertial>
