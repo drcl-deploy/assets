@@ -185,3 +185,5 @@ BAD_CONTACT_BODIES = [
     "left_hip_pitch_link",
     "right_hip_pitch_link",
 ]
+
+ROOT_LINK_NAME = "torso_link"

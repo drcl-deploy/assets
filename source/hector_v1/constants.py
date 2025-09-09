@@ -111,3 +111,5 @@ BAD_CONTACT_BODIES = [
     "l_thigh",
     "r_thigh",
 ]
+
+ROOT_LINK_NAME = "torso"
