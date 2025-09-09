@@ -7,8 +7,7 @@ import os
 
 ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
 
-# model variants
-WITHOUT_COUPLING_CFG = ArticulationCfg(
+IMPLICIT_WO_COUPLING_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=os.path.join(ASSETS_DIR, "hector_v2/feet/mvmc_reduced.urdf"),
         activate_contact_sensors=True,
@@ -48,7 +47,7 @@ WITHOUT_COUPLING_CFG = ArticulationCfg(
     },
 )
 
-WITH_COUPLING_CFG = ArticulationCfg(
+IMPLICIT_W_COUPLING_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=os.path.join(ASSETS_DIR, "hector_v2/feet/mvmc_reduced.urdf"),
         activate_contact_sensors=True,
