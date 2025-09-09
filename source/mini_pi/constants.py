@@ -19,3 +19,6 @@ BAD_CONTACT_BODIES = [
     "r_thigh_link",
     "l_thigh_link",
 ]
+
+
+ROOT_LINK_NAME = "base_link"

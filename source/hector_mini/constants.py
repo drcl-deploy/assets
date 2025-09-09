@@ -112,3 +112,6 @@ MPCL = [
     [-2.0, 2.0],  # l_ankle_joint
     [-2.0, 2.0],  # r_ankle_joint
 ]
+
+
+ROOT_LINK_NAME = "body"

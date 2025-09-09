@@ -4,3 +4,5 @@ BAD_CONTACT_BODIES = [
     "left_hip_roll_link",
     "right_hip_roll_link",
 ]
+
+ROOT_LINK_NAME = "torso_link"
