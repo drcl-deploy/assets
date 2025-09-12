@@ -39,7 +39,7 @@
 				<cylinder radius = "0.0465" length = "0.044"/>
 			</geometry>
 		</collision>
-		<!-- <visual>
+		<visual>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
 			<geometry>
 				<mesh filename="../meshes/l_hip1.stl" scale="1.00000 1.00000 1.00000"/>
@@ -47,7 +47,7 @@
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/>
             </material>
-		</visual>	 -->
+		</visual>
 	</link>
 	<!-- Red with 50% transparency -->
 	<link name="l_hip2">
