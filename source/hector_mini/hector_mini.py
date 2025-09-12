@@ -51,3 +51,10 @@ HECTOR_MINI_CFG = ArticulationCfg(
         ),
     },
 )
+
+# simple collision
+HECTOR_MINI_SC_CFG = HECTOR_MINI_CFG.copy() 
+# update the path to urdf file
+HECTOR_MINI_SC_CFG.spawn.asset_path = os.path.join(
+    ASSETS_DIR, "hector_mini/hector_mini_mvsc.urdf"
+)

@@ -53,6 +53,12 @@ IMPLICIT_WO_COUPLING_CFG = ArticulationCfg(
     },
 )
 
+IMPLICIT_WO_COUPLING_SC_CFG = IMPLICIT_WO_COUPLING_CFG.copy()
+# update the path to urdf file
+IMPLICIT_WO_COUPLING_SC_CFG.spawn.asset_path = os.path.join(
+    ASSETS_DIR, "hector_v1/mvsc_reduced2.urdf"
+)
+
 # implicit actuator with coupling 
 IMPLICIT_W_COUPLING_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
@@ -94,4 +100,10 @@ IMPLICIT_W_COUPLING_CFG = ArticulationCfg(
             damping=DAMPING,
         ),
     },
+)
+
+IMPLICIT_W_COUPLING_SC_CFG = IMPLICIT_W_COUPLING_CFG.copy()
+# update the path to urdf file
+IMPLICIT_W_COUPLING_SC_CFG.spawn.asset_path = os.path.join(
+    ASSETS_DIR, "hector_v1/mvsc_reduced2.urdf"
 )
