@@ -47,6 +47,13 @@ IMPLICIT_WO_COUPLING_CFG = ArticulationCfg(
     },
 )
 
+IMPLICIT_WO_COUPLING_SC_CFG = IMPLICIT_WO_COUPLING_CFG.copy()
+# update the path to urdf file
+IMPLICIT_WO_COUPLING_SC_CFG.spawn.asset_path = os.path.join(
+    ASSETS_DIR, "hector_v2/feet/mvsc_reduced.urdf"
+)
+
+
 IMPLICIT_W_COUPLING_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=os.path.join(ASSETS_DIR, "hector_v2/feet/mvmc_reduced.urdf"),
@@ -91,4 +98,11 @@ IMPLICIT_W_COUPLING_CFG = ArticulationCfg(
             armature=ARMATURE,
         ),
     },
+)
+
+
+IMPLICIT_W_COUPLING_SC_CFG = IMPLICIT_W_COUPLING_CFG.copy()
+# update the path to urdf file
+IMPLICIT_W_COUPLING_SC_CFG.spawn.asset_path = os.path.join(
+    ASSETS_DIR, "hector_v2/feet/mvsc_reduced.urdf"
 )

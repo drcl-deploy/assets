@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<robot name="pi_12dof_release_v1">
+<robot name="mvsc">
 	<mujoco>
 		<compiler meshdir="./meshes/" discardvisual="false"/>
 	</mujoco>
