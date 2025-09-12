@@ -52,3 +52,9 @@ MOTION_1_CFG = ArticulationCfg(
         ),
     },
 )
+
+MOTION_1_SC_CFG = MOTION_1_CFG.copy()
+# update the path to urdf file
+MOTION_1_SC_CFG.spawn.asset_path = os.path.join(
+    ASSETS_DIR, "motion_1/mvsc.urdf"
+)   
