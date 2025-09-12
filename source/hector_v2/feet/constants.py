@@ -178,3 +178,15 @@ BAD_CONTACT_BODIES = [
 ]
 
 ROOT_LINK_NAME = "torso"
+TRACKED_EE_LINKS = [
+    {"name": "l_foot", "body_name": "l_toe", "cmd_attr": "cmd_left_foot_pos"},
+    {"name": "r_foot", "body_name": "r_toe", "cmd_attr": "cmd_right_foot_pos"},
+]
+
+SAMPLING_RANGE = {
+    "left_foot_pos": [
+        [-0.0, 0.15, 0.01],
+        [0.0, 0.15, 0.22],
+    ],  # Lower limit, upper limit
+    "right_foot_pos": [[0.0, -0.15, 0.01], [0.0, -0.15, 0.01]],
+}
