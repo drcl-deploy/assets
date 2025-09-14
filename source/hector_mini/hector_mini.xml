@@ -134,13 +134,13 @@
     <motor name="left_hip_roll" joint="left_hip_roll_joint" ctrlrange="-17 17" />
     <motor name="left_hip_pitch" joint="left_hip_pitch_joint" ctrlrange="-17 17" />
     <motor name="left_knee" joint="left_knee_joint" ctrlrange="-17 17" />
-    <motor name="left_calf" joint="left_calf_joint" ctrlrange="-17 17" />
+    <!-- <motor name="left_calf" joint="left_calf_joint" ctrlrange="-17 17" /> -->
     <motor name="left_ankle" joint="left_ankle_joint" ctrlrange="-17 17" />
     <motor name="right_hip_yaw" joint="right_hip_yaw_joint" ctrlrange="-17 17" />
     <motor name="right_hip_roll" joint="right_hip_roll_joint" ctrlrange="-17 17" />
     <motor name="right_hip_pitch" joint="right_hip_pitch_joint" ctrlrange="-17 17" />
     <motor name="right_knee" joint="right_knee_joint" ctrlrange="-17 17" />
-    <motor name="right_calf" joint="right_calf_joint" ctrlrange="-17 17" />
+    <!-- <motor name="right_calf" joint="right_calf_joint" ctrlrange="-17 17" /> -->
     <motor name="right_ankle" joint="right_ankle_joint" ctrlrange="-17 17" />
   </actuator>
 
@@ -154,50 +154,64 @@
   </equality>
 
   <sensor>
+    <framequat name="torso_quat" objtype="site" objname="imu" />
+    <framepos name="torso_pos" objtype="site" objname="imu"/>
+    <framelinvel name="torso_linvel" objtype="site" objname="imu"/>
+
+    <accelerometer name="torso_acc" site="imu" />
+    <velocimeter name="torso_vel" site="imu"/>
+    <gyro name="torso_gyr" site="imu" />
+
     <jointpos name="left_hip_yaw_pos" joint="left_hip_yaw_joint" />
     <jointpos name="left_hip_roll_pos" joint="left_hip_roll_joint" />
     <jointpos name="left_hip_pitch_pos" joint="left_hip_pitch_joint" />
     <jointpos name="left_knee_pos" joint="left_knee_joint" />
-    <jointpos name="left_calf_pos" joint="left_calf_joint" />
+    <!-- <jointpos name="left_calf_pos" joint="left_calf_joint" /> -->
     <jointpos name="left_ankle_pos" joint="left_ankle_joint" />
     <jointpos name="right_hip_yaw_pos" joint="right_hip_yaw_joint" />
     <jointpos name="right_hip_roll_pos" joint="right_hip_roll_joint" />
     <jointpos name="right_hip_pitch_pos" joint="right_hip_pitch_joint" />
     <jointpos name="right_knee_pos" joint="right_knee_joint" />
-    <jointpos name="right_calf_pos" joint="right_calf_joint" />
+    <!-- <jointpos name="right_calf_pos" joint="right_calf_joint" /> -->
     <jointpos name="right_ankle_pos" joint="right_ankle_joint" />
 
     <jointvel name="left_hip_yaw_vel" joint="left_hip_yaw_joint" />
     <jointvel name="left_hip_roll_vel" joint="left_hip_roll_joint" />
     <jointvel name="left_hip_pitch_vel" joint="left_hip_pitch_joint" />
     <jointvel name="left_knee_vel" joint="left_knee_joint" />
-    <jointvel name="left_calf_vel" joint="left_calf_joint" />
+    <!-- <jointvel name="left_calf_vel" joint="left_calf_joint" /> -->
     <jointvel name="left_ankle_vel" joint="left_ankle_joint" />
     <jointvel name="right_hip_yaw_vel" joint="right_hip_yaw_joint" />
     <jointvel name="right_hip_roll_vel" joint="right_hip_roll_joint" />
     <jointvel name="right_hip_pitch_vel" joint="right_hip_pitch_joint" />
     <jointvel name="right_knee_vel" joint="right_knee_joint" />
-    <jointvel name="right_calf_vel" joint="right_calf_joint" />
+    <!-- <jointvel name="right_calf_vel" joint="right_calf_joint" /> -->
     <jointvel name="right_ankle_vel" joint="right_ankle_joint" />
 
-    <jointactuatorfrc name="left_hip_yaw_torque" joint="left_hip_yaw_joint" />
-    <jointactuatorfrc name="left_hip_roll_torque" joint="left_hip_roll_joint" />
-    <jointactuatorfrc name="left_hip_pitch_torque" joint="left_hip_pitch_joint" />
-    <jointactuatorfrc name="left_knee_torque" joint="left_knee_joint" />
-    <jointactuatorfrc name="left_calf_torque" joint="left_calf_joint" />
-    <jointactuatorfrc name="left_ankle_torque" joint="left_ankle_joint" />
-    <jointactuatorfrc name="right_hip_yaw_torque" joint="right_hip_yaw_joint" />
-    <jointactuatorfrc name="right_hip_roll_torque" joint="right_hip_roll_joint" />
-    <jointactuatorfrc name="right_hip_pitch_torque" joint="right_hip_pitch_joint" />
-    <jointactuatorfrc name="right_knee_torque" joint="right_knee_joint" />
-    <jointactuatorfrc name="right_calf_torque" joint="right_calf_joint" />
-    <jointactuatorfrc name="right_ankle_torque" joint="right_ankle_joint" />
+    <jointactuatorfrc name="left_hip_yaw_frc" joint="left_hip_yaw_joint" />
+    <jointactuatorfrc name="left_hip_roll_frc" joint="left_hip_roll_joint" />
+    <jointactuatorfrc name="left_hip_pitch_frc" joint="left_hip_pitch_joint" />
+    <jointactuatorfrc name="left_knee_frc" joint="left_knee_joint" />
+    <!-- <jointactuatorfrc name="left_calf_frc" joint="left_calf_joint" /> -->
+    <jointactuatorfrc name="left_ankle_frc" joint="left_ankle_joint" />
+    <jointactuatorfrc name="right_hip_yaw_frc" joint="right_hip_yaw_joint" />
+    <jointactuatorfrc name="right_hip_roll_frc" joint="right_hip_roll_joint" />
+    <jointactuatorfrc name="right_hip_pitch_frc" joint="right_hip_pitch_joint" />
+    <jointactuatorfrc name="right_knee_frc" joint="right_knee_joint" />
+    <!-- <jointactuatorfrc name="right_calf_frc" joint="right_calf_joint" /> -->
+    <jointactuatorfrc name="right_ankle_frc" joint="right_ankle_joint" />
 
-    <framequat name="imu_quat" objtype="site" objname="imu" />
-    <gyro name="imu_gyro" site="imu" />
-    <accelerometer name="imu_acc" site="imu" />
-
-    <framepos name="frame_pos" objtype="site" objname="imu" />
-    <framelinvel name="frame_vel" objtype="site" objname="imu" />
   </sensor>
+
+
+  <keyframe>
+    <key name="home" qpos="
+                            0.0 0.0 0.64 
+                            1.0 0.0 0.0 0.0 
+                            0.0 0.0 0.0 0.0 0.0 0.0
+                            0.0 0.0 0.0 0.0 0.0 0.0
+                          "
+      />
+  </keyframe>
+
 </mujoco>
