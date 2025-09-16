@@ -279,6 +279,15 @@
   </actuator>
 
   <sensor>
+
+    <framequat name="imu_quat" objtype="site" objname="imu" />
+    <gyro name="imu_gyro" site="imu" />
+    <accelerometer name="imu_acc" site="imu" />
+
+    <framepos name="frame_pos" objtype="site" objname="imu" />
+    <framelinvel name="frame_vel" objtype="site" objname="imu" />
+
+
     <jointpos name="left_hip_pitch_pos" joint="left_hip_pitch_joint" />
     <jointpos name="left_hip_roll_pos" joint="left_hip_roll_joint" />
     <jointpos name="left_hip_yaw_pos" joint="left_hip_yaw_joint" />
@@ -350,23 +359,22 @@
     <jointactuatorfrc name="right_shoulder_yaw_torque" joint="right_shoulder_yaw_joint" />
     <jointactuatorfrc name="right_elbow_torque" joint="right_elbow_joint" />
     <jointactuatorfrc name="right_wrist_torque" joint="right_wrist_joint" />
-
-    <framequat name="imu_quat" objtype="site" objname="imu" />
-    <gyro name="imu_gyro" site="imu" />
-    <accelerometer name="imu_acc" site="imu" />
-
-    <framepos name="frame_pos" objtype="site" objname="imu" />
-    <framelinvel name="frame_vel" objtype="site" objname="imu" />
-
-    
-    <!--framequat name="imu_quat_left_ankle" objtype="site" objname="imu_left_ankle" /-->
-    <!--gyro name="imu_gyro_left_ankle" site="imu_left_ankle" /-->
-    <!--accelerometer name="imu_acc_left_ankle" site="imu_left_ankle" /-->
-
-    
-    <!--framequat name="imu_quat_right_ankle" objtype="site" objname="imu_right_ankle" /-->
-    <!--gyro name="imu_gyro_right_ankle" site="imu_right_ankle" /-->
-    <!--accelerometer name="imu_acc_right_ankle" site="imu_right_ankle" /-->
   </sensor>
 
+  <!-- <equality>
+    <weld name="grasp_box" body1="right_wrist_link" body2="strawberry_box" solref="0.02 1.0" solimp="0.9 0.95 0.001" relpose="0 0.17 -0.22 1 0 0 0"/>
+  </equality> -->
+
+  <keyframe>
+    <key name="home" qpos="
+                              0.00 0.00 0.86
+                              1.00 0.00 0.00 0.00 
+                              0.00 0.00 0.00 0.00 0.00 0.00
+                              0.00 0.00 0.00 0.00 0.00 0.00
+                              0.00
+                              0.00 0.00 0.00 0.00 0.00
+                              0.00 0.00 0.00 0.00 0.00                              
+                          "
+      />
+  </keyframe>
 </mujoco>

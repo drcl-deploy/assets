@@ -161,54 +161,69 @@
   </actuator>
 
   <sensor>
-    <!-- Position sensors -->
-    <actuatorpos name="r_hip_pitch_joint_p" actuator="r_hip_pitch_joint" user="13"/>
-    <actuatorpos name="r_hip_roll_joint_p" actuator="r_hip_roll_joint" user="13"/>
-    <actuatorpos name="r_thigh_joint_p" actuator="r_thigh_joint" user="13"/>
-    <actuatorpos name="r_calf_joint_p" actuator="r_calf_joint" user="13"/>
-    <actuatorpos name="r_ankle_pitch_joint_p" actuator="r_ankle_pitch_joint" user="13"/>
-    <actuatorpos name="r_ankle_roll_joint_p" actuator="r_ankle_roll_joint" user="13"/>
-    <actuatorpos name="l_hip_pitch_joint_p" actuator="l_hip_pitch_joint" user="13"/>
-    <actuatorpos name="l_hip_roll_joint_p" actuator="l_hip_roll_joint" user="13"/>
-    <actuatorpos name="l_thigh_joint_p" actuator="l_thigh_joint" user="13"/>
-    <actuatorpos name="l_calf_joint_p" actuator="l_calf_joint" user="13"/>
-    <actuatorpos name="l_ankle_pitch_joint_p" actuator="l_ankle_pitch_joint" user="13"/>
-    <actuatorpos name="l_ankle_roll_joint_p" actuator="l_ankle_roll_joint" user="13"/>
+    <framequat     name='torso_quat' objtype='site' noise='0.001' objname='imu'/>
+    <framepos     name='torso_pos' objtype='site' noise='0.001' objname='imu'/>
+    <framelinvel name="torso_linvel" objtype="site" objname='imu'/>
 
-    <!-- Velocity sensors -->
-    <actuatorvel name="r_hip_pitch_joint_v" actuator="r_hip_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="r_hip_roll_joint_v" actuator="r_hip_roll_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="r_thigh_joint_v" actuator="r_thigh_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="r_calf_joint_v" actuator="r_calf_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="r_ankle_pitch_joint_v" actuator="r_ankle_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="r_ankle_roll_joint_v" actuator="r_ankle_roll_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="l_hip_pitch_joint_v" actuator="l_hip_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="l_hip_roll_joint_v" actuator="l_hip_roll_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="l_thigh_joint_v" actuator="l_thigh_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="l_calf_joint_v" actuator="l_calf_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="l_ankle_pitch_joint_v" actuator="l_ankle_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorvel name="l_ankle_roll_joint_v" actuator="l_ankle_roll_joint" user="13" noise="1e-3"/>
-
-    <!-- Force sensors -->
-    <actuatorfrc name="r_hip_pitch_joint_f" actuator="r_hip_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="r_hip_roll_joint_f" actuator="r_hip_roll_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="r_thigh_joint_f" actuator="r_thigh_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="r_calf_joint_f" actuator="r_calf_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="r_ankle_pitch_joint_f" actuator="r_ankle_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="r_ankle_roll_joint_f" actuator="r_ankle_roll_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="l_hip_pitch_joint_f" actuator="l_hip_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="l_hip_roll_joint_f" actuator="l_hip_roll_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="l_thigh_joint_f" actuator="l_thigh_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="l_calf_joint_f" actuator="l_calf_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="l_ankle_pitch_joint_f" actuator="l_ankle_pitch_joint" user="13" noise="1e-3"/>
-    <actuatorfrc name="l_ankle_roll_joint_f" actuator="l_ankle_roll_joint" user="13" noise="1e-3"/>
-  
-    <framequat     name='orientation' objtype='site' noise='0.001' objname='imu'/>
-    <framepos     name='position' objtype='site' noise='0.001' objname='imu'/>
-    <gyro          name='angular-velocity'    site='imu' noise='0.005' cutoff='34.9'/>
-    <velocimeter   name='linear-velocity'     site='imu' noise='0.001' cutoff='30'/>
-    <accelerometer name='linear-acceleration' site='imu' noise='0.005' cutoff='157'/>
+    <accelerometer name='torso_acc' site='imu' noise='0.005' cutoff='157'/>
+    <velocimeter   name='torso_vel'     site='imu' noise='0.001' cutoff='30'/>
+    <gyro          name='torso_gyr'    site='imu' noise='0.005' cutoff='34.9'/>
     <magnetometer  name='magnetometer'        site='imu'/>
   
+
+    <!-- Position sensors -->
+    <actuatorpos name="r_hip_pitch_joint_pos" actuator="r_hip_pitch_joint" user="13"/>
+    <actuatorpos name="r_hip_roll_joint_pos" actuator="r_hip_roll_joint" user="13"/>
+    <actuatorpos name="r_thigh_joint_pos" actuator="r_thigh_joint" user="13"/>
+    <actuatorpos name="r_calf_joint_pos" actuator="r_calf_joint" user="13"/>
+    <actuatorpos name="r_ankle_pitch_joint_pos" actuator="r_ankle_pitch_joint" user="13"/>
+    <actuatorpos name="r_ankle_roll_joint_pos" actuator="r_ankle_roll_joint" user="13"/>
+    <actuatorpos name="l_hip_pitch_joint_pos" actuator="l_hip_pitch_joint" user="13"/>
+    <actuatorpos name="l_hip_roll_joint_pos" actuator="l_hip_roll_joint" user="13"/>
+    <actuatorpos name="l_thigh_joint_pos" actuator="l_thigh_joint" user="13"/>
+    <actuatorpos name="l_calf_joint_pos" actuator="l_calf_joint" user="13"/>
+    <actuatorpos name="l_ankle_pitch_joint_pos" actuator="l_ankle_pitch_joint" user="13"/>
+    <actuatorpos name="l_ankle_roll_joint_pos" actuator="l_ankle_roll_joint" user="13"/>
+
+    <!-- Velocity sensors -->
+    <actuatorvel name="r_hip_pitch_joint_vel" actuator="r_hip_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="r_hip_roll_joint_vel" actuator="r_hip_roll_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="r_thigh_joint_vel" actuator="r_thigh_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="r_calf_joint_vel" actuator="r_calf_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="r_ankle_pitch_joint_vel" actuator="r_ankle_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="r_ankle_roll_joint_vel" actuator="r_ankle_roll_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="l_hip_pitch_joint_vel" actuator="l_hip_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="l_hip_roll_joint_vel" actuator="l_hip_roll_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="l_thigh_joint_vel" actuator="l_thigh_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="l_calf_joint_vel" actuator="l_calf_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="l_ankle_pitch_joint_vel" actuator="l_ankle_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorvel name="l_ankle_roll_joint_vel" actuator="l_ankle_roll_joint" user="13" noise="1e-3"/>
+
+    <!-- Force sensors -->
+    <actuatorfrc name="r_hip_pitch_joint_frc" actuator="r_hip_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="r_hip_roll_joint_frc" actuator="r_hip_roll_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="r_thigh_joint_frc" actuator="r_thigh_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="r_calf_joint_frc" actuator="r_calf_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="r_ankle_pitch_joint_frc" actuator="r_ankle_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="r_ankle_roll_joint_frc" actuator="r_ankle_roll_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="l_hip_pitch_joint_frc" actuator="l_hip_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="l_hip_roll_joint_frc" actuator="l_hip_roll_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="l_thigh_joint_frc" actuator="l_thigh_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="l_calf_joint_frc" actuator="l_calf_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="l_ankle_pitch_joint_frc" actuator="l_ankle_pitch_joint" user="13" noise="1e-3"/>
+    <actuatorfrc name="l_ankle_roll_joint_frc" actuator="l_ankle_roll_joint" user="13" noise="1e-3"/>
+  
+
+
+
   </sensor>
+  <keyframe>
+  <key name="home" qpos="
+                            0.00 0.00 0.347
+                            1.00 0.00 0.000   0.00 
+                            0.00 0.00 0.00 0.00 0.00 0.00
+                            0.00 0.00 0.00 0.00 0.00 0.00
+                        "
+    />
+</keyframe>
 </mujoco>
