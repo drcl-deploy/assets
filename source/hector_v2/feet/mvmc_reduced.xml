@@ -77,7 +77,7 @@
   <worldbody>
     <light name="spotlight0" mode="targetbodycom" target="torso" pos="0 0 10" cutoff="60" />
 		<light name="spotlight1" mode="targetbodycom" target="torso" pos="0.5 0 10" cutoff="60" />
-      <geom name="floor" size="0 0 .125" type="plane" material="groundplane" conaffinity="15" condim="3" />
+    <geom name="floor" size="0 0 .125" type="plane" material="groundplane" conaffinity="15" condim="3" />
     <body name="torso" pos="0 0 0.6" >
      
       <freejoint name="root" />
@@ -287,9 +287,6 @@
 		<velocimeter name="torso_vel" site="root"/>
 		<gyro name="torso_gyr" site="root"/>
 
-    <framepos name="l_foot_pos" objtype="site" objname="l_toe"/>
-    <framepos name="r_foot_pos" objtype="site" objname="r_toe"/>
-
 		<!-- motor encoders -->
 		<actuatorpos name="l_hip_yaw_pos" actuator="l_hip_yaw"/>
 		<actuatorpos name="l_hip_roll_pos" actuator="l_hip_roll"/>
@@ -372,7 +369,7 @@
 		<exclude body1="r_thigh" body2="r_hip2" />
 	</contact> 
 
-    <keyframe>
+  <keyframe>
     <key name="home" qpos="
                               0.00 0.00 0.55 
                               1.00 0.00 0.000   0.00 
