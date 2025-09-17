@@ -11,8 +11,8 @@
     </visual>
     
     <default>
-        <joint limited='true'/>
-        <motor ctrllimited='true'/>
+        <joint limited='true' armature="0.01"/>
+        <general biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0" forcerange="-20.0 20.0"/>
         <geom  condim='4' contype="1" conaffinity="15" solref='0.001 2' friction='0.9 0.2 0.2'/>
         <equality solref='0.001 2'/>
         <default class='visualgeom'>
@@ -26,14 +26,7 @@
         </default>
     </default>
     <asset>
-      <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512"/>
-      <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2"
-          width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
-      <texture name="texplane2" type="2d" builtin="checker" rgb1="1 0.3137 0.1843" rgb2="0.0 0.30196 0.38039"
-          width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
 
-      <material name="matplane" reflectance="0." texture="texplane" texrepeat="1 1" texuniform="true"/>
-      <material name="matplane2" reflectance="0.1" texture="texplane2" texrepeat="1 1" texuniform="true"/>
 
       <material name='obstacle'  rgba='0.9 0.6 0.2 1'/>
       <material name='visualgeom'  rgba='0.5 0.9 0.2 1'/>
@@ -56,16 +49,9 @@
       <hfield name='hf0' nrow='200' ncol='200' size="10 5 0.2 .1"/>
       </asset>
   <worldbody>
-    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5.0" dir="0 0 -1" castshadow="false"/>
-    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
-    <geom name="ground" type="plane" size="0 0 1" pos="0.001 0 0" quat="1 0 0 0" material="matplane" condim="1" conaffinity='15'/>
-
     <body name="base_link" pos="0.0 0.0 0.347">
       <inertial pos="0.00242324 -5.699e-05 0.0403008" quat="0.695312 0.00968645 0.00943283 0.718581" mass="2.1609" diaginertia="0.00978249 0.00901239 0.00416199"/>
-      <joint type='slide' axis='1 0 0' limited='false' />
-      <joint type='slide' axis='0 1 0' limited='false' />
-      <joint type='slide' axis='0 0 1' limited='false' />
-      <joint type='ball' limited='false' />
+       <freejoint name="root" />
       <site name='imu' size='0.01' pos='0.0 0 0.0'/> 
 
       <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="1 1 1 1" mesh="baselink_1"/>
@@ -146,30 +132,35 @@
     </body>
   </worldbody>
   <actuator>
-    <motor name="r_hip_pitch_joint" joint="r_hip_pitch_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="r_hip_roll_joint" joint="r_hip_roll_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="r_thigh_joint" joint="r_thigh_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="r_calf_joint" joint="r_calf_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="r_ankle_pitch_joint" joint="r_ankle_pitch_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="r_ankle_roll_joint" joint="r_ankle_roll_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="l_hip_pitch_joint" joint="l_hip_pitch_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="l_hip_roll_joint" joint="l_hip_roll_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="l_thigh_joint" joint="l_thigh_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="l_calf_joint" joint="l_calf_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="l_ankle_pitch_joint" joint="l_ankle_pitch_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
-    <motor name="l_ankle_roll_joint" joint="l_ankle_roll_joint" gear="1" ctrllimited="true" ctrlrange="-200 200"/>
+    <general name="r_hip_pitch_joint" joint="r_hip_pitch_joint" />
+    <general name="r_hip_roll_joint" joint="r_hip_roll_joint" />
+    <general name="r_thigh_joint" joint="r_thigh_joint" />
+    <general name="r_calf_joint" joint="r_calf_joint" />
+    <general name="r_ankle_pitch_joint" joint="r_ankle_pitch_joint" />
+    <general name="r_ankle_roll_joint" joint="r_ankle_roll_joint" />
+    <general name="l_hip_pitch_joint" joint="l_hip_pitch_joint" />
+    <general name="l_hip_roll_joint" joint="l_hip_roll_joint" />
+    <general name="l_thigh_joint" joint="l_thigh_joint" />
+    <general name="l_calf_joint" joint="l_calf_joint" />
+    <general name="l_ankle_pitch_joint" joint="l_ankle_pitch_joint" />
+    <general name="l_ankle_roll_joint" joint="l_ankle_roll_joint" /> 
+    
   </actuator>
 
-  <sensor>
-    <framequat     name='torso_quat' objtype='site' noise='0.001' objname='imu'/>
-    <framepos     name='torso_pos' objtype='site' noise='0.001' objname='imu'/>
-    <framelinvel name="torso_linvel" objtype="site" objname='imu'/>
 
-    <accelerometer name='torso_acc' site='imu' noise='0.005' cutoff='157'/>
-    <velocimeter   name='torso_vel'     site='imu' noise='0.001' cutoff='30'/>
-    <gyro          name='torso_gyr'    site='imu' noise='0.005' cutoff='34.9'/>
-    <magnetometer  name='magnetometer'        site='imu'/>
-  
+  <sensor>
+    <!-- root sensors -->
+    <framepos name="root_pos" objtype="body" objname="base_link"/>
+    <framequat name="root_quat" objtype="body" objname="base_link"/>
+    <framelinvel name="root_linvel" objtype="body" objname="base_link"/>
+    <frameangvel name="root_angvel" objtype="body" objname="base_link"/>
+
+    <!-- imu sensors -->
+    <framequat     name='torso_imu_quat' objtype='site' noise='0.001' objname='imu'/>
+    <accelerometer name='torso_imu_acc' site='imu' noise='0.005' cutoff='157'/>
+    <gyro          name='torso_imu_gyro'    site='imu' noise='0.005' cutoff='34.9'/>
+    <magnetometer  name='torso_imu_magnetometer'        site='imu'/>
+    <framepos     name='torso_imu_pos' objtype='site' noise='0.001' objname='imu'/>
 
     <!-- Position sensors -->
     <actuatorpos name="r_hip_pitch_joint_pos" actuator="r_hip_pitch_joint" user="13"/>
@@ -213,10 +204,11 @@
     <actuatorfrc name="l_ankle_pitch_joint_frc" actuator="l_ankle_pitch_joint" user="13" noise="1e-3"/>
     <actuatorfrc name="l_ankle_roll_joint_frc" actuator="l_ankle_roll_joint" user="13" noise="1e-3"/>
   
-
-
-
   </sensor>
+
+	<equality>
+		<weld name="world_root" active="false" body1="base_link" relpose="0 0 -0.397 1 0 0 0"/> 
+	</equality>
   <keyframe>
   <key name="home" qpos="
                             0.00 0.00 0.347
