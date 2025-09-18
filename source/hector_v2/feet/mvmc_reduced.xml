@@ -10,7 +10,7 @@
     </default>
 
     <default class="robstride_01_joint">
-      <joint axis="0 1 0" armature="0.0" frictionloss="0.0" damping="0.1" actuatorfrcrange="-17 17"/>
+      <joint axis="0 1 0" armature="0.0042 " frictionloss="0.0" damping="0.1" actuatorfrcrange="-17 17"/>
     </default>
 
     <default class="a1_actuator">
@@ -42,46 +42,24 @@
     <mesh name="r_hip1" file="r_hip1.stl"/>
     <mesh name="r_hip2" file="r_hip2.stl"/>
     <mesh name="r_thigh" file="r_thigh.stl"/>
-
     <mesh name="r_shoulder1" file="r_shoulder1.stl"/>
     <mesh name="r_shoulder2" file="r_shoulder2.stl"/>
     <mesh name="r_upper_arm" file="r_upper_arm.stl"/>
-    
     <mesh name="lower_arm" file="lower_arm.stl"/>
-
     <mesh name="l_shoulder1" file="l_shoulder1.stl"/>
     <mesh name="l_shoulder2" file="l_shoulder2.stl"/>
     <mesh name="l_upper_arm" file="l_upper_arm.stl"/>
-
-
     <material name="black" rgba="0.25 0.25 0.25 1" />
     <material name="silver" rgba="0.75 0.75 0.75 1" />
     <material name="space_gray" rgba="0.4 0.4 0.4 1" />
     <material name="transparent" rgba="0 0 0 0" />
-  
-    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072" />
-    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300" />
-    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.5" />
-
-  
   </asset>
 
-
-  <visual>
-		  <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0" />
-		  <rgba haze="0.15 0.25 0.35 1" />
-	    <global offheight="2160" offwidth="3840"/>
-    	<quality offsamples="8"/>
-	</visual>
-
   <worldbody>
-    <light name="spotlight0" mode="targetbodycom" target="torso" pos="0 0 10" cutoff="60" />
-		<light name="spotlight1" mode="targetbodycom" target="torso" pos="0.5 0 10" cutoff="60" />
-    <geom name="floor" size="0 0 .125" type="plane" material="groundplane" conaffinity="15" condim="3" />
     <body name="torso" pos="0 0 0.6" >
      
       <freejoint name="root" />
-      <site name="root" class="imu"/>
+      <site name="torso_imu" class="imu"/>
 
       <inertial pos="0.0 0.0 0.0" mass="4.98" fullinertia="0.048637  0.04267 0.023157 0.000154 0.000534 0.0" />
       <geom class="visual" mesh="torso" material="space_gray"/>
@@ -126,7 +104,6 @@
                 <geom class="visual" mesh="foot" material="black"/>
                 <geom class="collision" mesh="foot" material="black"/>
               
-                <site name="l_toe" class="imu"/>
               </body>
             </body>
           </body>
@@ -168,7 +145,6 @@
                 <geom class="visual" mesh="foot" material="black"/>
                 <geom class="collision" mesh="foot" material="black"/>
 
-                <site name="r_toe" class="imu"/>
               </body>
             </body>
           </body>
@@ -249,11 +225,7 @@
   </body>
   </worldbody>
 
-
-
-
   <actuator>
-    <!-- < for hybrid control in code > -->
 		<general class="a1_actuator" name="l_hip_yaw" joint="l_hip_yaw"  />
 		<general class="a1_actuator" name="l_hip_roll" joint="l_hip_roll"  />
 		<general class="a1_actuator" name="l_hip_pitch" joint="l_hip_pitch" />
@@ -275,17 +247,19 @@
     <general class="robstride_01_actuator" name="r_shoulder_pitch" joint="r_shoulder_pitch" />
     <general class="robstride_01_actuator" name="r_shoulder_roll" joint="r_shoulder_roll" />
     <general class="robstride_01_actuator" name="r_elbow" joint="r_elbow" forcerange="-24.09 24.09"   />
-
 	</actuator>	
 
   <sensor>
-     <framequat name="torso_quat" objtype="site" objname="root"/>
-     <framepos name="torso_pos" objtype="site" objname="root"/>
-     <framelinvel name="torso_linvel" objtype="site" objname="root"/>
-
-		<accelerometer name="torso_acc" site="root"/>
-		<velocimeter name="torso_vel" site="root"/>
-		<gyro name="torso_gyr" site="root"/>
+    <!-- root sensors -->
+    <framepos name="root_pos" objtype="body" objname="torso"/>
+    <framequat name="root_quat" objtype="body" objname="torso"/>
+    <framelinvel name="root_linvel" objtype="body" objname="torso"/>
+    <frameangvel name="root_angvel" objtype="body" objname="torso"/>
+    
+    <!-- imu sensors -->
+    <framequat name="torso_imu_quat" objtype="site" objname="torso_imu"/>
+    <accelerometer name="torso_imu_acc" site="torso_imu"/>
+    <gyro name="torso_imu_gyro" site="torso_imu"/>
 
 		<!-- motor encoders -->
 		<actuatorpos name="l_hip_yaw_pos" actuator="l_hip_yaw"/>
