@@ -23,54 +23,42 @@
   </asset>
 
   <default>
-    <default class="torso_motor">
-      <joint damping="0.01" armature="0.01" frictionloss="0.01"/>
-    </default>
-    <default class="leg_motor">
-      <joint damping="0.01" armature="0.01" frictionloss="0.1"/>
-    </default>
-    <default class="ankle_motor">
-      <joint damping="0.01" armature="0.01" frictionloss="0.1"/>
-    </default>
-    <default class="arm_motor">
-      <joint damping="0.01" armature="0.01" frictionloss="0.1"/>
-    </default>
-    <default class="wrist_motor">
-      <joint damping="0.01" armature="0.01" frictionloss="0.1"/>
-    </default>
+    <!-- robstride_01 / 02 -->
+    <joint damping="0.01" armature="0.01" frictionloss="0.1" actuatorfrcrange="-17 17"/>
+    <general biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0" forcerange="-17.0 17.0"/>
   </default>
 
   <worldbody>
     <body name="body" pos="0 0 0.64">
       <inertial pos="0.031602 0.0 -0.022894" quat="1 0 0 0" mass="1.8" diaginertia="0.008616 0.009058 0.005317"/>
       <joint name="floating_base_joint" type="free" limited="false" actuatorfrclimited="false"/>
-      <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.752941 0.752941 0.752941 1" mesh="body"/>
+      <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="body"/>
       <!-- <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="body"/> -->
          <site name="imu" size="0.01" pos="-0.0 -0.0 0.0" />
       <body name="left_hip1" pos="0 0.05 -0.125" quat="0.9238795 0 0.3826834 0">
         <inertial pos="-0.0107 0 -0.0455" quat="1 0 0 0" mass="0.385" diaginertia="0.00023228 0.00017208 0.00012534"/>
-        <joint name="left_hip_yaw_joint" pos="0 0 0" axis="0 0 1" damping="0.0" range="-1.57 1.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-        <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="left_hip1"/>
+        <joint name="left_hip_yaw_joint" pos="0 0 0" axis="0 0 1" damping="0.0" range="-1.57 1.57"/>
+        <geom type="mesh" material="metal_silver" mesh="left_hip1"/>
         <body name="left_hip2" pos="0.0155 0 -0.04875" quat="1 0 0 0">
           <inertial pos="0.0455 -0.0107 0" quat="1 0 0 0" mass="0.385" diaginertia="0.00012534 0.00023228 0.00017208"/>
-          <joint name="left_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1" actuatorfrcrange="-17 17" class="leg_motor"/>
-          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="left_hip2"/>
+          <joint name="left_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1"/>
+          <geom type="mesh" material="metal_silver" mesh="left_hip2"/>
           <body name="left_hip_pitch_joint" pos="0.04875 0.0155 0" quat="0.9238795 0 -0.3826834 0">
             <inertial pos="0.0001 0.03687 -0.09013" quat="1 0 0 0" mass="0.9856" diaginertia="0.003092 0.003075 0.00060"/>
-            <joint name="left_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="left_thigh"/>
+            <joint name="left_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
+            <geom type="mesh" material="metal_silver" mesh="left_thigh"/>
             <!-- <geom type="mesh" material="metal_silver" mesh="left_thigh"/> -->
             <body name="left_bracket_link" pos="0 0.0175 -0.18">
               <inertial pos="0 0 -0.0255" quat="1 0 0 0" mass="0.020" diaginertia="0.00000719 0.00000323 0.00000450"/>
-              <joint name="left_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-              <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="left_bracket"/>
+              <joint name="left_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
+              <geom type="mesh" material="metal_silver" mesh="left_bracket"/>
               <body name="left_calf_link" pos="0 0 -0.051">
                 <inertial pos="0.005608 0.001267 -0.04554" quat="1 0 0 0" mass="0.1464" diaginertia="0.00047 0.000476 0.000035"/>
-                <joint name="left_calf_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-                <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="left_calf"/>
+                <joint name="left_calf_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
+                <geom type="mesh" material="metal_silver" mesh="left_calf"/>
                 <body name="left_ankle_link" pos="0 0 -0.18">
                   <inertial pos="0.0154 0 -0.0154" quat="1 0 0 0" mass="0.026" diaginertia="0.00000274 0.0000111 0.00001109"/>
-                  <joint name="left_ankle_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-2 2" actuatorfrcrange="-17 17" class="ankle_motor"/> 
+                  <joint name="left_ankle_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-2 2" /> 
                   <geom type="mesh" material="metal_silver" mesh="left_foot"/>
                   <!-- <geom size="0.005" pos="-0.02 0.015 -0.024" rgba="0.2 0.2 0.2 1" />
                   <geom size="0.005" pos="-0.02 -0.015 -0.024" rgba="0.2 0.2 0.2 1" />
@@ -86,28 +74,28 @@
       </body>
       <body name="right_hip1" pos="0 -0.05 -0.125" quat="0.9238795 0 0.3826834 0">
         <inertial pos="-0.0107 0 -0.0455" quat="1 0 0 0" mass="0.385" diaginertia="0.00023228 0.00017208 0.00012534"/>
-        <joint name="right_hip_yaw_joint" pos="0 0 0" axis="0 0 1" damping="0.0" range="-1.57 1.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-        <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="right_hip1"/>
+        <joint name="right_hip_yaw_joint" pos="0 0 0" axis="0 0 1" damping="0.0" range="-1.57 1.57"/>
+        <geom type="mesh" material="metal_silver" mesh="right_hip1"/>
         <body name="right_hip2" pos="0.0155 0 -0.04875" quat="1 0 0 0">
           <inertial pos="0.0455 0.0107 0" quat="1 0 0 0" mass="0.385" diaginertia="0.00012534 0.00023228 0.00017208"/>
-          <joint name="right_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1" actuatorfrcrange="-17 17" class="leg_motor"/>
-          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="right_hip2"/>
+          <joint name="right_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1"/>
+          <geom type="mesh" material="metal_silver" mesh="right_hip2"/>
           <body name="right_hip_pitch_joint" pos="0.04875 -0.0155 0" quat="0.9238795 0 -0.3826834 0">
             <inertial pos="0.0001 -0.03687 -0.09013" quat="1 0 0 0" mass="0.9856" diaginertia="0.003092 0.003075 0.00060"/>
-            <joint name="right_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="right_thigh"/>
+            <joint name="right_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
+            <geom type="mesh" material="metal_silver" mesh="right_thigh"/>
             <!-- <geom type="mesh" material="metal_silver" mesh="right_thigh"/> -->
             <body name="right_bracket_link" pos="0 -0.0175 -0.18">
               <inertial pos="0 0 -0.0255" quat="1 0 0 0" mass="0.020" diaginertia="0.00000719 0.00000323 0.00000450"/>
-              <joint name="right_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-              <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="right_bracket"/>
+              <joint name="right_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
+              <geom type="mesh" material="metal_silver" mesh="right_bracket"/>
               <body name="right_calf_link" pos="0 0 -0.051">
                 <inertial pos="0.005608 -0.001267 -0.04554" quat="1 0 0 0" mass="0.1464" diaginertia="0.00047 0.000476 0.000035"/>
-                <joint name="right_calf_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57" actuatorfrcrange="-17 17" class="leg_motor"/>
-                <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" material="metal_silver" mesh="right_calf"/>
+                <joint name="right_calf_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
+                <geom type="mesh" material="metal_silver" mesh="right_calf"/>
                 <body name="right_ankle_link" pos="0 0 -0.18">
                   <inertial pos="0.0154 0 -0.0154" quat="1 0 0 0" mass="0.026" diaginertia="0.00000274 0.0000111 0.00001109"/>
-                  <joint name="right_ankle_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-2 2" actuatorfrcrange="-17 17" class="ankle_motor"/> 
+                  <joint name="right_ankle_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-2 2" /> 
                   <geom type="mesh" material="metal_silver" mesh="right_foot"/>
                   <!-- <geom size="0.005" pos="-0.02 0.015 -0.024" rgba="0.2 0.2 0.2 1" />
                   <geom size="0.005" pos="-0.02 -0.015 -0.024" rgba="0.2 0.2 0.2 1" />
@@ -121,84 +109,80 @@
           </body>
         </body>
       </body>
-      <!-- <body name="box_body" pos="0 0 0.2">
-                <geom type="box" size="0.05 0.12 0.2" rgba="0.752941 0.752941 0.752941 1" />
-                <inertial pos="0 0 0" mass="9" diaginertia="0.135151 0.123088 0.0327256" />
-      </body> -->
     </body>
   </worldbody>
 
 
   <actuator>
-    <motor name="left_hip_yaw" joint="left_hip_yaw_joint" ctrlrange="-17 17" />
-    <motor name="left_hip_roll" joint="left_hip_roll_joint" ctrlrange="-17 17" />
-    <motor name="left_hip_pitch" joint="left_hip_pitch_joint" ctrlrange="-17 17" />
-    <motor name="left_knee" joint="left_knee_joint" ctrlrange="-17 17" />
-    <!-- <motor name="left_calf" joint="left_calf_joint" ctrlrange="-17 17" /> -->
-    <motor name="left_ankle" joint="left_ankle_joint" ctrlrange="-17 17" />
-    <motor name="right_hip_yaw" joint="right_hip_yaw_joint" ctrlrange="-17 17" />
-    <motor name="right_hip_roll" joint="right_hip_roll_joint" ctrlrange="-17 17" />
-    <motor name="right_hip_pitch" joint="right_hip_pitch_joint" ctrlrange="-17 17" />
-    <motor name="right_knee" joint="right_knee_joint" ctrlrange="-17 17" />
-    <!-- <motor name="right_calf" joint="right_calf_joint" ctrlrange="-17 17" /> -->
-    <motor name="right_ankle" joint="right_ankle_joint" ctrlrange="-17 17" />
+    <general name="left_hip_yaw" joint="left_hip_yaw_joint" />
+    <general name="left_hip_roll" joint="left_hip_roll_joint" />
+    <general name="left_hip_pitch" joint="left_hip_pitch_joint" />
+    <general name="left_knee" joint="left_knee_joint" />
+    <general name="left_ankle" joint="left_ankle_joint" />
+    <general name="right_hip_yaw" joint="right_hip_yaw_joint" />
+    <general name="right_hip_roll" joint="right_hip_roll_joint" />
+    <general name="right_hip_pitch" joint="right_hip_pitch_joint" />
+    <general name="right_knee" joint="right_knee_joint" />
+    <general name="right_ankle" joint="right_ankle_joint" />
   </actuator>
 
 
+	<contact>
+    <exclude body1="left_hip_pitch_joint" body2="left_calf_link" />
+    <exclude body1="right_hip_pitch_joint" body2="right_calf_link" />
+	</contact> 
+
   <equality>
     <!-- constraint to weld the root to the world, fixed base -->
-    <!-- <weld name="world_root" body1="body" relpose="0 0 -0.5 1 0 0 0" /> -->
+    <weld name="world_root" active="true" body1="body" relpose="0 0 -0.7 1 0 0 0"/> 
     <!-- constraint to couple the left hip pitch and left knee joints -->
     <joint name="left_pitch_knee" joint1="left_knee_joint" joint2="left_calf_joint" polycoef="0 1 0 0 0"/>
     <joint name="right_pitch_knee" joint1="right_knee_joint" joint2="right_calf_joint" polycoef="0 1 0 0 0"/>
   </equality>
 
   <sensor>
-    <framequat name="torso_quat" objtype="site" objname="imu" />
-    <framepos name="torso_pos" objtype="site" objname="imu"/>
-    <framelinvel name="torso_linvel" objtype="site" objname="imu"/>
-
-    <accelerometer name="torso_acc" site="imu" />
-    <velocimeter name="torso_vel" site="imu"/>
-    <gyro name="torso_gyr" site="imu" />
+    <!-- root sensors -->
+    <framepos name="root_pos" objtype="body" objname="body"/>
+    <framequat name="root_quat" objtype="body" objname="body"/>
+    <framelinvel name="root_linvel" objtype="body" objname="body"/>
+    <frameangvel name="root_angvel" objtype="body" objname="body"/>
+    
+    <!-- imu sensors -->
+    <framequat name="torso_imu_quat" objtype="site" objname="imu"/>
+    <accelerometer name="torso_imu_acc" site="imu"/>
+    <gyro name="torso_imu_gyro" site="imu"/>
 
     <jointpos name="left_hip_yaw_pos" joint="left_hip_yaw_joint" />
     <jointpos name="left_hip_roll_pos" joint="left_hip_roll_joint" />
     <jointpos name="left_hip_pitch_pos" joint="left_hip_pitch_joint" />
     <jointpos name="left_knee_pos" joint="left_knee_joint" />
-    <!-- <jointpos name="left_calf_pos" joint="left_calf_joint" /> -->
     <jointpos name="left_ankle_pos" joint="left_ankle_joint" />
     <jointpos name="right_hip_yaw_pos" joint="right_hip_yaw_joint" />
     <jointpos name="right_hip_roll_pos" joint="right_hip_roll_joint" />
     <jointpos name="right_hip_pitch_pos" joint="right_hip_pitch_joint" />
     <jointpos name="right_knee_pos" joint="right_knee_joint" />
-    <!-- <jointpos name="right_calf_pos" joint="right_calf_joint" /> -->
     <jointpos name="right_ankle_pos" joint="right_ankle_joint" />
 
     <jointvel name="left_hip_yaw_vel" joint="left_hip_yaw_joint" />
     <jointvel name="left_hip_roll_vel" joint="left_hip_roll_joint" />
     <jointvel name="left_hip_pitch_vel" joint="left_hip_pitch_joint" />
     <jointvel name="left_knee_vel" joint="left_knee_joint" />
-    <!-- <jointvel name="left_calf_vel" joint="left_calf_joint" /> -->
     <jointvel name="left_ankle_vel" joint="left_ankle_joint" />
     <jointvel name="right_hip_yaw_vel" joint="right_hip_yaw_joint" />
     <jointvel name="right_hip_roll_vel" joint="right_hip_roll_joint" />
     <jointvel name="right_hip_pitch_vel" joint="right_hip_pitch_joint" />
     <jointvel name="right_knee_vel" joint="right_knee_joint" />
-    <!-- <jointvel name="right_calf_vel" joint="right_calf_joint" /> -->
     <jointvel name="right_ankle_vel" joint="right_ankle_joint" />
 
     <jointactuatorfrc name="left_hip_yaw_frc" joint="left_hip_yaw_joint" />
     <jointactuatorfrc name="left_hip_roll_frc" joint="left_hip_roll_joint" />
     <jointactuatorfrc name="left_hip_pitch_frc" joint="left_hip_pitch_joint" />
     <jointactuatorfrc name="left_knee_frc" joint="left_knee_joint" />
-    <!-- <jointactuatorfrc name="left_calf_frc" joint="left_calf_joint" /> -->
     <jointactuatorfrc name="left_ankle_frc" joint="left_ankle_joint" />
     <jointactuatorfrc name="right_hip_yaw_frc" joint="right_hip_yaw_joint" />
     <jointactuatorfrc name="right_hip_roll_frc" joint="right_hip_roll_joint" />
     <jointactuatorfrc name="right_hip_pitch_frc" joint="right_hip_pitch_joint" />
     <jointactuatorfrc name="right_knee_frc" joint="right_knee_joint" />
-    <!-- <jointactuatorfrc name="right_calf_frc" joint="right_calf_joint" /> -->
     <jointactuatorfrc name="right_ankle_frc" joint="right_ankle_joint" />
 
   </sensor>

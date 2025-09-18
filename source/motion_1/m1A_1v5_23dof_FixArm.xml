@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mujoco model="motion1_23dof">
   <compiler angle="radian" meshdir="./meshes_reduce/" />
-  <option timestep="0.00005" />
+  <option timestep='0.001' o_solref='-100000 -1000' />
   <asset>
     <mesh name="pelvis_link" file="pelvis_link.STL" />
 
@@ -36,14 +36,10 @@
     <mesh name="right_wrist_link" file="right_wrist_link.STL" />
     <mesh name="right_hand_link" file="right_hand_link.STL" />
     <mesh name="right_fist_link" file="right_fist_link.STL" />
-
-    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072" />
-    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300" />
-    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.5" />
-
   </asset>
 
   <default>
+    <general biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0"/>
     <default class="torso_motor">
       <joint damping="0.05" armature="0.01" frictionloss="0.2" />
     </default>
@@ -65,10 +61,6 @@
   </default>
 
   <worldbody>
-    <light name="spotlight0" mode="targetbodycom" target="pelvis_link" pos="0 0 10" cutoff="60" />
-		<light name="spotlight1" mode="targetbodycom" target="pelvis_link" pos="0.5 0 10" cutoff="60" />
-    <geom name="floor" size="0 0 .125" type="plane" material="groundplane" conaffinity="15" condim="3" />
-    
     <body name="pelvis_link" pos="0 0 0.86">
       <inertial pos="4.53344e-06 3.06828e-05 -0.0611805" quat="0.498187 0.4977 -0.50201 0.502086" mass="3.08581" diaginertia="0.0131825 0.0125599 0.00780354" />
       <joint name="floating_base_joint" type="free" limited="false" actuatorfrclimited="false" />
@@ -179,7 +171,6 @@
         <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="torso_link" />
         <geom pos="0 0 0.362" quat="1 0 0 0" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="head_link" />
 
-
         <body name="left_shoulder_pitch_link" pos="0 0.103122 0.302183" quat="0.996195 0.0871557 0 0">
           <inertial pos="0.00609218 0.060037 -0.00031418" quat="0.705439 0.707992 0.027144 0.0191561" mass="0.518898" diaginertia="0.000548284 0.00045526 0.000351496" />
           <joint name="left_shoulder_pitch_joint" pos="0 0 0" axis="0 -1 0" range="-3.1 3.1" actuatorfrcrange="-17 17" class="arm_motor" />
@@ -208,11 +199,6 @@
                   <inertial pos="0.00248772 -0.00195905 -0.172027" quat="0.603647 -0.00783246 0.00387491 0.797204" mass="0.710911" diaginertia="0.00408741 0.00374972 0.000528325" />
                   <joint name="left_wrist_joint" pos="0 0 0" axis="0 0 1" range="-3.1 3.1" actuatorfrcrange="-17 17" class="arm_motor" />
                   <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="left_wrist_link" />
-                  <!-- Hand holding light stick -->
-                  <!-- <geom pos="0 0 -0.1252" quat="1 0 0 0" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="left_hand_link" /> -->
-                  <!-- <geom type="cylinder" size="0.008 0.5" pos="0 -0.02 -0.225" quat="0.707107 0 0.707107 0" rgba="0.0 1.0 0.0 0.4" contype="0" conaffinity="0"/> -->
-                  <!-- Light stick straight from forearm -->
-                  <!--geom type="cylinder" size="0.015 0.2" pos="0 0 -0.3252" rgba="1 0 0 0.8" contype="0" conaffinity="0"/-->
                   <geom pos="0 0 -0.1252" quat="1 0 0 0" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="left_fist_link" />
                 </body>
               </body>
@@ -247,11 +233,6 @@
                   <inertial pos="0.00167453 0.00177851 -0.177258" quat="0.820148 0.00456919 -0.00892685 0.572064" mass="0.710911" diaginertia="0.00441165 0.00411905 0.000511156" />
                   <joint name="right_wrist_joint" pos="0 0 0" axis="0 0 1" range="-3.1 3.1" actuatorfrcrange="-17 17" class="arm_motor" />
                   <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="right_wrist_link" />
-                  <!-- Hand holding light stick -->
-                  <!-- <geom pos="0 0 -0.1252" quat="1 0 0 0" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="right_hand_link" /> -->
-                  <!-- <geom type="cylinder" size="0.008 0.5" pos="0 0.02 -0.225" quat="0.707107 0 0.707107 0" rgba="0.0 1.0 0.0 0.4" contype="0" conaffinity="0"/> -->
-                  <!-- Light stick straight from forearm -->
-                  <!--geom type="cylinder" size="0.015 0.2" pos="0 0 -0.3252" rgba="1 0 0 0.8" contype="0" conaffinity="0"/-->
                   <geom pos="0 0 -0.1252" quat="1 0 0 0" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="right_fist_link" />
                 </body>
               </body>
@@ -263,43 +244,46 @@
   </worldbody>
 
   <actuator>
-    <motor name="left_hip_pitch" joint="left_hip_pitch_joint" ctrlrange="-60 60" />
-    <motor name="left_hip_roll" joint="left_hip_roll_joint" ctrlrange="-60 60" />
-    <motor name="left_hip_yaw" joint="left_hip_yaw_joint" ctrlrange="-60 60" />
-    <motor name="left_knee" joint="left_knee_joint" ctrlrange="-120 120" />
-    <motor name="left_ankle_pitch" joint="left_ankle_pitch_joint" ctrlrange="-34 34" />
-    <motor name="left_ankle_roll" joint="left_ankle_roll_joint" ctrlrange="-34 34" />
+    <general name="left_hip_pitch" joint="left_hip_pitch_joint" />
+    <general name="left_hip_roll" joint="left_hip_roll_joint" />
+    <general name="left_hip_yaw" joint="left_hip_yaw_joint" />
+    <general name="left_knee" joint="left_knee_joint"  />
+    <general name="left_ankle_pitch" joint="left_ankle_pitch_joint"  />
+    <general name="left_ankle_roll" joint="left_ankle_roll_joint"  />
 
-    <motor name="right_hip_pitch" joint="right_hip_pitch_joint" ctrlrange="-60 60" />
-    <motor name="right_hip_roll" joint="right_hip_roll_joint" ctrlrange="-60 60" />
-    <motor name="right_hip_yaw" joint="right_hip_yaw_joint" ctrlrange="-60 60" />
-    <motor name="right_knee" joint="right_knee_joint" ctrlrange="-120 120" />
-    <motor name="right_ankle_pitch" joint="right_ankle_pitch_joint" ctrlrange="-34 34" />
-    <motor name="right_ankle_roll" joint="right_ankle_roll_joint" ctrlrange="-34 34" />
+    <general name="right_hip_pitch" joint="right_hip_pitch_joint" />
+    <general name="right_hip_roll" joint="right_hip_roll_joint" />
+    <general name="right_hip_yaw" joint="right_hip_yaw_joint" />
+    <general name="right_knee" joint="right_knee_joint"  />
+    <general name="right_ankle_pitch" joint="right_ankle_pitch_joint"  />
+    <general name="right_ankle_roll" joint="right_ankle_roll_joint"  />
 
-    <motor name="waist" joint="waist_joint" ctrlrange="-60 60" />
+    <general name="waist" joint="waist_joint" />
 
-    <motor name="left_shoulder_pitch" joint="left_shoulder_pitch_joint" ctrlrange="-17 17" />
-    <motor name="left_shoulder_roll" joint="left_shoulder_roll_joint" ctrlrange="-17 17" />
-    <motor name="left_shoulder_yaw" joint="left_shoulder_yaw_joint" ctrlrange="-17 17" />
-    <motor name="left_elbow" joint="left_elbow_joint" ctrlrange="-17 17" />
-    <motor name="left_wrist" joint="left_wrist_joint" ctrlrange="-17 17" />
+    <general name="left_shoulder_pitch" joint="left_shoulder_pitch_joint" />
+    <general name="left_shoulder_roll" joint="left_shoulder_roll_joint" />
+    <general name="left_shoulder_yaw" joint="left_shoulder_yaw_joint" />
+    <general name="left_elbow" joint="left_elbow_joint" />
+    <general name="left_wrist" joint="left_wrist_joint" />
 
-    <motor name="right_shoulder_pitch" joint="right_shoulder_pitch_joint" ctrlrange="-17 17" />
-    <motor name="right_shoulder_roll" joint="right_shoulder_roll_joint" ctrlrange="-17 17" />
-    <motor name="right_shoulder_yaw" joint="right_shoulder_yaw_joint" ctrlrange="-17 17" />
-    <motor name="right_elbow" joint="right_elbow_joint" ctrlrange="-17 17" />
-    <motor name="right_wrist" joint="right_wrist_joint" ctrlrange="-17 17" />
+    <general name="right_shoulder_pitch" joint="right_shoulder_pitch_joint" />
+    <general name="right_shoulder_roll" joint="right_shoulder_roll_joint" />
+    <general name="right_shoulder_yaw" joint="right_shoulder_yaw_joint" />
+    <general name="right_elbow" joint="right_elbow_joint" />
+    <general name="right_wrist" joint="right_wrist_joint" />
   </actuator>
 
   <sensor>
-
-    <framequat name="torso_quat" objtype="site" objname="imu" />
-    <framepos name="torso_pos" objtype="site" objname="imu" />
-    <framelinvel name="torso_linvel" objtype="site" objname="imu" />
-    <accelerometer name="torso_acc" site="imu" />
-    <velocimeter name="torso_vel" site="imu"/>
-    <gyro name="torso_gyr" site="imu" />
+    <!-- root sensors -->
+    <framepos name="root_pos" objtype="body" objname="pelvis_link"/>
+    <framequat name="root_quat" objtype="body" objname="pelvis_link"/>
+    <framelinvel name="root_linvel" objtype="body" objname="pelvis_link"/>
+    <frameangvel name="root_angvel" objtype="body" objname="pelvis_link"/>
+    
+    <!-- imu sensors -->
+    <framequat name="torso_imu_quat" objtype="site" objname="imu"/>
+    <accelerometer name="torso_imu_acc" site="imu"/>
+    <gyro name="torso_imu_gyro" site="imu"/>
 
     <jointpos name="left_hip_pitch_pos" joint="left_hip_pitch_joint" />
     <jointpos name="left_hip_roll_pos" joint="left_hip_roll_joint" />
@@ -374,9 +358,9 @@
     <jointactuatorfrc name="right_wrist_frc" joint="right_wrist_joint" />  
   </sensor>
 
-  <!-- <equality>
-    <weld name="grasp_box" body1="right_wrist_link" body2="strawberry_box" solref="0.02 1.0" solimp="0.9 0.95 0.001" relpose="0 0.17 -0.22 1 0 0 0"/>
-  </equality> -->
+	<equality>
+		<weld name="world_root" active="true" body1="pelvis_link" relpose="0 0 -1.0 1 0 0 0"/> 
+	</equality>
 
   <keyframe>
     <key name="home" qpos="

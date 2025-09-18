@@ -14,7 +14,7 @@ ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
 # implicit actuator
 HECTOR_MINI_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
-        asset_path=os.path.join(ASSETS_DIR, "hector_mini/hector_mini_body.urdf"),
+        asset_path=os.path.join(ASSETS_DIR, "hector_mini/mvsc.urdf"),
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
