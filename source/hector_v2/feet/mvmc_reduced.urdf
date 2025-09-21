@@ -334,6 +334,7 @@
 		</visual>
 
 	</link>
+	<link name="l_hand"/>
 	<link name="r_shoulder1">
 		<inertial>
 			<origin rpy="0.00000 -0.00000 1.57080" xyz="0.00071 -0.02838 0.04835"/>
@@ -422,6 +423,7 @@
             </material>
 		</visual>
 	</link>
+	<link name="r_hand"/>
 	<joint name="l_hip_yaw" type="revolute">
 		<parent link="torso"/>
 		<child link="l_hip1"/>
@@ -542,6 +544,11 @@
 
 		<axis xyz="0.00000 1.00000 0.00000"/>
 	</joint>
+	<joint name="l_wrist" type="fixed">
+		<parent link="l_lower_arm"/>
+		<child link="l_hand"/>        
+		<origin xyz="0 0 -0.23" rpy="0 0 0"/> 
+	</joint>
 	<joint name="r_shoulder_yaw" type="revolute">
 		<parent link="torso"/>
 		<child link="r_shoulder1"/>
@@ -577,5 +584,10 @@
 		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
 
 		<axis xyz="0.00000 1.00000 0.00000"/>
+	</joint>
+	<joint name="r_wrist" type="fixed">
+		<parent link="r_lower_arm"/>
+		<child link="r_hand"/>        
+		<origin xyz="0 0 -0.23" rpy="0 0 0"/> 
 	</joint>
 </robot>
