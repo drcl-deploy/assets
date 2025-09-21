@@ -198,14 +198,18 @@ SAMPLING_RANGE = {
 END_EFFECTORS = {
     "l_foot": {
         "body_name": "l_toe",
+        "actuated_joints": ["l_hip_yaw", "l_hip_roll", "l_hip_pitch", "l_knee", "l_ankle"],
     },
     "r_foot": {
         "body_name": "r_toe",
+        "actuated_joints": ["r_hip_yaw", "r_hip_roll", "r_hip_pitch", "r_knee", "r_ankle"],
     },
     "l_wrist": {
         "body_name": "l_hand",
+        "actuated_joints": ["l_shoulder_yaw", "l_shoulder_pitch", "l_shoulder_roll", "l_elbow"],
     },
     "r_wrist": {
         "body_name": "r_hand",
+        "actuated_joints": ["r_shoulder_yaw", "r_shoulder_pitch", "r_shoulder_roll", "r_elbow"],   
     },
 }
