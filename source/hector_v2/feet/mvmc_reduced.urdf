@@ -334,7 +334,12 @@
 		</visual>
 
 	</link>
-	<link name="l_hand"/>
+	<link name="l_hand" >
+		<inertial>
+			<origin rpy="0.00000 -0.00000 0.0" xyz="0.00 0.0 0.0"/>
+			<mass value="0.001"/>
+		</inertial>
+	</link>
 	<link name="r_shoulder1">
 		<inertial>
 			<origin rpy="0.00000 -0.00000 1.57080" xyz="0.00071 -0.02838 0.04835"/>
@@ -423,7 +428,12 @@
             </material>
 		</visual>
 	</link>
-	<link name="r_hand"/>
+	<link name="r_hand">
+		<inertial>
+			<origin rpy="0.00000 -0.00000 0.0" xyz="0.00 0.0 0.0"/>
+			<mass value="0.001"/>
+		</inertial>
+	</link>
 	<joint name="l_hip_yaw" type="revolute">
 		<parent link="torso"/>
 		<child link="l_hip1"/>

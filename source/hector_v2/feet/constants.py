@@ -194,3 +194,18 @@ SAMPLING_RANGE = {
     ],  # Lower limit, upper limit
     "right_foot_pos": [[0.0, -0.15, 0.01], [0.0, -0.15, 0.01]],
 }
+
+END_EFFECTORS = {
+    "l_foot": {
+        "body_name": "l_toe",
+    },
+    "r_foot": {
+        "body_name": "r_toe",
+    },
+    "l_wrist": {
+        "body_name": "l_hand",
+    },
+    "r_wrist": {
+        "body_name": "r_hand",
+    },
+}
