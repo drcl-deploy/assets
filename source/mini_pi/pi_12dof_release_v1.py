@@ -58,6 +58,7 @@ PAI_CFG = ArticulationCfg(
         "limbs": ImplicitActuatorCfg(
             joint_names_expr=JOINT_NAME_EXPR,
             effort_limit=EFFORT_LIMIT,
+            velocity_limit=VELOCITY_LIMIT,
             stiffness=STIFFNESS,
             damping=DAMPING,
             armature=ARMATURE,

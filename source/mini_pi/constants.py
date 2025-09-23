@@ -73,6 +73,21 @@ EFFORT_LIMIT = {
     "l_ankle_roll_joint":20.0,
 }
 
+VELOCITY_LIMIT = {
+    "r_hip_pitch_joint":20.0,
+    "r_hip_roll_joint":20.0,
+    "r_thigh_joint":20.0,
+    "r_calf_joint":20.0,
+    "r_ankle_pitch_joint":20.0,
+    "r_ankle_roll_joint":20.0,
+    "l_hip_pitch_joint":20.0,
+    "l_hip_roll_joint":20.0,
+    "l_thigh_joint":20.0,
+    "l_calf_joint":20.0,
+    "l_ankle_pitch_joint":20.0,
+    "l_ankle_roll_joint":20.0,
+}
+
 
 ARMATURE = {
     "r_hip_pitch_joint":0.01,
