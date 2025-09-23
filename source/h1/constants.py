@@ -1,3 +1,5 @@
+# Taken from isaaclab_assets/robots/unitree.py
+
 BAD_CONTACT_BODIES = [
     "pelvis",
     "torso_link",
@@ -7,12 +9,21 @@ BAD_CONTACT_BODIES = [
 
 ROOT_LINK_NAME = "torso_link"
 TRACKED_EE_LINKS = [
-    {"name": "l_foot", "body_name": "left_ankle_link", "cmd_attr": "cmd_left_foot_pos"},
+    {
+        "name": "l_foot",
+        "body_name": "left_ankle_link",
+        "cmd_attr": "cmd_left_foot_pos",
+    },
     {
         "name": "r_foot",
         "body_name": "right_ankle_link",
         "cmd_attr": "cmd_right_foot_pos",
     },
+]
+
+FOOT_CONTACT_BODIES = [
+    "left_ankle_link",
+    "right_ankle_link",
 ]
 
 SAMPLING_RANGE = {

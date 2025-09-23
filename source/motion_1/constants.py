@@ -23,6 +23,7 @@ STIFFNESS = {
     "left_ankle_roll_joint": 20.0,
     "right_ankle_roll_joint": 20.0,
 }
+
 DAMPING = {
     "left_shoulder_pitch_joint": 5.0,
     "right_shoulder_pitch_joint": 5.0,
@@ -153,6 +154,32 @@ VELOCITY_LIMIT = {
     "right_ankle_roll_joint": 32.9,
 }
 
+ARMATURE = {
+    "left_shoulder_pitch_joint": 0.01,
+    "right_shoulder_pitch_joint": 0.01,
+    "waist_yaw_joint": 0.01,
+    "left_shoulder_roll_joint": 0.01,
+    "right_shoulder_roll_joint": 0.01,
+    "left_hip_pitch_joint": 0.01,
+    "right_hip_pitch_joint": 0.01,
+    "left_shoulder_yaw_joint": 0.01,
+    "right_shoulder_yaw_joint": 0.01,
+    "left_hip_roll_joint": 0.01,
+    "right_hip_roll_joint": 0.01,
+    "left_elbow_joint": 0.01,
+    "right_elbow_joint": 0.01,
+    "left_hip_yaw_joint": 0.01,
+    "right_hip_yaw_joint": 0.01,
+    "left_wrist_roll_joint": 0.01,
+    "right_wrist_roll_joint": 0.01,
+    "left_knee_joint": 0.01,
+    "right_knee_joint": 0.01,
+    "left_ankle_pitch_joint": 0.01,
+    "right_ankle_pitch_joint": 0.01,
+    "left_ankle_roll_joint": 0.01,
+    "right_ankle_roll_joint": 0.01,
+}
+
 MPCL = [
     [-3.1, 3.1],  # left_shoulder_pitch_joint
     [-3.1, 3.1],  # right_shoulder_pitch_joint
@@ -184,6 +211,11 @@ BAD_CONTACT_BODIES = [
     "pelvis_link",
     "left_hip_pitch_link",
     "right_hip_pitch_link",
+]
+
+FOOT_CONTACT_BODIES = [
+    "left_ankle_roll_link",
+    "right_ankle_roll_link",
 ]
 
 ROOT_LINK_NAME = "torso_link"
