@@ -48,6 +48,7 @@ HECTOR_MINI_CFG = ArticulationCfg(
             velocity_limit=VELOCITY_LIMIT,
             stiffness=STIFFNESS,
             damping=DAMPING,
+            armature=ARMATURE,
         ),
     },
 )
