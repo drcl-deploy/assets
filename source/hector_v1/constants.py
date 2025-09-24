@@ -70,6 +70,19 @@ JOINT_NAMES_EXPR = [
     "r_ankle_joint",
 ]
 
+ARMATURE = {
+    "l_hip_yaw_joint": 0.01,
+    "r_hip_yaw_joint": 0.01,
+    "l_hip_roll_joint": 0.01,
+    "r_hip_roll_joint": 0.01,
+    "l_hip_pitch_joint": 0.01,
+    "r_hip_pitch_joint": 0.01,
+    "l_knee_joint": 0.04,  # motor_speed_max/knee_gear_ratio
+    "r_knee_joint": 0.04,  # motor_speed_max/knee_gear_ratio
+    "l_ankle_joint": 0.01,
+    "r_ankle_joint": 0.01,
+}
+
 
 MPCL = [
     # [-0.7900000214576721, 0.7900000214576721], # l_hip_yaw_joint
@@ -111,6 +124,12 @@ BAD_CONTACT_BODIES = [
     "l_thigh",
     "r_thigh",
 ]
+
+FOOT_CONTACT_BODIES = [
+    "l_toe",
+    "r_toe",
+]
+
 
 ROOT_LINK_NAME = "torso"
 TRACKED_EE_LINKS = [

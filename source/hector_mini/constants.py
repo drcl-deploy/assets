@@ -98,6 +98,27 @@ BAD_CONTACT_BODIES = [
     "right_bracket_link",
 ]
 
+FOOT_CONTACT_BODIES = [
+    "left_ankle_link",
+    "right_ankle_link",
+]
+
+# Robstride 02, TODO: Consider couping on ankle, knee
+ARMATURE = {
+    "left_hip_yaw_joint": 0.00414,
+    "right_hip_yaw_joint": 0.00414,
+    "left_hip_roll_joint": 0.00414,
+    "right_hip_roll_joint": 0.00414,
+    "left_hip_pitch_joint": 0.00414,
+    "right_hip_pitch_joint": 0.00414,
+    "left_knee_joint": 0.00414,
+    "right_knee_joint": 0.00414,
+    "left_calf_joint": 0.00414,
+    "right_calf_joint": 0.00414,
+    "left_ankle_joint": 0.00414,
+    "right_ankle_joint": 0.00414,
+}
+
 MPCL = [
     [-1.57, 1.57],  # l_hip_yaw_joint
     [-1.57, 1.57],  # r_hip_yaw_joint

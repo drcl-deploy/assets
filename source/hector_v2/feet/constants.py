@@ -126,24 +126,23 @@ VELOCITY_LIMIT = {
     "r_ankle": 21.0,
 }
 
-# TODO (lkrajan) : update armature value of robstride motors in arms
 ARMATURE = {
     "l_hip_yaw": 0.01,
-    "l_shoulder_yaw": 0.0,
+    "l_shoulder_yaw": 0.00414,
     "r_hip_yaw": 0.01,
-    "r_shoulder_yaw": 0.0,
+    "r_shoulder_yaw": 0.00414,
     "l_hip_roll": 0.01,
-    "l_shoulder_pitch": 0.0,
+    "l_shoulder_pitch": 0.00414,
     "r_hip_roll": 0.01,
-    "r_shoulder_pitch": 0.0,
+    "r_shoulder_pitch": 0.00414,
     "l_hip_pitch": 0.01,
-    "l_shoulder_roll": 0.0,
+    "l_shoulder_roll": 0.00414,
     "r_hip_pitch": 0.01,
-    "r_shoulder_roll": 0.0,
-    "l_knee": 0.01,  # motor_speed_max/knee_gear_ratio
-    "l_elbow": 0.0,  # motor_speed_max/elbow_gear_ratio
-    "r_knee": 0.01,  # motor_speed_max/knee_gear_ratio
-    "r_elbow": 0.0,  # motor_speed_max/elbow_gear_ratio
+    "r_shoulder_roll": 0.00414,
+    "l_knee": 0.04,  # motor_speed_max/knee_gear_ratio
+    "l_elbow": 0.0093,  # motor_speed_max/elbow_gear_ratio
+    "r_knee": 0.04,  # motor_speed_max/knee_gear_ratio
+    "r_elbow": 0.0093,  # motor_speed_max/elbow_gear_ratio
     "l_ankle": 0.01,
     "r_ankle": 0.01,
 }
@@ -175,6 +174,11 @@ BAD_CONTACT_BODIES = [
     "l_thigh",
     "r_calf",
     "l_calf",
+]
+
+FOOT_CONTACT_BODIES = [
+    "l_toe",
+    "r_toe",
 ]
 
 ROOT_LINK_NAME = "torso"

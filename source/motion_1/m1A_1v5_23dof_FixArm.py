@@ -49,6 +49,7 @@ MOTION_1_CFG = ArticulationCfg(
             velocity_limit_sim=VELOCITY_LIMIT,
             stiffness=STIFFNESS,
             damping=DAMPING,
+            armature=ARMATURE,
         ),
     },
 )
