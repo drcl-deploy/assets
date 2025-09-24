@@ -17,6 +17,12 @@ TRACKED_EE_LINKS = [
     },
 ]
 
+FOOT_CONTACT_BODIES = [
+    "left_ankle_roll_link",
+    "right_ankle_roll_link",
+]
+
+
 SAMPLING_RANGE = {
     "left_foot_pos": [[-0.0, 0.15, 0.01], [0.0, 0.15, 0.3]],  # Lower limit, upper limit
     "right_foot_pos": [[0.0, -0.15, 0.01], [0.0, -0.15, 0.01]],

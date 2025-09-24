@@ -38,22 +38,8 @@ PAI_CFG = ArticulationCfg(
             drive_type="force",
             target_type="position",
             gains=sim_utils.UrdfConverterCfg.JointDriveCfg.PDGainsCfg(
-                stiffness={
-                    ".*_hip_pitch_joint": 20.0,
-                    ".*_hip_roll_joint": 20.0,
-                    ".*_thigh_joint": 20.0,
-                    ".*_calf_joint": 20.0,
-                    ".*_ankle_pitch_joint": 20.0,
-                    ".*_ankle_roll_joint": 20.0,
-                },
-                damping={
-                    ".*_hip_pitch_joint": 0.5,
-                    ".*_hip_roll_joint": 0.5,
-                    ".*_thigh_joint": 0.5,
-                    ".*_calf_joint": 0.5,
-                    ".*_ankle_pitch_joint": 0.5,
-                    ".*_ankle_roll_joint": 0.5,
-                },
+                stiffness=STIFFNESS,
+                damping=DAMPING,
             ),
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
@@ -63,74 +49,19 @@ PAI_CFG = ArticulationCfg(
         ),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
-        pos=(0.0, 0.0, 0.3453),
-        joint_pos={
-            ".*_hip_pitch_joint": 0.0,
-            ".*_hip_roll_joint": 0.0,
-            ".*_thigh_joint": 0.0,
-            ".*_calf_joint": 0.0,
-            ".*_ankle_pitch_joint": 0.0,
-            ".*_ankle_roll_joint": 0.0,
-        },
+        pos=(0.0, 0.0, 0.3453),  
+        joint_pos=DEFAULT_JOINT_POS,
         joint_vel={".*": 0.0},
     ),
     soft_joint_pos_limit_factor=0.90,
     actuators={
-        "legs": ImplicitActuatorCfg(
-            joint_names_expr=[
-                ".*_hip_pitch_joint",
-                ".*_hip_roll_joint",
-                ".*_thigh_joint",
-                ".*_calf_joint",
-            ],
-            effort_limit_sim={
-                ".*_hip_pitch_joint": 20.0,
-                ".*_hip_roll_joint": 20.0,
-                ".*_thigh_joint": 20.0,
-                ".*_calf_joint": 20.0,
-            },
-            velocity_limit_sim={
-                ".*_hip_pitch_joint": 21.0,
-                ".*_hip_roll_joint": 21.0,
-                ".*_thigh_joint": 21.0,
-                ".*_calf_joint": 21.0,
-            },
-            stiffness={
-                ".*_hip_pitch_joint": 20.0,
-                ".*_hip_roll_joint": 20.0,
-                ".*_thigh_joint": 20.0,
-                ".*_calf_joint": 20.0,
-            },
-            damping={
-                ".*_hip_pitch_joint": 0.5,
-                ".*_hip_roll_joint": 0.5,
-                ".*_thigh_joint": 0.5,
-                ".*_calf_joint": 0.5,
-            },
-            armature=0.01,
-        ),
-        "feet": ImplicitActuatorCfg(
-            joint_names_expr=[
-                ".*_ankle_pitch_joint",
-                ".*_ankle_roll_joint",
-            ],
-            effort_limit_sim={
-                ".*_ankle_pitch_joint": 20.0,
-                ".*_ankle_roll_joint": 20.0,
-            },
-            velocity_limit_sim={
-                ".*_ankle_pitch_joint": 21.1,
-                ".*_ankle_roll_joint": 21.1,
-            },
-            stiffness={
-                ".*_ankle_pitch_joint": 20.0,
-                ".*_ankle_roll_joint": 20.0,
-            },
-            damping={
-                ".*_ankle_pitch_joint": 0.5,
-                ".*_ankle_roll_joint": 0.5,
-            },
-            armature=0.01,
+        "limbs": ImplicitActuatorCfg(
+            joint_names_expr=JOINT_NAME_EXPR,
+            effort_limit=EFFORT_LIMIT,
+            velocity_limit=VELOCITY_LIMIT,
+            stiffness=STIFFNESS,
+            damping=DAMPING,
+            armature=ARMATURE,
         ),
     },
 )
