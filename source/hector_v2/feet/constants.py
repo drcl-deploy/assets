@@ -199,17 +199,47 @@ END_EFFECTORS = {
     "l_foot": {
         "body_name": "l_toe",
         "actuated_joints": ["l_hip_yaw", "l_hip_roll", "l_hip_pitch", "l_knee", "l_ankle"],
+        "links_in_chain": [
+            "l_hip1",
+            "r_hip1",
+            "l_hip_pitch",
+            "l_thigh",
+            "l_calf",
+            "l_toe",
+        ],
     },
     "r_foot": {
         "body_name": "r_toe",
         "actuated_joints": ["r_hip_yaw", "r_hip_roll", "r_hip_pitch", "r_knee", "r_ankle"],
+        "links_in_chain": [
+            "r_hip1",
+            "l_hip1",
+            "r_hip_pitch",
+            "r_thigh",
+            "r_calf",
+            "r_toe",
+        ],
     },
     "l_wrist": {
         "body_name": "l_hand",
         "actuated_joints": ["l_shoulder_yaw", "l_shoulder_pitch", "l_shoulder_roll", "l_elbow"],
+        "links_in_chain": [
+            "l_shoulder1",
+            "l_shoulder2",
+            "l_upper_arm",
+            "l_lower_arm",
+            "l_hand",
+        ],
     },
     "r_wrist": {
         "body_name": "r_hand",
-        "actuated_joints": ["r_shoulder_yaw", "r_shoulder_pitch", "r_shoulder_roll", "r_elbow"],   
+        "actuated_joints": ["r_shoulder_yaw", "r_shoulder_pitch", "r_shoulder_roll", "r_elbow"],
+        "links_in_chain": [
+            "r_shoulder1",
+            "r_shoulder2",
+            "r_upper_arm",
+            "r_lower_arm",
+            "r_hand",
+        ],
     },
 }

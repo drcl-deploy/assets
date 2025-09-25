@@ -248,6 +248,15 @@ END_EFFECTORS = {
                             "left_knee_joint", 
                             "left_ankle_pitch_joint", 
                             "left_ankle_roll_joint"],
+        "links_in_chain": [
+            "left_hip_pitch_link",
+            "left_hip_roll_link",
+            "left_hip_yaw_link",
+            "left_knee_link",
+            "left_ankle_pitch_link",
+            "left_ankle_roll_link",
+        ],
+
     },
     "r_foot": {
         "body_name": "right_ankle_roll_link",
@@ -258,6 +267,14 @@ END_EFFECTORS = {
                             "right_knee_joint", 
                             "right_ankle_pitch_joint", 
                             "right_ankle_roll_joint"],
+        "links_in_chain": [ 
+            "right_hip_pitch_link",
+            "right_hip_roll_link",
+            "right_hip_yaw_link",
+            "right_knee_link",
+            "right_ankle_pitch_link",
+            "right_ankle_roll_link",
+        ],  
     },
     "l_wrist": {
         "body_name": "left_fist_link",
@@ -268,6 +285,14 @@ END_EFFECTORS = {
                             "left_elbow_joint",
                             "left_wrist_roll_joint",
                             ],
+        "links_in_chain": [
+            "left_shoulder_pitch_link",
+            "left_shoulder_roll_link",
+            "left_shoulder_yaw_link",
+            "left_elbow_link",
+            "left_wrist_link",
+            "left_fist_link",
+        ],
     },
     "r_wrist": {
         "body_name": "right_fist_link",
@@ -278,5 +303,13 @@ END_EFFECTORS = {
                             "right_elbow_joint",
                             "right_wrist_roll_joint",
                             ],
+        "links_in_chain": [
+            "right_shoulder_pitch_link",
+            "right_shoulder_roll_link",
+            "right_shoulder_yaw_link",
+            "right_elbow_link",
+            "right_wrist_link",
+            "right_fist_link",
+        ],
     },
 }
