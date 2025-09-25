@@ -44,7 +44,7 @@ MOTION_1_CFG = ArticulationCfg(
     ),
     actuators={
         "limbs": ImplicitActuatorCfg(
-            joint_names_expr=JOINT_NAME_EXPR,
+            joint_names_expr=JOINT_NAMES_EXPR,
             effort_limit_sim=EFFORT_LIMIT,
             velocity_limit_sim=VELOCITY_LIMIT,
             stiffness=STIFFNESS,

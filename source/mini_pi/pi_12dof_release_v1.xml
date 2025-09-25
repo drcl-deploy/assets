@@ -207,7 +207,7 @@
   </sensor>
 
 	<equality>
-		<weld name="world_root" active="false" body1="base_link" relpose="0 0 -0.397 1 0 0 0"/> 
+		<weld name="world_root" active="true" body1="base_link" relpose="0 0 -0.397 1 0 0 0"/> 
 	</equality>
   <keyframe>
   <key name="home" qpos="
