@@ -56,7 +56,7 @@ PAI_CFG = ArticulationCfg(
     soft_joint_pos_limit_factor=0.90,
     actuators={
         "limbs": ImplicitActuatorCfg(
-            joint_names_expr=JOINT_NAME_EXPR,
+            joint_names_expr=JOINT_NAMES_EXPR,
             effort_limit=EFFORT_LIMIT,
             velocity_limit=VELOCITY_LIMIT,
             stiffness=STIFFNESS,

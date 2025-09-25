@@ -50,7 +50,7 @@ DAMPING = {
     "right_ankle_roll_joint": 2.0,
 }
 
-JOINT_NAME_EXPR = [
+JOINT_NAMES_EXPR = [
     "left_shoulder_pitch_joint",
     "right_shoulder_pitch_joint",
     "waist_yaw_joint",

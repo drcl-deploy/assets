@@ -1,5 +1,5 @@
 # common joint parameters
-JOINT_NAME_EXPR = [
+JOINT_NAMES_EXPR = [
     "l_hip_yaw",
     "l_shoulder_yaw",
     "r_hip_yaw",

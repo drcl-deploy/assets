@@ -1,4 +1,4 @@
-JOINT_NAME_EXPR = [
+JOINT_NAMES_EXPR = [
     "left_hip_yaw_joint",
     "right_hip_yaw_joint",
     "left_hip_roll_joint",
