@@ -29,6 +29,7 @@ IMPLICIT_WO_COUPLING_CFG = ArticulationCfg(
                 damping=DAMPING,
             ),
         ),
+        merge_fixed_joints=False,
     ),
     init_state=ArticulationCfg.InitialStateCfg(
         pos=(0.0, 0.0, 0.55),  # when fix_root_link=False
@@ -76,6 +77,7 @@ IMPLICIT_W_COUPLING_CFG = ArticulationCfg(
                 damping=DAMPING,
             ),
         ),
+        merge_fixed_joints=False,
     ),
     init_state=ArticulationCfg.InitialStateCfg(
         pos=(0.0, 0.0, 0.55),

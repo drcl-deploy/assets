@@ -179,7 +179,9 @@
               <geom class="visual" mesh="lower_arm" material="black"/>
               <geom class="collision" mesh="lower_arm" material="black"/>
             
-                <site name="l_hand" pos="0 0 -0.22" quat="0 1 0 0"/>
+              <body name="l_hand" pos="0 0 -0.23" quat="0 1 0 0">
+                <geom class="visual" type="sphere" size="0.02" material="black"/>
+              </body>
             </body>
           </body>
         </body>
@@ -212,9 +214,10 @@
               <inertial pos="0 8e-05 -0.11722" quat="0.707107 0 0 0.707107" mass="0.1578" diaginertia="0.0013 0.00129 2e-05"/>
               <joint  name="r_elbow" pos="0 0 0" axis="0 1 0" limited="true" range="-3 3" actuatorfrcrange="-24.09 24.09" />
               <geom class="visual" mesh="lower_arm" material="black"/>
-              <geom class="collision" mesh="lower_arm" material="black" />
-            
-              <site name="r_hand" pos="0 0 -0.22" quat="0 1 0 0"/>
+              <geom class="collision" mesh="lower_arm" material="black" />              
+              <body name="r_hand" pos="0 0 -0.23" quat="0 1 0 0">
+                <geom class="visual" type="sphere" size="0.02" material="black"/>
+              </body>
             </body>
           
           </body>
