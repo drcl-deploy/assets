@@ -1,3 +1,4 @@
+import copy
 # common joint parameters
 JOINT_NAMES_EXPR = [
     "l_hip_yaw",
@@ -40,6 +41,14 @@ DEFAULT_JOINT_POS = {
     "l_ankle": 0.7848373651504517,
     "r_ankle": 0.7848373651504517,
 }
+
+DEFAULT_MOTOR_POS = copy.deepcopy(DEFAULT_JOINT_POS)
+DEFAULT_MOTOR_POS["l_knee"] = -3.14  # -1.57*knee_gear_ratio
+DEFAULT_MOTOR_POS["r_knee"] = -3.14  # -1.57*knee_gear_ratio
+DEFAULT_MOTOR_POS["l_elbow"] = -2.22469  # -1.57*elbow_gear_ratio
+DEFAULT_MOTOR_POS["r_elbow"] = -2.22469  # -1.57*elbow_gear_ratio
+DEFAULT_MOTOR_POS["l_ankle"] = 0.7848373651504517 
+DEFAULT_MOTOR_POS["r_ankle"] = 0.7848373651504517
 
 # common actuator parameters
 STIFFNESS = {
