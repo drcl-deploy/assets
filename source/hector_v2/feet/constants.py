@@ -1,26 +1,5 @@
 import copy
 # common joint parameters
-# JOINT_NAMES_EXPR = [
-#     "l_hip_yaw",
-#     "l_shoulder_yaw",
-#     "r_hip_yaw",
-#     "r_shoulder_yaw",
-#     "l_hip_roll",
-#     "l_shoulder_pitch",
-#     "r_hip_roll",
-#     "r_shoulder_pitch",
-#     "l_hip_pitch",
-#     "l_shoulder_roll",
-#     "r_hip_pitch",
-#     "r_shoulder_roll",
-#     "l_knee",
-#     "l_elbow",
-#     "r_knee",
-#     "r_elbow",
-#     "l_ankle",
-#     "r_ankle",
-# ]
-
 JOINT_NAMES_EXPR = [
     "l_hip_yaw",
     "l_hip_roll",
@@ -72,26 +51,6 @@ DEFAULT_MOTOR_POS["l_ankle"] = -0.78
 DEFAULT_MOTOR_POS["r_ankle"] = -0.78
 
 # common actuator parameters
-# STIFFNESS = {
-#     "l_hip_yaw": 20.0,
-#     "l_shoulder_yaw": 10.0,
-#     "r_hip_yaw": 20.0,
-#     "r_shoulder_yaw": 10.0,
-#     "l_hip_roll": 20.0,
-#     "l_shoulder_pitch": 10.0,
-#     "r_hip_roll": 20.0,
-#     "r_shoulder_pitch": 10.0,
-#     "l_hip_pitch": 30.0,
-#     "l_shoulder_roll": 10.0,
-#     "r_hip_pitch": 30.0,
-#     "r_shoulder_roll": 10.0,
-#     "l_knee": 60.0,  # kp*knee_gear_ratio^2
-#     "l_elbow": 20.0,  # kp*elbow_gear_ratio^2
-#     "r_knee": 60.0,  # kp*knee_gear_ratio^2
-#     "r_elbow": 20.0,  # kp*elbow_gear_ratio^2
-#     "l_ankle": 15.0,
-#     "r_ankle": 15.0,
-# }
 STIFFNESS = {
     "l_hip_yaw": 20.0,
     "l_shoulder_yaw": 10.0,
@@ -105,12 +64,12 @@ STIFFNESS = {
     "l_shoulder_roll": 10.0,
     "r_hip_pitch": 30.0,
     "r_shoulder_roll": 10.0,
-    "l_knee": 3.0,  # kp*knee_gear_ratio^2
+    "l_knee": 60.0,  # kp*knee_gear_ratio^2
     "l_elbow": 20.0,  # kp*elbow_gear_ratio^2
-    "r_knee": 3.0,  # kp*knee_gear_ratio^2
+    "r_knee": 60.0,  # kp*knee_gear_ratio^2
     "r_elbow": 20.0,  # kp*elbow_gear_ratio^2
-    "l_ankle": 3.0,
-    "r_ankle": 3.0,
+    "l_ankle": 15.0,
+    "r_ankle": 15.0,
 }
 
 DAMPING = {
