@@ -2,23 +2,23 @@ import copy
 # common joint parameters
 JOINT_NAMES_EXPR = [
     "l_hip_yaw",
-    "l_shoulder_yaw",
-    "r_hip_yaw",
-    "r_shoulder_yaw",
     "l_hip_roll",
-    "l_shoulder_pitch",
-    "r_hip_roll",
-    "r_shoulder_pitch",
     "l_hip_pitch",
-    "l_shoulder_roll",
-    "r_hip_pitch",
-    "r_shoulder_roll",
     "l_knee",
-    "l_elbow",
-    "r_knee",
-    "r_elbow",
     "l_ankle",
+    "r_hip_yaw",
+    "r_hip_roll",
+    "r_hip_pitch",
+    "r_knee",
     "r_ankle",
+    "l_shoulder_yaw",
+    "l_shoulder_pitch",
+    "l_shoulder_roll",
+    "l_elbow",
+    "r_shoulder_yaw",
+    "r_shoulder_pitch",
+    "r_shoulder_roll",
+    "r_elbow",
 ]
 
 DEFAULT_JOINT_POS = {
@@ -47,8 +47,8 @@ DEFAULT_MOTOR_POS["l_knee"] = -3.14  # -1.57*knee_gear_ratio
 DEFAULT_MOTOR_POS["r_knee"] = -3.14  # -1.57*knee_gear_ratio
 DEFAULT_MOTOR_POS["l_elbow"] = -2.22469  # -1.57*elbow_gear_ratio
 DEFAULT_MOTOR_POS["r_elbow"] = -2.22469  # -1.57*elbow_gear_ratio
-DEFAULT_MOTOR_POS["l_ankle"] = 0.7848373651504517 
-DEFAULT_MOTOR_POS["r_ankle"] = 0.7848373651504517
+DEFAULT_MOTOR_POS["l_ankle"] = -0.78
+DEFAULT_MOTOR_POS["r_ankle"] = -0.78
 
 # common actuator parameters
 STIFFNESS = {
