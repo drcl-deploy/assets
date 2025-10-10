@@ -238,6 +238,9 @@ SAMPLING_RANGE = {
     "right_foot_pos": [[0.0, -0.15, 0.01], [0.0, -0.15, 0.01]],
 }
 
+SUPPORT_CIRCLE_RADIUS = 0.5
+SUPPORT_ELLIPSE_LENGTH = 0.5
+
 END_EFFECTORS = {
     "l_foot": {
         "body_name": "left_ankle_roll_link",
@@ -256,7 +259,7 @@ END_EFFECTORS = {
             "left_ankle_pitch_link",
             "left_ankle_roll_link",
         ],
-
+        "commanded_contact": True,
     },
     "r_foot": {
         "body_name": "right_ankle_roll_link",
@@ -275,6 +278,7 @@ END_EFFECTORS = {
             "right_ankle_pitch_link",
             "right_ankle_roll_link",
         ],  
+        "commanded_contact": True,
     },
     "l_wrist": {
         "body_name": "left_fist_link",
@@ -293,6 +297,7 @@ END_EFFECTORS = {
             "left_wrist_link",
             "left_fist_link",
         ],
+        "commanded_contact": False,
     },
     "r_wrist": {
         "body_name": "right_fist_link",
@@ -311,5 +316,6 @@ END_EFFECTORS = {
             "right_wrist_link",
             "right_fist_link",
         ],
+        "commanded_contact": False,
     },
 }
