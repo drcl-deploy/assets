@@ -216,6 +216,7 @@ END_EFFECTORS = {
             "l_calf",
             "l_toe",
         ],
+        "commanded_contact": True,
     },
     "r_foot": {
         "body_name": "r_toe",
@@ -228,6 +229,7 @@ END_EFFECTORS = {
             "r_calf",
             "r_toe",
         ],
+        "commanded_contact": True,
     },
     "l_wrist": {
         "body_name": "l_hand",
@@ -239,6 +241,7 @@ END_EFFECTORS = {
             "l_lower_arm",
             "l_hand",
         ],
+        "commanded_contact": False,
     },
     "r_wrist": {
         "body_name": "r_hand",
@@ -250,5 +253,6 @@ END_EFFECTORS = {
             "r_lower_arm",
             "r_hand",
         ],
+        "commanded_contact": False,
     },
 }

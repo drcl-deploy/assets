@@ -47,6 +47,7 @@ END_EFFECTORS = {
             "left_ankle_pitch_link",
             "left_ankle_roll_link",
         ],
+        "commanded_contact": True,
     },
     "r_foot": {
         "body_name": "right_ankle_roll_link",
@@ -66,6 +67,7 @@ END_EFFECTORS = {
             "right_ankle_pitch_link",
             "right_ankle_roll_link",
         ],
+        "commanded_contact": True,
     },
     "l_wrist": {
         "body_name": "left_palm_link",
@@ -84,6 +86,7 @@ END_EFFECTORS = {
             "left_elbow_roll_link",
             "left_palm_link",
         ],
+        "commanded_contact": False,
     },
     "r_wrist": {
         "body_name": "right_palm_link",
@@ -102,5 +105,6 @@ END_EFFECTORS = {
             "right_elbow_roll_link",
             "right_palm_link",
         ],
+        "commanded_contact": False,
     },
 }
