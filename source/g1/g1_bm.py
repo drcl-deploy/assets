@@ -3,6 +3,8 @@ from isaaclab.actuators import ImplicitActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
 from .constants import *
 
+# Following config and model files has been sourced from beyondmimic repository: https://github.com/HybridRobotics/whole_body_tracking
+
 import os
 
 ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
@@ -41,10 +43,14 @@ G1_BM_CFG = ArticulationCfg(
             max_depenetration_velocity=1.0,
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
-            enabled_self_collisions=True, solver_position_iteration_count=8, solver_velocity_iteration_count=4
+            enabled_self_collisions=True,
+            solver_position_iteration_count=8,
+            solver_velocity_iteration_count=4,
         ),
         joint_drive=sim_utils.UrdfConverterCfg.JointDriveCfg(
-            gains=sim_utils.UrdfConverterCfg.JointDriveCfg.PDGainsCfg(stiffness=0, damping=0)
+            gains=sim_utils.UrdfConverterCfg.JointDriveCfg.PDGainsCfg(
+                stiffness=0, damping=0
+            )
         ),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
@@ -184,7 +190,7 @@ G1_BM_CFG = ArticulationCfg(
     },
 )
 
-G1_ACTION_SCALE = {}
+G1_BM_ACTION_SCALE = {}
 for a in G1_BM_CFG.actuators.values():
     e = a.effort_limit_sim
     s = a.stiffness
@@ -195,4 +201,4 @@ for a in G1_BM_CFG.actuators.values():
         s = {n: s for n in names}
     for n in names:
         if n in e and n in s and s[n]:
-            G1_ACTION_SCALE[n] = 0.25 * e[n] / s[n]
+            G1_BM_ACTION_SCALE[n] = 0.25 * e[n] / s[n]
