@@ -210,7 +210,6 @@ END_EFFECTORS = {
         "actuated_joints": ["l_hip_yaw", "l_hip_roll", "l_hip_pitch", "l_knee", "l_ankle"],
         "links_in_chain": [
             "l_hip1",
-            "r_hip1",
             "l_hip_pitch",
             "l_thigh",
             "l_calf",
@@ -223,7 +222,6 @@ END_EFFECTORS = {
         "actuated_joints": ["r_hip_yaw", "r_hip_roll", "r_hip_pitch", "r_knee", "r_ankle"],
         "links_in_chain": [
             "r_hip1",
-            "l_hip1",
             "r_hip_pitch",
             "r_thigh",
             "r_calf",

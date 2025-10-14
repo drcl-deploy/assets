@@ -144,3 +144,42 @@ SAMPLING_RANGE = {
     ],  # Lower limit, upper limit
     "right_foot_pos": [[0.0, -0.15, 0.01], [0.0, -0.15, 0.01]],
 }
+
+
+END_EFFECTORS = {
+    "l_foot": {
+        "body_name": "l_toe",
+        "actuated_joints": ["l_hip_yaw_joint", 
+                            "r_hip_yaw_joint", 
+                            "l_hip_pitch_joint", 
+                            "l_knee_joint", 
+                            "l_ankle_joint"
+                            ],
+        "links_in_chain": [
+            "l_hip",
+            "l_hip2",
+            "l_thigh",
+            "l_calf",
+            "l_toe",
+        ],
+        "commanded_contact": True,
+    },
+    "r_foot": {
+        "body_name": "r_toe",
+        "actuated_joints": [
+                            "r_hip_yaw_joint", 
+                            "r_hip_roll_joint", 
+                            "r_hip_pitch_joint", 
+                            "r_knee_joint", 
+                            "r_ankle_joint"
+                            ],
+        "links_in_chain": [
+            "r_hip",
+            "r_hip2",
+            "r_thigh",
+            "r_calf",
+            "r_toe",
+        ],
+        "commanded_contact": True,
+    },
+}
