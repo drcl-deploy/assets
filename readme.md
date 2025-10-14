@@ -30,7 +30,7 @@ for loading and simulationg a model with zero ctrl, run
 
 for example,
 
-    python3 tests/load_robot_isaaclab.py --robot assets.hector_v2.feet --cfg WITHOUT_COUPLING_CFG
+    python3 tests/load_robot_isaaclab.py --robot assets.hector_v2.feet --cfg IMPLICIT_WO_COUPLING_CFG
 
 
 ### MuJoCo
