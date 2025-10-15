@@ -155,7 +155,7 @@ END_EFFECTORS = {
         "body_name": "left_ankle_link",
         "actuated_joints": ["left_hip_yaw_joint", 
                             "left_hip_roll_joint", 
-                            "left_hip_roll_joint", 
+                            "left_hip_pitch_joint", 
                             "left_knee_joint", 
                             "left_calf_joint",
                             "left_ankle_joint",
