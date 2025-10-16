@@ -20,6 +20,7 @@ END_EFFECTORS = {
                             "left_leg_toe_a",
                             "left_leg_toe_b",
                             ],
+        "commanded_contact": True,
     },
     "r_foot": {
         "body_name": "right_leg_toe_roll",
@@ -31,6 +32,7 @@ END_EFFECTORS = {
                             "right_leg_toe_a",
                             "right_leg_toe_b",
                             ],
+        "commanded_contact": True,
     },
     "l_wrist": {
         "body_name": "left_arm_wrist_yaw",
@@ -43,6 +45,7 @@ END_EFFECTORS = {
                             "left_arm_wrist_pitch",
                             "left_arm_wrist_yaw",
                             ],
+        "commanded_contact": False,
     },
     "r_wrist": {
         "body_name": "right_arm_wrist_yaw",
@@ -55,5 +58,6 @@ END_EFFECTORS = {
                             "right_arm_wrist_pitch",
                             "right_arm_wrist_yaw",
                             ],
+        "commanded_contact": False,
     },
 }

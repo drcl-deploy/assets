@@ -210,24 +210,24 @@ END_EFFECTORS = {
         "actuated_joints": ["l_hip_yaw", "l_hip_roll", "l_hip_pitch", "l_knee", "l_ankle"],
         "links_in_chain": [
             "l_hip1",
-            "r_hip1",
             "l_hip_pitch",
             "l_thigh",
             "l_calf",
             "l_toe",
         ],
+        "commanded_contact": True,
     },
     "r_foot": {
         "body_name": "r_toe",
         "actuated_joints": ["r_hip_yaw", "r_hip_roll", "r_hip_pitch", "r_knee", "r_ankle"],
         "links_in_chain": [
             "r_hip1",
-            "l_hip1",
             "r_hip_pitch",
             "r_thigh",
             "r_calf",
             "r_toe",
         ],
+        "commanded_contact": True,
     },
     "l_wrist": {
         "body_name": "l_hand",
@@ -239,6 +239,7 @@ END_EFFECTORS = {
             "l_lower_arm",
             "l_hand",
         ],
+        "commanded_contact": False,
     },
     "r_wrist": {
         "body_name": "r_hand",
@@ -250,5 +251,6 @@ END_EFFECTORS = {
             "r_lower_arm",
             "r_hand",
         ],
+        "commanded_contact": False,
     },
 }
