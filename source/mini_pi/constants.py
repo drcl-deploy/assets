@@ -149,10 +149,10 @@ TRACKED_EE_LINKS = [
 
 SAMPLING_RANGE = {
     "left_foot_pos": [
-        [-0.0, 0.15, ACTUATOR_504736NE.reflected_inertia],
+        [-0.0, 0.15, 0.01],
         [0.0, 0.15, 0.14],
     ],  # Lower limit, upper limit
-    "right_foot_pos": [[0.0, -0.15, ACTUATOR_504736NE.reflected_inertia], [0.0, -0.15, ACTUATOR_504736NE.reflected_inertia]],
+    "right_foot_pos": [[0.0, -0.15, 0.01], [0.0, -0.15, 0.01]],
 }
 
 END_EFFECTORS = {
