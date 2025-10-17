@@ -66,3 +66,4 @@ then drag and drop the `.xml` model to be tested
         * `<accelerometer name="torso_imu_acc" ... />`
         * `<gyro name="torso_imu_gyro" ... />`
     6. has the equality constraint `<weld name="world_root" active="true" ... />` , set to **true** by default.
+6. resuse or add `actuator parameters` by simply importing it in `actuator_params.py` and augment with `constants` you want. Do not make redundant copies inside this repo. 

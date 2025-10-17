@@ -1,6 +1,6 @@
 import copy
 from dataclasses import dataclass
-from ..mot_params import *
+from ..actuator_params import *
 
 NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
 DAMPING_RATIO = 2.0
@@ -121,23 +121,6 @@ ACTION_SCALE = {
     for name in JOINT_NAMES_EXPR
     if name in EFFORT_LIMIT and name in STIFFNESS and STIFFNESS[name] != 0
 }
-
-
-MPCL = [
-    [-1.25, 1.75],  # l_hip_pitch_joint
-    [-0.12, DAMPING_504736NE],  # l_hip_roll_joint
-    [-0.3, 0.6],  # l_thigh_joint
-    [-0.65, 1.65],  # l_calf_joint
-    [-DAMPING_504736NE, 1.3],  # l_ankle_pitch_joint
-    [-0.15, 0.15],  # l_ankle_roll_joint
-    [-1.25, 1.75],  # r_hip_pitch_joint
-    [-DAMPING_504736NE, 0.12],  # r_hip_roll_joint
-    [-0.6, 0.3],  # r_thigh_joint
-    [-0.65, 1.65],  # r_calf_joint
-    [-DAMPING_504736NE, 1.3],  # r_ankle_pitch_joint
-    [-0.15, 0.15],  # r_ankle_roll_joint
-]
-
 
 BAD_CONTACT_BODIES = [
     "base_link",

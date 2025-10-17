@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from ..mot_params import *
+from ..actuator_params import *
 
 NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
 DAMPING_RATIO = 2.0
@@ -200,32 +200,6 @@ ACTION_SCALE = {
     for name in JOINT_NAMES_EXPR
     if name in EFFORT_LIMIT and name in STIFFNESS and STIFFNESS[name] != 0
 }
-
-MPCL = [
-    [-3.1, 3.1],  # left_shoulder_pitch_joint
-    [-3.1, 3.1],  # right_shoulder_pitch_joint
-    [-0.175, 3.0],  # left_shoulder_roll_joint
-    [-3.0, -0.175],  # right_shoulder_roll_joint
-    [-1.047, 1.047],  # left_hip_pitch_joint
-    [-1.047, 1.047],  # right_hip_pitch_joint
-    [-3.1, 3.1],  # left_shoulder_yaw_joint
-    [-3.1, 3.1],  # right_shoulder_yaw_joint
-    [-0.145, 1.047],  # left_hip_roll_joint
-    [-1.047, 0.145],  # right_hip_roll_joint
-    [-1.6, 1.6],  # left_elbow_joint
-    [-1.6, 1.6],  # right_elbow_joint
-    [-1.6, 1.6],  # left_hip_yaw_joint
-    [-1.6, 1.6],  # right_hip_yaw_joint
-    [-0.15, 1.72],  # left_knee_joint
-    [-0.15, 1.72],  # right_knee_joint
-    [-0.5, 0.5],  # left_ankle_pitch_joint
-    [-0.5, 0.5],  # right_ankle_pitch_joint
-    [-0.26, 0.26],  # left_ankle_roll_joint
-    [-0.26, 0.26],  # right_ankle_roll_joint
-    [-1.57, 1.57],  # waist_joint
-    [-3.1, 3.1],  # left_wrist_joint
-    [-3.1, 3.1],  # right_wrist_joint
-]
 
 BAD_CONTACT_BODIES = [
     "torso_link",

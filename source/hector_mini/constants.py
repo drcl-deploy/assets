@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from ..mot_params import *
+from ..actuator_params import *
 
 NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
 DAMPING_RATIO = 2.0
@@ -135,23 +135,6 @@ FOOT_CONTACT_BODIES = [
     "left_ankle_link",
     "right_ankle_link",
 ]
-
-
-MPCL = [
-    [-1.57, 1.57],  # l_hip_yaw_joint
-    [-1.57, 1.57],  # r_hip_yaw_joint
-    [-1.0, 1.0],  # l_hip_roll_joint
-    [-1.0, 1.0],  # r_hip_roll_joint
-    [-1.0, 2.57],  # l_hip_pitch_joint
-    [-1.0, 2.57],  # r_hip_pitch_joint
-    [0.1, 1.57],  # l_knee_joint
-    [0.1, 1.57],  # r_knee_joint
-    [-1.57, 1.57],  # l_calf_joint
-    [-1.57, 1.57],  # r_calf_joint
-    [-2.0, 2.0],  # l_ankle_joint
-    [-2.0, 2.0],  # r_ankle_joint
-]
-
 
 ROOT_LINK_NAME = "body"
 TRACKED_EE_LINKS = [
