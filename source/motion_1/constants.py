@@ -8,110 +8,47 @@ class ElectricActuator:
   velocity_limit: float
   effort_limit: float
 
-ROTOR_INERTIAS_ROBOSTRIDE01 = 0.5e-4
-GEARS_ROBOSTRIDE01 = 7.75
-ARMATURE_ROBOSTRIDE01 = ROTOR_INERTIAS_ROBOSTRIDE01*GEARS_ROBOSTRIDE01**2
+ROTOR_INERTIAS_ROBOSTRIDE02 = 0.5e-4
+GEARS_ROBOSTRIDE02 = 7.75
+ARMATURE_ROBOSTRIDE02 = ROTOR_INERTIAS_ROBOSTRIDE02*GEARS_ROBOSTRIDE02**2
 
-ROTOR_INERTIAS_ROBOSTRIDE01_ELBOW = 0.5e-4
-GEARS_ROBOSTRIDE01_ELBOW = 7.75#7.75*1.5
-ARMATURE_ROBOSTRIDE01_ELBOW = ROTOR_INERTIAS_ROBOSTRIDE01_ELBOW*GEARS_ROBOSTRIDE01_ELBOW**2
+ROTOR_INERTIAS_ROBOSTRIDE03 = 1.0e-4
+GEARS_ROBOSTRIDE03 = 9.0
+ARMATURE_ROBOSTRIDE03 = ROTOR_INERTIAS_ROBOSTRIDE03*GEARS_ROBOSTRIDE03**2
 
-ROTOR_INERTIAS_UNITREE_A1 = 1.0e-4
-GEARS_UNITREE_A1 = 9.0
-ARMATURE_UNITREE_A1= ROTOR_INERTIAS_UNITREE_A1*GEARS_UNITREE_A1**2
+ROTOR_INERTIAS_ROBOSTRIDE04 = 1.0e-4
+GEARS_ROBOSTRIDE04 = 9.0
+ARMATURE_ROBOSTRIDE04 = ROTOR_INERTIAS_ROBOSTRIDE04*GEARS_ROBOSTRIDE04**2
 
-ROTOR_INERTIAS_UNITREE_A1_KNEE = 1.0e-4
-GEARS_UNITREE_A1_KNEE = 9.0#9.0*2.0
-ARMATURE_UNITREE_A1_KNEE= ROTOR_INERTIAS_UNITREE_A1_KNEE*GEARS_UNITREE_A1_KNEE**2
 
-ACTUATOR_ROBOSTRIDE01 = ElectricActuator(
-  reflected_inertia=ARMATURE_ROBOSTRIDE01,
-  velocity_limit=28.79,
+ACTUATOR_ROBOSTRIDE02 = ElectricActuator(
+  reflected_inertia=ARMATURE_ROBOSTRIDE02,
+  velocity_limit=42.93,
   effort_limit=17.0,
 )
 
-ACTUATOR_ROBOSTRIDE01_ELBOW = ElectricActuator(
-  reflected_inertia=ARMATURE_ROBOSTRIDE01_ELBOW,
-  velocity_limit=28.79/1.5,
-  effort_limit=17.0*1.5,
+ACTUATOR_ROBOSTRIDE03 = ElectricActuator(
+  reflected_inertia=ARMATURE_ROBOSTRIDE03,
+  velocity_limit=18.84,
+  effort_limit=60.0,
 )
 
-ACTUATOR_UNITREE_A1 = ElectricActuator(
-  reflected_inertia=ARMATURE_UNITREE_A1,
-  velocity_limit=21.0,
-  effort_limit=33.5,
-)
-
-ACTUATOR_UNITREE_A1_KNEE = ElectricActuator(
-  reflected_inertia=ARMATURE_UNITREE_A1_KNEE,
-  velocity_limit=21.0/2.0,
-  effort_limit=33.5*2.0,
+ACTUATOR_ROBOSTRIDE04 = ElectricActuator(
+  reflected_inertia=ARMATURE_ROBOSTRIDE04,
+  velocity_limit=17.48,
+  effort_limit=120.0,
 )
 
 NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
 DAMPING_RATIO = 2.0
 
-STIFFNESS_01 = ARMATURE_ROBOSTRIDE01 * NATURAL_FREQ**2
-STIFFNESS_A1 = ARMATURE_UNITREE_A1 * NATURAL_FREQ**2
-STIFFNESS_01_ELBOW = ARMATURE_ROBOSTRIDE01_ELBOW * NATURAL_FREQ**2
-STIFFNESS_A1_KNEE = ARMATURE_UNITREE_A1_KNEE * NATURAL_FREQ**2
+STIFFNESS_02 = ARMATURE_ROBOSTRIDE02 * NATURAL_FREQ**2
+STIFFNESS_03 = ARMATURE_ROBOSTRIDE03 * NATURAL_FREQ**2
+STIFFNESS_04 = ARMATURE_ROBOSTRIDE04 * NATURAL_FREQ**2
 
-DAMPING_01 = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE01 * NATURAL_FREQ
-DAMPING_A1 = 2.0 * DAMPING_RATIO * ARMATURE_UNITREE_A1 * NATURAL_FREQ
-DAMPING_01_ELBOW = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE01_ELBOW * NATURAL_FREQ
-DAMPING_A1_KNEE = 2.0 * DAMPING_RATIO * ARMATURE_UNITREE_A1_KNEE * NATURAL_FREQ
-
-STIFFNESS = {
-    "left_shoulder_pitch_joint": 40.0,
-    "right_shoulder_pitch_joint": 40.0,
-    "waist_yaw_joint": 120.0,
-    "left_shoulder_roll_joint": 40.0,
-    "right_shoulder_roll_joint": 40.0,
-    "left_hip_pitch_joint": 120.0,
-    "right_hip_pitch_joint": 120.0,
-    "left_shoulder_yaw_joint": 40.0,
-    "right_shoulder_yaw_joint": 40.0,
-    "left_hip_roll_joint": 120.0,
-    "right_hip_roll_joint": 120.0,
-    "left_elbow_joint": 40.0,
-    "right_elbow_joint": 40.0,
-    "left_hip_yaw_joint": 120.0,
-    "right_hip_yaw_joint": 120.0,
-    "left_wrist_roll_joint": 40.0,
-    "right_wrist_roll_joint": 40.0,
-    "left_knee_joint": 160.0,
-    "right_knee_joint": 160.0,
-    "left_ankle_pitch_joint": 20.0,
-    "right_ankle_pitch_joint": 20.0,
-    "left_ankle_roll_joint": 20.0,
-    "right_ankle_roll_joint": 20.0,
-}
-
-DAMPING = {
-    "left_shoulder_pitch_joint": 5.0,
-    "right_shoulder_pitch_joint": 5.0,
-    "waist_yaw_joint": 5.0,
-    "left_shoulder_roll_joint": 5.0,
-    "right_shoulder_roll_joint": 5.0,
-    "left_hip_pitch_joint": 5.0,
-    "right_hip_pitch_joint": 5.0,
-    "left_shoulder_yaw_joint": 5.0,
-    "right_shoulder_yaw_joint": 5.0,
-    "left_hip_roll_joint": 5.0,
-    "right_hip_roll_joint": 5.0,
-    "left_elbow_joint": 5.0,
-    "right_elbow_joint": 5.0,
-    "left_hip_yaw_joint": 5.0,
-    "right_hip_yaw_joint": 5.0,
-    "left_wrist_roll_joint": 5.0,
-    "right_wrist_roll_joint": 5.0,
-    "left_knee_joint": 5.0,
-    "right_knee_joint": 5.0,
-    "left_ankle_pitch_joint": 2.0,
-    "right_ankle_pitch_joint": 2.0,
-    "left_ankle_roll_joint": 2.0,
-    "right_ankle_roll_joint": 2.0,
-}
+DAMPING_02 = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE02 * NATURAL_FREQ
+DAMPING_03 = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE03 * NATURAL_FREQ
+DAMPING_04 = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE04 * NATURAL_FREQ
 
 JOINT_NAMES_EXPR = [
     "left_shoulder_pitch_joint",
@@ -165,82 +102,141 @@ DEFAULT_JOINT_POS = {
     "right_ankle_roll_joint": 0.0,
 }
 
+STIFFNESS = {
+    "left_shoulder_pitch_joint": STIFFNESS_02,
+    "right_shoulder_pitch_joint": STIFFNESS_02,
+    "waist_yaw_joint": STIFFNESS_04,
+    "left_shoulder_roll_joint": STIFFNESS_02,
+    "right_shoulder_roll_joint": STIFFNESS_02,
+    "left_hip_pitch_joint": STIFFNESS_03,
+    "right_hip_pitch_joint": STIFFNESS_03,
+    "left_shoulder_yaw_joint": STIFFNESS_02,
+    "right_shoulder_yaw_joint": STIFFNESS_02,
+    "left_hip_roll_joint": STIFFNESS_03,
+    "right_hip_roll_joint": STIFFNESS_03,
+    "left_elbow_joint": STIFFNESS_02,
+    "right_elbow_joint": STIFFNESS_02,
+    "left_hip_yaw_joint": STIFFNESS_03,
+    "right_hip_yaw_joint": STIFFNESS_03,
+    "left_wrist_roll_joint": STIFFNESS_02,
+    "right_wrist_roll_joint": STIFFNESS_02,
+    "left_knee_joint": STIFFNESS_04,
+    "right_knee_joint": STIFFNESS_04,
+    "left_ankle_pitch_joint": 2.0*STIFFNESS_03,
+    "right_ankle_pitch_joint": 2.0*STIFFNESS_03,
+    "left_ankle_roll_joint": 2.0*STIFFNESS_03,
+    "right_ankle_roll_joint": 2.0*STIFFNESS_03,
+}
+
+DAMPING = {
+    "left_shoulder_pitch_joint": DAMPING_02,
+    "right_shoulder_pitch_joint": DAMPING_02,
+    "waist_yaw_joint": DAMPING_04,
+    "left_shoulder_roll_joint": DAMPING_02,
+    "right_shoulder_roll_joint": DAMPING_02,
+    "left_hip_pitch_joint": DAMPING_03,
+    "right_hip_pitch_joint": DAMPING_03,
+    "left_shoulder_yaw_joint": DAMPING_02,
+    "right_shoulder_yaw_joint": DAMPING_02,
+    "left_hip_roll_joint": DAMPING_03,
+    "right_hip_roll_joint": DAMPING_03,
+    "left_elbow_joint": DAMPING_02,
+    "right_elbow_joint": DAMPING_02,
+    "left_hip_yaw_joint": DAMPING_03,
+    "right_hip_yaw_joint": DAMPING_03,
+    "left_wrist_roll_joint": DAMPING_02,
+    "right_wrist_roll_joint": DAMPING_02,
+    "left_knee_joint": DAMPING_04,
+    "right_knee_joint": DAMPING_04,
+    "left_ankle_pitch_joint": 2.0*DAMPING_03,
+    "right_ankle_pitch_joint": 2.0*DAMPING_03,
+    "left_ankle_roll_joint": 2.0*DAMPING_03,
+    "right_ankle_roll_joint": 2.0*DAMPING_03,
+}
+
 EFFORT_LIMIT = {
-    "left_shoulder_pitch_joint": 17.0,
-    "right_shoulder_pitch_joint": 17.0,
-    "waist_yaw_joint": 60.0,
-    "left_shoulder_roll_joint": 17.0,
-    "right_shoulder_roll_joint": 17.0,
-    "left_hip_pitch_joint": 60.0,
-    "right_hip_pitch_joint": 60.0,
-    "left_shoulder_yaw_joint": 17.0,
-    "right_shoulder_yaw_joint": 17.0,
-    "left_hip_roll_joint": 60.0,
-    "right_hip_roll_joint": 60.0,
-    "left_elbow_joint": 17.0,
-    "right_elbow_joint": 17.0,
-    "left_hip_yaw_joint": 60.0,
-    "right_hip_yaw_joint": 60.0,
-    "left_wrist_roll_joint": 17.0,
-    "right_wrist_roll_joint": 17.0,
-    "left_knee_joint": 120.0,
-    "right_knee_joint": 120.0,
-    "left_ankle_pitch_joint": 34.0,
-    "right_ankle_pitch_joint": 34.0,
-    "left_ankle_roll_joint": 34.0,
-    "right_ankle_roll_joint": 34.0,
+    "left_shoulder_pitch_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "right_shoulder_pitch_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "waist_yaw_joint": ACTUATOR_ROBOSTRIDE04.effort_limit,
+    "left_shoulder_roll_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "right_shoulder_roll_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "left_hip_pitch_joint": ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "right_hip_pitch_joint": ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "left_shoulder_yaw_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "right_shoulder_yaw_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "left_hip_roll_joint": ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "right_hip_roll_joint": ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "left_elbow_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "right_elbow_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "left_hip_yaw_joint": ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "right_hip_yaw_joint": ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "left_wrist_roll_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "right_wrist_roll_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
+    "left_knee_joint": ACTUATOR_ROBOSTRIDE04.effort_limit,
+    "right_knee_joint": ACTUATOR_ROBOSTRIDE04.effort_limit,
+    "left_ankle_pitch_joint": 2.0*ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "right_ankle_pitch_joint": 2.0*ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "left_ankle_roll_joint": 2.0*ACTUATOR_ROBOSTRIDE03.effort_limit,
+    "right_ankle_roll_joint": 2.0*ACTUATOR_ROBOSTRIDE03.effort_limit,
 }
 
 VELOCITY_LIMIT = {
-    "left_shoulder_pitch_joint": 32.9,
-    "right_shoulder_pitch_joint": 32.9,
-    "waist_yaw_joint": 20.4,
-    "left_shoulder_roll_joint": 32.9,
-    "right_shoulder_roll_joint": 32.9,
-    "left_hip_pitch_joint": 20.4,
-    "right_hip_pitch_joint": 20.4,
-    "left_shoulder_yaw_joint": 32.9,
-    "right_shoulder_yaw_joint": 32.9,
-    "left_hip_roll_joint": 20.4,
-    "right_hip_roll_joint": 20.4,
-    "left_elbow_joint": 32.9,
-    "right_elbow_joint": 32.9,
-    "left_hip_yaw_joint": 20.4,
-    "right_hip_yaw_joint": 20.4,
-    "left_wrist_roll_joint": 32.9,
-    "right_wrist_roll_joint": 32.9,
-    "left_knee_joint": 20.9,
-    "right_knee_joint": 20.9,
-    "left_ankle_pitch_joint": 32.9,
-    "right_ankle_pitch_joint": 32.9,
-    "left_ankle_roll_joint": 32.9,
-    "right_ankle_roll_joint": 32.9,
+    "left_shoulder_pitch_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "right_shoulder_pitch_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "waist_yaw_joint": ACTUATOR_ROBOSTRIDE04.velocity_limit,
+    "left_shoulder_roll_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "right_shoulder_roll_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "left_hip_pitch_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "right_hip_pitch_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "left_shoulder_yaw_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "right_shoulder_yaw_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "left_hip_roll_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "right_hip_roll_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "left_elbow_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "right_elbow_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "left_hip_yaw_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "right_hip_yaw_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "left_wrist_roll_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "right_wrist_roll_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
+    "left_knee_joint": ACTUATOR_ROBOSTRIDE04.velocity_limit,
+    "right_knee_joint": ACTUATOR_ROBOSTRIDE04.velocity_limit,
+    "left_ankle_pitch_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "right_ankle_pitch_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "left_ankle_roll_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
+    "right_ankle_roll_joint": ACTUATOR_ROBOSTRIDE03.velocity_limit,
 }
 
 ARMATURE = {
-    "left_shoulder_pitch_joint": 0.01,
-    "right_shoulder_pitch_joint": 0.01,
-    "waist_yaw_joint": 0.01,
-    "left_shoulder_roll_joint": 0.01,
-    "right_shoulder_roll_joint": 0.01,
-    "left_hip_pitch_joint": 0.01,
-    "right_hip_pitch_joint": 0.01,
-    "left_shoulder_yaw_joint": 0.01,
-    "right_shoulder_yaw_joint": 0.01,
-    "left_hip_roll_joint": 0.01,
-    "right_hip_roll_joint": 0.01,
-    "left_elbow_joint": 0.01,
-    "right_elbow_joint": 0.01,
-    "left_hip_yaw_joint": 0.01,
-    "right_hip_yaw_joint": 0.01,
-    "left_wrist_roll_joint": 0.01,
-    "right_wrist_roll_joint": 0.01,
-    "left_knee_joint": 0.01,
-    "right_knee_joint": 0.01,
-    "left_ankle_pitch_joint": 0.01,
-    "right_ankle_pitch_joint": 0.01,
-    "left_ankle_roll_joint": 0.01,
-    "right_ankle_roll_joint": 0.01,
+    "left_shoulder_pitch_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "right_shoulder_pitch_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "waist_yaw_joint": ACTUATOR_ROBOSTRIDE04.reflected_inertia,
+    "left_shoulder_roll_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "right_shoulder_roll_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "left_hip_pitch_joint": ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "right_hip_pitch_joint": ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "left_shoulder_yaw_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "right_shoulder_yaw_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "left_hip_roll_joint": ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "right_hip_roll_joint": ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "left_elbow_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "right_elbow_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "left_hip_yaw_joint": ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "right_hip_yaw_joint": ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "left_wrist_roll_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "right_wrist_roll_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
+    "left_knee_joint": ACTUATOR_ROBOSTRIDE04.reflected_inertia,
+    "right_knee_joint": ACTUATOR_ROBOSTRIDE04.reflected_inertia,
+    "left_ankle_pitch_joint": 2.0*ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "right_ankle_pitch_joint": 2.0*ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "left_ankle_roll_joint": 2.0*ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+    "right_ankle_roll_joint": 2.0*ACTUATOR_ROBOSTRIDE03.reflected_inertia,
+}
+
+# 0.25 * effort / stiffness, in the same per-joint dict style
+ACTION_SCALE = {
+    name: 0.25 * EFFORT_LIMIT[name] / STIFFNESS[name]
+    for name in JOINT_NAMES_EXPR
+    if name in EFFORT_LIMIT and name in STIFFNESS and STIFFNESS[name] != 0
 }
 
 MPCL = [

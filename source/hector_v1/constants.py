@@ -1,61 +1,42 @@
-STIFFNESS = {
-    "l_hip_yaw_joint": 20.0,
-    "r_hip_yaw_joint": 20.0,
-    "l_hip_roll_joint": 20.0,
-    "r_hip_roll_joint": 20.0,
-    # 'l_hip_yaw_joint': 40.0,
-    # 'r_hip_yaw_joint': 40.0,
-    # 'l_hip_roll_joint': 40.0,
-    # 'r_hip_roll_joint': 40.0,
-    "l_hip_pitch_joint": 30.0,
-    "r_hip_pitch_joint": 30.0,
-    "l_knee_joint": 60.0,  # kp*knee_gear_ratio^2
-    "r_knee_joint": 60.0,  # kp*knee_gear_ratio^2
-    "l_ankle_joint": 15.0,
-    "r_ankle_joint": 15.0,
-}
+import copy
+from dataclasses import dataclass
 
-DAMPING = {
-    "l_hip_yaw_joint": 1.0,
-    "r_hip_yaw_joint": 1.0,
-    "l_hip_roll_joint": 1.0,
-    "r_hip_roll_joint": 1.0,
-    "l_hip_pitch_joint": 1.0,
-    "r_hip_pitch_joint": 1.0,
-    "l_knee_joint": 2.0,  # kd*knee_gear_ratio^2
-    "r_knee_joint": 2.0,  # kd*knee_gear_ratio^2
-    "l_ankle_joint": 0.5,
-    "r_ankle_joint": 0.5,
-}
+@dataclass(frozen=True)
+class ElectricActuator:
+  """Electric actuator parameters."""
 
+  reflected_inertia: float
+  velocity_limit: float
+  effort_limit: float
 
-EFFORT_LIMIT = {
-    "l_hip_yaw_joint": 33.5,
-    "r_hip_yaw_joint": 33.5,
-    "l_hip_roll_joint": 33.5,
-    "r_hip_roll_joint": 33.5,
-    "l_hip_pitch_joint": 33.5,
-    "r_hip_pitch_joint": 33.5,
-    "l_knee_joint": 67.0,  # motor_tau_max*knee_gear_ratio
-    "r_knee_joint": 67.0,  # motor_tau_max*knee_gear_ratio
-    "l_ankle_joint": 33.5,
-    "r_ankle_joint": 33.5,
-}
+ROTOR_INERTIAS_UNITREE_A1 = 1.0e-4
+GEARS_UNITREE_A1 = 9.0
+ARMATURE_UNITREE_A1= ROTOR_INERTIAS_UNITREE_A1*GEARS_UNITREE_A1**2
 
+ROTOR_INERTIAS_UNITREE_A1_KNEE = 1.0e-4
+GEARS_UNITREE_A1_KNEE = 9.0#9.0*2.0
+ARMATURE_UNITREE_A1_KNEE= ROTOR_INERTIAS_UNITREE_A1_KNEE*GEARS_UNITREE_A1_KNEE**2
 
-VELOCITY_LIMIT = {
-    "l_hip_yaw_joint": 21.0,
-    "r_hip_yaw_joint": 21.0,
-    "l_hip_roll_joint": 21.0,
-    "r_hip_roll_joint": 21.0,
-    "l_hip_pitch_joint": 21.0,
-    "r_hip_pitch_joint": 21.0,
-    "l_knee_joint": 10.5,  # motor_speed_max/knee_gear_ratio
-    "r_knee_joint": 10.5,  # motor_speed_max/knee_gear_ratio
-    "l_ankle_joint": 21.0,
-    "r_ankle_joint": 21.0,
-}
+ACTUATOR_UNITREE_A1 = ElectricActuator(
+  reflected_inertia=ARMATURE_UNITREE_A1,
+  velocity_limit=21.0,
+  effort_limit=33.5,
+)
 
+ACTUATOR_UNITREE_A1_KNEE = ElectricActuator(
+  reflected_inertia=ARMATURE_UNITREE_A1_KNEE,
+  velocity_limit=21.0/2.0,
+  effort_limit=33.5*2.0,
+)
+
+NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
+DAMPING_RATIO = 2.0
+
+STIFFNESS_A1 = ARMATURE_UNITREE_A1 * NATURAL_FREQ**2
+STIFFNESS_A1_KNEE = ARMATURE_UNITREE_A1_KNEE * NATURAL_FREQ**2
+
+DAMPING_A1 = 2.0 * DAMPING_RATIO * ARMATURE_UNITREE_A1 * NATURAL_FREQ
+DAMPING_A1_KNEE = 2.0 * DAMPING_RATIO * ARMATURE_UNITREE_A1_KNEE * NATURAL_FREQ
 
 JOINT_NAMES_EXPR = [
     "l_hip_yaw_joint",
@@ -70,17 +51,91 @@ JOINT_NAMES_EXPR = [
     "r_ankle_joint",
 ]
 
+DEFAULT_JOINT_POS = {
+    "l_hip_yaw_joint": 0.0,
+    "r_hip_yaw_joint": 0.0,
+    "l_hip_roll_joint": 0.0,
+    "r_hip_roll_joint": 0.0,
+    "l_hip_pitch_joint": 0.0,
+    "r_hip_pitch_joint": 0.0,
+    "l_knee_joint": 0.0,
+    "r_knee_joint": 0.0,
+    "l_ankle_joint": 0.0,
+    "r_ankle_joint": 0.0,
+}
+
+STIFFNESS = {
+    "l_hip_yaw_joint": STIFFNESS_A1,
+    "r_hip_yaw_joint": STIFFNESS_A1,
+    "l_hip_roll_joint": STIFFNESS_A1,
+    "r_hip_roll_joint": STIFFNESS_A1,
+    "l_hip_pitch_joint": STIFFNESS_A1,
+    "r_hip_pitch_joint": STIFFNESS_A1,
+    "l_knee_joint": STIFFNESS_A1_KNEE,  # kp*knee_gear_ratio^2
+    "r_knee_joint": STIFFNESS_A1_KNEE,  # kp*knee_gear_ratio^2
+    "l_ankle_joint": STIFFNESS_A1,
+    "r_ankle_joint": STIFFNESS_A1,
+}
+
+DAMPING = {
+    "l_hip_yaw_joint": DAMPING_A1,
+    "r_hip_yaw_joint": DAMPING_A1,
+    "l_hip_roll_joint": DAMPING_A1,
+    "r_hip_roll_joint": DAMPING_A1,
+    "l_hip_pitch_joint": DAMPING_A1,
+    "r_hip_pitch_joint": DAMPING_A1,
+    "l_knee_joint": DAMPING_A1_KNEE,  # kp*knee_gear_ratio^2
+    "r_knee_joint": DAMPING_A1_KNEE,  # kp*knee_gear_ratio^2
+    "l_ankle_joint": DAMPING_A1,
+    "r_ankle_joint": DAMPING_A1,
+}
+
+
+EFFORT_LIMIT = {
+    "l_hip_yaw_joint": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_hip_yaw_joint": ACTUATOR_UNITREE_A1.effort_limit,
+    "l_hip_roll_joint": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_hip_roll_joint": ACTUATOR_UNITREE_A1.effort_limit,
+    "l_hip_pitch_joint": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_hip_pitch_joint": ACTUATOR_UNITREE_A1.effort_limit,
+    "l_knee_joint": ACTUATOR_UNITREE_A1_KNEE.effort_limit,  # kp*knee_gear_ratio^2
+    "r_knee_joint": ACTUATOR_UNITREE_A1_KNEE.effort_limit,  # kp*knee_gear_ratio^2
+    "l_ankle_joint": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_ankle_joint": ACTUATOR_UNITREE_A1.effort_limit,
+}
+
+
+VELOCITY_LIMIT = {
+    "l_hip_yaw_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_hip_yaw_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+    "l_hip_roll_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_hip_roll_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+    "l_hip_pitch_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_hip_pitch_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+    "l_knee_joint": ACTUATOR_UNITREE_A1_KNEE.velocity_limit,  # kp*knee_gear_ratio^2
+    "r_knee_joint": ACTUATOR_UNITREE_A1_KNEE.velocity_limit,  # kp*knee_gear_ratio^2
+    "l_ankle_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_ankle_joint": ACTUATOR_UNITREE_A1.velocity_limit,
+}
+
 ARMATURE = {
-    "l_hip_yaw_joint": 0.01,
-    "r_hip_yaw_joint": 0.01,
-    "l_hip_roll_joint": 0.01,
-    "r_hip_roll_joint": 0.01,
-    "l_hip_pitch_joint": 0.01,
-    "r_hip_pitch_joint": 0.01,
-    "l_knee_joint": 0.04,  # motor_speed_max/knee_gear_ratio
-    "r_knee_joint": 0.04,  # motor_speed_max/knee_gear_ratio
-    "l_ankle_joint": 0.01,
-    "r_ankle_joint": 0.01,
+    "l_hip_yaw_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_hip_yaw_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "l_hip_roll_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_hip_roll_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "l_hip_pitch_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_hip_pitch_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "l_knee_joint": ACTUATOR_UNITREE_A1_KNEE.reflected_inertia,  # kp*knee_gear_ratio^2
+    "r_knee_joint": ACTUATOR_UNITREE_A1_KNEE.reflected_inertia,  # kp*knee_gear_ratio^2
+    "l_ankle_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_ankle_joint": ACTUATOR_UNITREE_A1.reflected_inertia,
+}
+
+# 0.25 * effort / stiffness, in the same per-joint dict style
+ACTION_SCALE = {
+    name: 0.25 * EFFORT_LIMIT[name] / STIFFNESS[name]
+    for name in JOINT_NAMES_EXPR
+    if name in EFFORT_LIMIT and name in STIFFNESS and STIFFNESS[name] != 0
 }
 
 
@@ -100,20 +155,6 @@ MPCL = [
     [-1.5700000524520874, 0.7900000214576721],  # l_ankle_joint
     [-1.5700000524520874, 0.7900000214576721],  # r_ankle_joint
 ]
-
-
-DEFAULT_JOINT_POS = {
-    "l_hip_yaw_joint": 0.0,
-    "r_hip_yaw_joint": 0.0,
-    "l_hip_roll_joint": 0.0,
-    "r_hip_roll_joint": 0.0,
-    "l_hip_pitch_joint": 0.0,
-    "r_hip_pitch_joint": 0.0,
-    "l_knee_joint": 0.0,
-    "r_knee_joint": 0.0,
-    "l_ankle_joint": 0.0,
-    "r_ankle_joint": 0.0,
-}
 
 BAD_CONTACT_BODIES = [
     "torso",

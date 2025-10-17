@@ -1,3 +1,31 @@
+import copy
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class ElectricActuator:
+  """Electric actuator parameters."""
+
+  reflected_inertia: float
+  velocity_limit: float
+  effort_limit: float
+
+ROTOR_INERTIAS_504736NE = 0.3e-5
+GEARS_504736NE = 36
+ARMATURE_504736NE = ROTOR_INERTIAS_504736NE*GEARS_504736NE**2
+
+ACTUATOR_504736NE = ElectricActuator(
+  reflected_inertia=ARMATURE_504736NE,
+  velocity_limit=4.188,
+  effort_limit=16.0,
+)
+
+NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
+DAMPING_RATIO = 2.0
+
+STIFFNESS_504736NE = ARMATURE_504736NE * NATURAL_FREQ**2
+
+DAMPING_504736NE = 2.0 * DAMPING_RATIO * ARMATURE_504736NE * NATURAL_FREQ
+
 JOINT_NAMES_EXPR = [
     "r_hip_pitch_joint",
     "r_hip_roll_joint",
@@ -29,94 +57,101 @@ DEFAULT_JOINT_POS = {
 }
 
 STIFFNESS = {
-    "r_hip_pitch_joint":10.0,
-    "r_hip_roll_joint":10.0,
-    "r_thigh_joint":10.0,
-    "r_calf_joint":10.0,
-    "r_ankle_pitch_joint":10.0,
-    "r_ankle_roll_joint":10.0,
-    "l_hip_pitch_joint":10.0,
-    "l_hip_roll_joint":10.0,
-    "l_thigh_joint":10.0,
-    "l_calf_joint":10.0,
-    "l_ankle_pitch_joint":10.0,
-    "l_ankle_roll_joint":10.0,
+    "r_hip_pitch_joint":STIFFNESS_504736NE,
+    "r_hip_roll_joint":STIFFNESS_504736NE,
+    "r_thigh_joint":STIFFNESS_504736NE,
+    "r_calf_joint":STIFFNESS_504736NE,
+    "r_ankle_pitch_joint":STIFFNESS_504736NE,
+    "r_ankle_roll_joint":STIFFNESS_504736NE,
+    "l_hip_pitch_joint":STIFFNESS_504736NE,
+    "l_hip_roll_joint":STIFFNESS_504736NE,
+    "l_thigh_joint":STIFFNESS_504736NE,
+    "l_calf_joint":STIFFNESS_504736NE,
+    "l_ankle_pitch_joint":STIFFNESS_504736NE,
+    "l_ankle_roll_joint":STIFFNESS_504736NE,
 }
 
 DAMPING = {
-    "r_hip_pitch_joint":0.5,
-    "r_hip_roll_joint":0.5,
-    "r_thigh_joint":0.5,
-    "r_calf_joint":0.5,
-    "r_ankle_pitch_joint":0.5,
-    "r_ankle_roll_joint":0.5,
-    "l_hip_pitch_joint":0.5,
-    "l_hip_roll_joint":0.5,
-    "l_thigh_joint":0.5,
-    "l_calf_joint":0.5,
-    "l_ankle_pitch_joint":0.5,
-    "l_ankle_roll_joint":0.5,
+    "r_hip_pitch_joint":DAMPING_504736NE,
+    "r_hip_roll_joint":DAMPING_504736NE,
+    "r_thigh_joint":DAMPING_504736NE,
+    "r_calf_joint":DAMPING_504736NE,
+    "r_ankle_pitch_joint":DAMPING_504736NE,
+    "r_ankle_roll_joint":DAMPING_504736NE,
+    "l_hip_pitch_joint":DAMPING_504736NE,
+    "l_hip_roll_joint":DAMPING_504736NE,
+    "l_thigh_joint":DAMPING_504736NE,
+    "l_calf_joint":DAMPING_504736NE,
+    "l_ankle_pitch_joint":DAMPING_504736NE,
+    "l_ankle_roll_joint":DAMPING_504736NE,
 }
 
 EFFORT_LIMIT = {
-    "r_hip_pitch_joint":20.0,
-    "r_hip_roll_joint":20.0,
-    "r_thigh_joint":20.0,
-    "r_calf_joint":20.0,
-    "r_ankle_pitch_joint":20.0,
-    "r_ankle_roll_joint":20.0,
-    "l_hip_pitch_joint":20.0,
-    "l_hip_roll_joint":20.0,
-    "l_thigh_joint":20.0,
-    "l_calf_joint":20.0,
-    "l_ankle_pitch_joint":20.0,
-    "l_ankle_roll_joint":20.0,
+    "r_hip_pitch_joint":ACTUATOR_504736NE.effort_limit,
+    "r_hip_roll_joint":ACTUATOR_504736NE.effort_limit,
+    "r_thigh_joint":ACTUATOR_504736NE.effort_limit,
+    "r_calf_joint":ACTUATOR_504736NE.effort_limit,
+    "r_ankle_pitch_joint":ACTUATOR_504736NE.effort_limit,
+    "r_ankle_roll_joint":ACTUATOR_504736NE.effort_limit,
+    "l_hip_pitch_joint":ACTUATOR_504736NE.effort_limit,
+    "l_hip_roll_joint":ACTUATOR_504736NE.effort_limit,
+    "l_thigh_joint":ACTUATOR_504736NE.effort_limit,
+    "l_calf_joint":ACTUATOR_504736NE.effort_limit,
+    "l_ankle_pitch_joint":ACTUATOR_504736NE.effort_limit,
+    "l_ankle_roll_joint":ACTUATOR_504736NE.effort_limit,
 }
 
 VELOCITY_LIMIT = {
-    "r_hip_pitch_joint":20.0,
-    "r_hip_roll_joint":20.0,
-    "r_thigh_joint":20.0,
-    "r_calf_joint":20.0,
-    "r_ankle_pitch_joint":20.0,
-    "r_ankle_roll_joint":20.0,
-    "l_hip_pitch_joint":20.0,
-    "l_hip_roll_joint":20.0,
-    "l_thigh_joint":20.0,
-    "l_calf_joint":20.0,
-    "l_ankle_pitch_joint":20.0,
-    "l_ankle_roll_joint":20.0,
+    "r_hip_pitch_joint":ACTUATOR_504736NE.velocity_limit,
+    "r_hip_roll_joint":ACTUATOR_504736NE.velocity_limit,
+    "r_thigh_joint":ACTUATOR_504736NE.velocity_limit,
+    "r_calf_joint":ACTUATOR_504736NE.velocity_limit,
+    "r_ankle_pitch_joint":ACTUATOR_504736NE.velocity_limit,
+    "r_ankle_roll_joint":ACTUATOR_504736NE.velocity_limit,
+    "l_hip_pitch_joint":ACTUATOR_504736NE.velocity_limit,
+    "l_hip_roll_joint":ACTUATOR_504736NE.velocity_limit,
+    "l_thigh_joint":ACTUATOR_504736NE.velocity_limit,
+    "l_calf_joint":ACTUATOR_504736NE.velocity_limit,
+    "l_ankle_pitch_joint":ACTUATOR_504736NE.velocity_limit,
+    "l_ankle_roll_joint":ACTUATOR_504736NE.velocity_limit,
 }
 
 
 ARMATURE = {
-    "r_hip_pitch_joint":0.01,
-    "r_hip_roll_joint":0.01,
-    "r_thigh_joint":0.01,
-    "r_calf_joint":0.01,
-    "r_ankle_pitch_joint":0.01,
-    "r_ankle_roll_joint":0.01,
-    "l_hip_pitch_joint":0.01,
-    "l_hip_roll_joint":0.01,
-    "l_thigh_joint":0.01,
-    "l_calf_joint":0.01,
-    "l_ankle_pitch_joint":0.01,
-    "l_ankle_roll_joint":0.01,
+    "r_hip_pitch_joint":ACTUATOR_504736NE.reflected_inertia,
+    "r_hip_roll_joint":ACTUATOR_504736NE.reflected_inertia,
+    "r_thigh_joint":ACTUATOR_504736NE.reflected_inertia,
+    "r_calf_joint":ACTUATOR_504736NE.reflected_inertia,
+    "r_ankle_pitch_joint":ACTUATOR_504736NE.reflected_inertia,
+    "r_ankle_roll_joint":ACTUATOR_504736NE.reflected_inertia,
+    "l_hip_pitch_joint":ACTUATOR_504736NE.reflected_inertia,
+    "l_hip_roll_joint":ACTUATOR_504736NE.reflected_inertia,
+    "l_thigh_joint":ACTUATOR_504736NE.reflected_inertia,
+    "l_calf_joint":ACTUATOR_504736NE.reflected_inertia,
+    "l_ankle_pitch_joint":ACTUATOR_504736NE.reflected_inertia,
+    "l_ankle_roll_joint":ACTUATOR_504736NE.reflected_inertia,
+}
+
+# 0.25 * effort / stiffness, in the same per-joint dict style
+ACTION_SCALE = {
+    name: 0.25 * EFFORT_LIMIT[name] / STIFFNESS[name]
+    for name in JOINT_NAMES_EXPR
+    if name in EFFORT_LIMIT and name in STIFFNESS and STIFFNESS[name] != 0
 }
 
 
 MPCL = [
     [-1.25, 1.75],  # l_hip_pitch_joint
-    [-0.12, 0.5],  # l_hip_roll_joint
+    [-0.12, DAMPING_504736NE],  # l_hip_roll_joint
     [-0.3, 0.6],  # l_thigh_joint
     [-0.65, 1.65],  # l_calf_joint
-    [-0.5, 1.3],  # l_ankle_pitch_joint
+    [-DAMPING_504736NE, 1.3],  # l_ankle_pitch_joint
     [-0.15, 0.15],  # l_ankle_roll_joint
     [-1.25, 1.75],  # r_hip_pitch_joint
-    [-0.5, 0.12],  # r_hip_roll_joint
+    [-DAMPING_504736NE, 0.12],  # r_hip_roll_joint
     [-0.6, 0.3],  # r_thigh_joint
     [-0.65, 1.65],  # r_calf_joint
-    [-0.5, 1.3],  # r_ankle_pitch_joint
+    [-DAMPING_504736NE, 1.3],  # r_ankle_pitch_joint
     [-0.15, 0.15],  # r_ankle_roll_joint
 ]
 
@@ -148,10 +183,10 @@ TRACKED_EE_LINKS = [
 
 SAMPLING_RANGE = {
     "left_foot_pos": [
-        [-0.0, 0.15, 0.01],
+        [-0.0, 0.15, ACTUATOR_504736NE.reflected_inertia],
         [0.0, 0.15, 0.14],
     ],  # Lower limit, upper limit
-    "right_foot_pos": [[0.0, -0.15, 0.01], [0.0, -0.15, 0.01]],
+    "right_foot_pos": [[0.0, -0.15, ACTUATOR_504736NE.reflected_inertia], [0.0, -0.15, ACTUATOR_504736NE.reflected_inertia]],
 }
 
 END_EFFECTORS = {
