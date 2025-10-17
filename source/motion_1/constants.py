@@ -1,43 +1,5 @@
 from dataclasses import dataclass
-
-@dataclass(frozen=True)
-class ElectricActuator:
-  """Electric actuator parameters."""
-
-  reflected_inertia: float
-  velocity_limit: float
-  effort_limit: float
-
-ROTOR_INERTIAS_ROBOSTRIDE02 = 0.5e-4
-GEARS_ROBOSTRIDE02 = 7.75
-ARMATURE_ROBOSTRIDE02 = ROTOR_INERTIAS_ROBOSTRIDE02*GEARS_ROBOSTRIDE02**2
-
-ROTOR_INERTIAS_ROBOSTRIDE03 = 1.0e-4
-GEARS_ROBOSTRIDE03 = 9.0
-ARMATURE_ROBOSTRIDE03 = ROTOR_INERTIAS_ROBOSTRIDE03*GEARS_ROBOSTRIDE03**2
-
-ROTOR_INERTIAS_ROBOSTRIDE04 = 1.0e-4
-GEARS_ROBOSTRIDE04 = 9.0
-ARMATURE_ROBOSTRIDE04 = ROTOR_INERTIAS_ROBOSTRIDE04*GEARS_ROBOSTRIDE04**2
-
-
-ACTUATOR_ROBOSTRIDE02 = ElectricActuator(
-  reflected_inertia=ARMATURE_ROBOSTRIDE02,
-  velocity_limit=42.93,
-  effort_limit=17.0,
-)
-
-ACTUATOR_ROBOSTRIDE03 = ElectricActuator(
-  reflected_inertia=ARMATURE_ROBOSTRIDE03,
-  velocity_limit=18.84,
-  effort_limit=60.0,
-)
-
-ACTUATOR_ROBOSTRIDE04 = ElectricActuator(
-  reflected_inertia=ARMATURE_ROBOSTRIDE04,
-  velocity_limit=17.48,
-  effort_limit=120.0,
-)
+from ..mot_params import *
 
 NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
 DAMPING_RATIO = 2.0

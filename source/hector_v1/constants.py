@@ -1,33 +1,6 @@
 import copy
 from dataclasses import dataclass
-
-@dataclass(frozen=True)
-class ElectricActuator:
-  """Electric actuator parameters."""
-
-  reflected_inertia: float
-  velocity_limit: float
-  effort_limit: float
-
-ROTOR_INERTIAS_UNITREE_A1 = 1.0e-4
-GEARS_UNITREE_A1 = 9.0
-ARMATURE_UNITREE_A1= ROTOR_INERTIAS_UNITREE_A1*GEARS_UNITREE_A1**2
-
-ROTOR_INERTIAS_UNITREE_A1_KNEE = 1.0e-4
-GEARS_UNITREE_A1_KNEE = 9.0#9.0*2.0
-ARMATURE_UNITREE_A1_KNEE= ROTOR_INERTIAS_UNITREE_A1_KNEE*GEARS_UNITREE_A1_KNEE**2
-
-ACTUATOR_UNITREE_A1 = ElectricActuator(
-  reflected_inertia=ARMATURE_UNITREE_A1,
-  velocity_limit=21.0,
-  effort_limit=33.5,
-)
-
-ACTUATOR_UNITREE_A1_KNEE = ElectricActuator(
-  reflected_inertia=ARMATURE_UNITREE_A1_KNEE,
-  velocity_limit=21.0/2.0,
-  effort_limit=33.5*2.0,
-)
+from ..mot_params import *
 
 NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
 DAMPING_RATIO = 2.0
