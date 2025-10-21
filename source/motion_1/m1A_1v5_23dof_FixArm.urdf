@@ -5,7 +5,7 @@
 	</mujoco>
   <link name="torso_link">
     <inertial>
-      <origin xyz="0.006 0.0008 0.022" rpy="0 0 0"/>
+      <origin xyz="0.006 -0.000793856 0.203226" rpy="0 0 0"/>
       <mass value="8.92389"/>
       <inertia ixx="0.147886" ixy="0" ixz="0" iyy="0.131533" iyz="0" izz="0.0433487"/>
     </inertial>
@@ -427,7 +427,7 @@
     </visual>
   </link>
   
-  <joint name="left_wrist_roll_joint" type="revolute">
+  <joint name="left_wrist_yaw_joint" type="revolute">
     <parent link="left_elbow_link"/>
     <child link="left_wrist_link"/>
     <origin xyz="0 0 -0.09" rpy="0 0 0"/>
@@ -564,7 +564,7 @@
     </visual>
   </link>
   
-  <joint name="right_wrist_roll_joint" type="revolute">
+  <joint name="right_wrist_yaw_joint" type="revolute">
     <parent link="right_elbow_link"/>
     <child link="right_wrist_link"/>
     <origin xyz="0 0 -0.09" rpy="0 0 0"/>
