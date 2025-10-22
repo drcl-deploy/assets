@@ -195,6 +195,55 @@
             </material>
 		</visual>
 	</link>
+	<link name="l_front_wheel">
+		<inertial>
+			<origin xyz="0.00001 0.00001 0.00001" rpy="0 0 0"/>
+			<mass value="0.001"/>
+			<inertia ixx="0.00001" iyy="0.00001" izz="0.00001"
+					ixy="0" ixz="0" iyz="0"/>
+		</inertial>
+		<collision>
+			<origin rpy="1.5707964  -0.00000 0.00000" xyz="0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+		</collision>
+		<!-- Red with 50% transparency -->
+		<visual>
+			<origin rpy="1.5707964  -0.00000 0.00000" xyz="0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+			<material name="black">
+                <color rgba="0.25 0.25 0.25 1"/>
+            </material>
+		</visual>
+	</link>
+	<link name="l_back_wheel">
+		<inertial>
+			<origin xyz="0.00001 0.00001 0.00001" rpy="0 0 0"/>
+			<mass value="0.001"/>
+			<inertia ixx="0.00001" iyy="0.00001" izz="0.00001"
+					ixy="0" ixz="0" iyz="0"/>
+		</inertial>
+		<collision>
+			<origin rpy="1.5707964  -0.00000 0.00000" xyz="0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+		</collision>
+		<!-- Red with 50% transparency -->
+		<visual>
+			<origin rpy="1.5707964 -0.00000 0.00000" xyz="-0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+			<material name="black">
+                <color rgba="0.25 0.25 0.25 1"/>
+            </material>
+		</visual>
+	</link>
+
 	<link name="r_hip1">
 		<inertial>
 			<origin rpy="0.00000 -0.00000 0.00000" xyz="0.05147 -0.01453 -0.06160"/>
@@ -357,6 +406,54 @@
 			</geometry>
 			<material name="black">
                 <color rgba="0.25 0.25 0.25 1"/> <!-- Red with 50% transparency -->
+            </material>
+		</visual>
+	</link>
+	<link name="r_front_wheel">
+		<inertial>
+			<origin xyz="0.00001 0.00001 0.00001" rpy="0 0 0"/>
+			<mass value="0.001"/>
+			<inertia ixx="0.00001" iyy="0.00001" izz="0.00001"
+					ixy="0" ixz="0" iyz="0"/>
+		</inertial>
+		<collision>
+			<origin rpy="1.5707964  -0.00000 0.00000" xyz="0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+		</collision>
+		<!-- Red with 50% transparency -->
+		<visual>
+			<origin rpy="1.5707964  -0.00000 0.00000" xyz="0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+			<material name="black">
+                <color rgba="0.25 0.25 0.25 1"/>
+            </material>
+		</visual>
+	</link>
+	<link name="r_back_wheel">
+		<inertial>
+			<origin xyz="0.00001 0.00001 0.00001" rpy="0 0 0"/>
+			<mass value="0.001"/>
+			<inertia ixx="0.00001" iyy="0.00001" izz="0.00001"
+					ixy="0" ixz="0" iyz="0"/>
+		</inertial>
+		<collision>
+			<origin rpy="1.5707964  -0.00000 0.00000" xyz="0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+		</collision>
+		<!-- Red with 50% transparency -->
+		<visual>
+			<origin rpy="1.5707964 -0.00000 0.00000" xyz="-0. 0. 0."/>
+			<geometry>
+				<cylinder radius = "0.02" length = "0.02"/>
+			</geometry>
+			<material name="black">
+                <color rgba="0.25 0.25 0.25 1"/>
             </material>
 		</visual>
 	</link>
@@ -754,6 +851,42 @@
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="-0.00000 -0.00000 0.00000" xyz="0.04100 0.00700 -0.20000"/>
 		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
+
+		<axis xyz="0.00000 1.00000 0.00000"/>
+	</joint>
+	<joint name="l_toe_front" type="continuous">
+		<parent link="l_toe"/>
+		<child link="l_front_wheel"/>
+		<dynamics damping="1.0" friction="0.0001"/>
+		<origin rpy="-0.00000 -0.00000 0.00000" xyz="0.0750 0.0000 -0.0625"/>
+		<limit effort="5.5" velocity="50.0"/>
+
+		<axis xyz="0.00000 1.00000 0.00000"/>
+	</joint>
+	<joint name="l_toe_back" type="continuous">
+		<parent link="l_toe"/>
+		<child link="l_back_wheel"/>
+		<dynamics damping="1.0" friction="0.0001"/>
+		<origin rpy="-0.00000 -0.00000 0.00000" xyz="-0.055 0.0000 -0.0625"/>
+		<limit effort="5.5" velocity="50.0"/>
+
+		<axis xyz="0.00000 1.00000 0.00000"/>
+	</joint>
+		<joint name="r_toe_front" type="continuous">
+		<parent link="r_toe"/>
+		<child link="r_front_wheel"/>
+		<dynamics damping="1.0" friction="0.0001"/>
+		<origin rpy="-0.00000 -0.00000 0.00000" xyz="0.0750 0.0000 -0.0625"/>
+		<limit effort="5.5" velocity="50.0"/>
+
+		<axis xyz="0.00000 1.00000 0.00000"/>
+	</joint>
+	<joint name="r_toe_back" type="continuous">
+		<parent link="r_toe"/>
+		<child link="r_back_wheel"/>
+		<dynamics damping="1.0" friction="0.0001"/>
+		<origin rpy="-0.00000 -0.00000 0.00000" xyz="-0.055 0.0000 -0.0625"/>
+		<limit effort="5.5" velocity="50.0"/>
 
 		<axis xyz="0.00000 1.00000 0.00000"/>
 	</joint>
