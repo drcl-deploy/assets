@@ -1,5 +1,7 @@
 <mujoco model="go1">
   <compiler angle="radian" meshdir="meshes" autolimits="true"/>
+  <option timestep='0.001'/>
+
 
   <option cone="elliptic" impratio="100"/>
 
@@ -7,18 +9,23 @@
     <default class="go1">
       <geom friction="0.6" margin="0.001" condim="1"/>
       <joint axis="0 1 0" damping="2" armature="0.01" frictionloss="0.2"/>
-      <position kp="100" forcerange="-23.7 23.7"/>
+      <general
+        biastype="affine"
+        gainprm="0 0 0 0 0 0 0 0 0 0"
+        biasprm="0 0 0 0 0 0 0 0 0 0"
+        forcerange="-23.7 23.7"
+      />
       <default class="abduction">
         <joint axis="1 0 0" damping="1" range="-0.863 0.863"/>
-        <position ctrlrange="-0.863 0.863"/>
+        <general forcerange="-23.7 23.7"/>
       </default>
       <default class="hip">
         <joint range="-0.686 4.501"/>
-        <position ctrlrange="-0.686 4.501"/>
+        <general forcerange="-23.7 23.7"/>
       </default>
       <default class="knee">
         <joint range="-2.818 -0.888"/>
-        <position forcerange="-35.55 35.55" ctrlrange="-2.818 -0.888"/>
+        <general forcerange="-35.55 35.55"/>
       </default>
       <default class="visual">
         <geom type="mesh" contype="0" conaffinity="0" group="2" material="dark"/>
@@ -79,6 +86,9 @@
     <light name="spotlight" mode="targetbodycom" target="trunk" pos="0 -1 2"/>
     <body name="trunk" pos="0 0 0.445" childclass="go1">
       <camera name="tracking" mode="trackcom" pos="0 -1 0.8" xyaxes="1 0 0 0 1 1"/>
+      <!-- Camera set to Ry(−60∘)⊗Rz(+90∘)⊗Rzlocal(180∘) -->
+      <camera name="tiled_camera" pos="0.2 0 0.2" quat="-0.6123724 -0.3535534 0.3535534 0.6123724" fovy="60"/> 
+
       <site name="head" pos="0.3 0 0" rgba="1 0 0 1" size="0.02" group="5"/>
       <inertial pos="0.0223 0.002 -0.0005" quat="-0.00342088 0.705204 0.000106698 0.708996" mass="5.204"
         diaginertia="0.0716565 0.0630105 0.0168101"/>
@@ -207,19 +217,87 @@
   </worldbody>
 
   <actuator>
-    <position class="abduction" name="FR_hip" joint="FR_hip_joint"/>
-    <position class="hip" name="FR_thigh" joint="FR_thigh_joint"/>
-    <position class="knee" name="FR_calf" joint="FR_calf_joint"/>
-    <position class="abduction" name="FL_hip" joint="FL_hip_joint"/>
-    <position class="hip" name="FL_thigh" joint="FL_thigh_joint"/>
-    <position class="knee" name="FL_calf" joint="FL_calf_joint"/>
-    <position class="abduction" name="RR_hip" joint="RR_hip_joint"/>
-    <position class="hip" name="RR_thigh" joint="RR_thigh_joint"/>
-    <position class="knee" name="RR_calf" joint="RR_calf_joint"/>
-    <position class="abduction" name="RL_hip" joint="RL_hip_joint"/>
-    <position class="hip" name="RL_thigh" joint="RL_thigh_joint"/>
-    <position class="knee" name="RL_calf" joint="RL_calf_joint"/>
+    <general class="abduction" name="FR_hip" joint="FR_hip_joint"/>
+    <general class="hip" name="FR_thigh" joint="FR_thigh_joint"/>
+    <general class="knee" name="FR_calf" joint="FR_calf_joint"/>
+    <general class="abduction" name="FL_hip" joint="FL_hip_joint"/>
+    <general class="hip" name="FL_thigh" joint="FL_thigh_joint"/>
+    <general class="knee" name="FL_calf" joint="FL_calf_joint"/>
+    <general class="abduction" name="RR_hip" joint="RR_hip_joint"/>
+    <general class="hip" name="RR_thigh" joint="RR_thigh_joint"/>
+    <general class="knee" name="RR_calf" joint="RR_calf_joint"/>
+    <general class="abduction" name="RL_hip" joint="RL_hip_joint"/>
+    <general class="hip" name="RL_thigh" joint="RL_thigh_joint"/>
+    <general class="knee" name="RL_calf" joint="RL_calf_joint"/>
   </actuator>
+
+  <sensor>
+    <!-- Trunk Sensors -->
+    <framepos name="root_pos" objtype="body" objname="trunk"/>
+    <framequat name="root_quat" objtype="body" objname="trunk"/>
+    <framelinvel name="root_linvel" objtype="body" objname="trunk"/>
+    <frameangvel name="root_angvel" objtype="body" objname="trunk"/>
+
+    <!-- IMU Sensors -->
+    <framequat name="torso_imu_quat" objtype="site" objname="imu"/>
+    <accelerometer name="torso_imu_acc" site="imu"/>
+    <gyro name="torso_imu_gyro" site="imu"/>
+
+    <!-- Motor Encoders-->
+    <actuatorpos name="FR_hip_pos" actuator="FR_hip"/>
+    <actuatorpos name="FR_thigh_pos" actuator="FR_thigh"/>
+    <actuatorpos name="FR_calf_pos" actuator="FR_calf"/>
+    
+    <actuatorpos name="FL_hip_pos" actuator="FL_hip"/>
+    <actuatorpos name="FL_thigh_pos" actuator="FL_thigh"/>
+    <actuatorpos name="FL_calf_pos" actuator="FL_calf"/>
+
+    <actuatorpos name="RR_hip_pos" actuator="RR_hip"/>
+    <actuatorpos name="RR_thigh_pos" actuator="RR_thigh"/>
+    <actuatorpos name="RR_calf_pos" actuator="RR_calf"/>
+
+    <actuatorpos name="RL_hip_pos" actuator="RL_hip"/>
+    <actuatorpos name="RL_thigh_pos" actuator="RL_thigh"/>
+    <actuatorpos name="RL_calf_pos" actuator="RL_calf"/>
+
+    <actuatorvel name="FR_hip_vel" actuator="FR_hip"/>
+    <actuatorvel name="FR_thigh_vel" actuator="FR_thigh"/>
+    <actuatorvel name="FR_calf_vel" actuator="FR_calf"/>
+
+    <actuatorvel name="FL_hip_vel" actuator="FL_hip"/>
+    <actuatorvel name="FL_thigh_vel" actuator="FL_thigh"/>
+    <actuatorvel name="FL_calf_vel" actuator="FL_calf"/>
+
+    <actuatorvel name="RR_hip_vel" actuator="RR_hip"/>
+    <actuatorvel name="RR_thigh_vel" actuator="RR_thigh"/>
+    <actuatorvel name="RR_calf_vel" actuator="RR_calf"/>
+
+    <actuatorvel name="RL_hip_vel" actuator="RL_hip"/>
+    <actuatorvel name="RL_thigh_vel" actuator="RL_thigh"/>
+    <actuatorvel name="RL_calf_vel" actuator="RL_calf"/>
+
+    <actuatorfrc name="FR_hip_frc" actuator="FR_hip"/>
+    <actuatorfrc name="FR_thigh_frc" actuator="FR_thigh"/>
+    <actuatorfrc name="FR_calf_frc" actuator="FR_calf"/>
+
+    <actuatorfrc name="FL_hip_frc" actuator="FL_hip"/>
+    <actuatorfrc name="FL_thigh_frc" actuator="FL_thigh"/>
+    <actuatorfrc name="FL_calf_frc" actuator="FL_calf"/>
+
+    <actuatorfrc name="RR_hip_frc" actuator="RR_hip"/>
+    <actuatorfrc name="RR_thigh_frc" actuator="RR_thigh"/>
+    <actuatorfrc name="RR_calf_frc" actuator="RR_calf"/>
+
+    <actuatorfrc name="RL_hip_frc" actuator="RL_hip"/>
+    <actuatorfrc name="RL_thigh_frc" actuator="RL_thigh"/>
+    <actuatorfrc name="RL_calf_frc" actuator="RL_calf"/>                         
+
+  </sensor>
+
+	<equality>
+		<weld name="world_root" active="true" body1="trunk" relpose="0 0 -0.405 1 0 0 0"/> 
+	</equality>
+
 
   <keyframe>
     <key name="home" qpos="0 0 0.27 1 0 0 0 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"
