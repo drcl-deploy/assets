@@ -14,7 +14,7 @@ ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
 # implicit actuator
 MOTION_1_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
-        asset_path=os.path.join(ASSETS_DIR, "motion_1/m1A_1v5_23dof_FixArm.urdf"),
+        asset_path=os.path.join(ASSETS_DIR, "motion_1/m1A_1v5_23dof_FixArm_Updated.urdf"),
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
