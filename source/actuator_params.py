@@ -54,8 +54,8 @@ ACTUATOR_ROBOSTRIDE01 = ElectricActuator(
 
 ACTUATOR_ROBOSTRIDE01_ELBOW = ElectricActuator(
   reflected_inertia=ARMATURE_ROBOSTRIDE01_ELBOW,
-  velocity_limit=28.79/1.5,
-  effort_limit=17.0*1.5,
+  velocity_limit=28.79/1.417,
+  effort_limit=17.0*1.417,
 )
 
 ACTUATOR_ROBOSTRIDE02 = ElectricActuator(
