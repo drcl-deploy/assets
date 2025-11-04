@@ -1,3 +1,4 @@
+<!-- Model taken from MuJoCo Menagerie (https://github.com/google-deepmind/mujoco_menagerie/blob/main/unitree_go1/go1.xml) -->
 <mujoco model="go1">
   <compiler angle="radian" meshdir="meshes" autolimits="true"/>
   <option timestep='0.001'/>

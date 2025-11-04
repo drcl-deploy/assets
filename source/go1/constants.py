@@ -74,4 +74,25 @@ DAMPING = {
     "RR_calf_joint": 1.2,
 }
 
+EFFORT_LIMIT = {
+    # Hip joints
+    "FL_hip_joint": 23.7,
+    "FR_hip_joint": 23.7,
+    "RL_hip_joint": 23.7,
+    "RR_hip_joint": 23.7,
+    
+    # Thigh joints
+    "FL_thigh_joint": 23.7,
+    "FR_thigh_joint": 23.7,
+    "RL_thigh_joint": 23.7,
+    "RR_thigh_joint": 23.7,
+    
+    # Calf joints
+    "FL_calf_joint": 35.55,
+    "FR_calf_joint": 35.55,
+    "RL_calf_joint": 35.55,
+    "RR_calf_joint": 35.55,
 
+}
+
+ARMATURE = 0.01
