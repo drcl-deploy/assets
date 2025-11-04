@@ -532,7 +532,7 @@
 		<child link="l_shoulder2"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.04900 0.05300"/>
-		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
+		<limit effort="17.0" lower="-3.14" upper="3.14" velocity="32.0"/>
 
 		<axis xyz="0.00000 1.00000 0.00000"/>
 	</joint>
@@ -541,8 +541,7 @@
 		<child link="l_upper_arm"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="0.00000 0.00000 0.00000" xyz="-0.01100 0.04570 0.00000"/>
-		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
-
+		<limit effort="17.0" lower="-1.4" upper="1.4" velocity="32.0"/>
 		<axis xyz="-1.00000 0.00000 0.00000"/>
 	</joint>
 	<joint name="l_elbow" type="revolute">
@@ -550,7 +549,7 @@
 		<child link="l_lower_arm"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="0.00000 -0.00000 0.00000" xyz="0.04100 -0.00700 -0.20000"/>
-		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
+		<limit effort="17.0" lower="-2.5" upper="2.5" velocity="32.0"/>
 
 		<axis xyz="0.00000 1.00000 0.00000"/>
 	</joint>
@@ -573,7 +572,7 @@
 		<child link="r_shoulder2"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 -0.04900 0.05300"/>
-		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
+		<limit effort="17.0" lower="-3.14" upper="3.14" velocity="32.0"/>
 
 		<axis xyz="0.00000 1.00000 0.00000"/>
 	</joint>
@@ -582,7 +581,7 @@
 		<child link="r_upper_arm"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="0.00000 -0.00000 -0.00000" xyz="-0.01100 -0.04570 0.00000"/>
-		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
+		<limit effort="17.0" lower="-1.4" upper="1.4" velocity="32.0"/>
 
 		<axis xyz="-1.00000 0.00000 0.00000"/>
 	</joint>
@@ -591,7 +590,7 @@
 		<child link="r_lower_arm"/>
 		<dynamics damping="1.0" friction="0.0001"/>
 		<origin rpy="-0.00000 -0.00000 0.00000" xyz="0.04100 0.00700 -0.20000"/>
-		<limit effort="17.0" lower="-1.5708" upper="1.5708" velocity="32.0"/>
+		<limit effort="17.0" lower="-2.5" upper="2.5" velocity="32.0"/>
 
 		<axis xyz="0.00000 1.00000 0.00000"/>
 	</joint>

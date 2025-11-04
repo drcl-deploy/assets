@@ -1,4 +1,20 @@
 import copy
+from dataclasses import dataclass
+from source.actuator_params import *
+
+NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
+DAMPING_RATIO = 2.0
+
+STIFFNESS_01 = ARMATURE_ROBOSTRIDE01 * NATURAL_FREQ**2
+STIFFNESS_A1 = ARMATURE_UNITREE_A1 * NATURAL_FREQ**2
+STIFFNESS_01_ELBOW = ARMATURE_ROBOSTRIDE01_ELBOW * NATURAL_FREQ**2
+STIFFNESS_A1_KNEE = ARMATURE_UNITREE_A1_KNEE * NATURAL_FREQ**2
+
+DAMPING_01 = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE01 * NATURAL_FREQ
+DAMPING_A1 = 2.0 * DAMPING_RATIO * ARMATURE_UNITREE_A1 * NATURAL_FREQ
+DAMPING_01_ELBOW = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE01_ELBOW * NATURAL_FREQ
+DAMPING_A1_KNEE = 2.0 * DAMPING_RATIO * ARMATURE_UNITREE_A1_KNEE * NATURAL_FREQ
+
 # common joint parameters
 JOINT_NAMES_EXPR = [
     "l_hip_yaw",
@@ -52,130 +68,116 @@ DEFAULT_MOTOR_POS["r_ankle"] = -0.78
 
 # common actuator parameters
 STIFFNESS = {
-    "l_hip_yaw": 20.0,
-    "l_shoulder_yaw": 10.0,
-    "r_hip_yaw": 20.0,
-    "r_shoulder_yaw": 10.0,
-    "l_hip_roll": 20.0,
-    "l_shoulder_pitch": 10.0,
-    "r_hip_roll": 20.0,
-    "r_shoulder_pitch": 10.0,
-    "l_hip_pitch": 30.0,
-    "l_shoulder_roll": 10.0,
-    "r_hip_pitch": 30.0,
-    "r_shoulder_roll": 10.0,
-    "l_knee": 60.0,  # kp*knee_gear_ratio^2
-    "l_elbow": 20.0,  # kp*elbow_gear_ratio^2
-    "r_knee": 60.0,  # kp*knee_gear_ratio^2
-    "r_elbow": 20.0,  # kp*elbow_gear_ratio^2
-    "l_ankle": 15.0,
-    "r_ankle": 15.0,
+    "l_hip_yaw": STIFFNESS_A1,
+    "l_shoulder_yaw": STIFFNESS_01,
+    "r_hip_yaw": STIFFNESS_A1,
+    "r_shoulder_yaw": STIFFNESS_01,
+    "l_hip_roll": STIFFNESS_A1,
+    "l_shoulder_pitch": STIFFNESS_01,
+    "r_hip_roll": STIFFNESS_A1,
+    "r_shoulder_pitch": STIFFNESS_01,
+    "l_hip_pitch": STIFFNESS_A1,
+    "l_shoulder_roll": STIFFNESS_01,
+    "r_hip_pitch": STIFFNESS_A1,
+    "r_shoulder_roll": STIFFNESS_01,
+    "l_knee": STIFFNESS_A1_KNEE,  # kp*knee_gear_ratio^2
+    "l_elbow": STIFFNESS_01_ELBOW,  # kp*elbow_gear_ratio^2
+    "r_knee": STIFFNESS_A1_KNEE,  # kp*knee_gear_ratio^2
+    "r_elbow": STIFFNESS_01_ELBOW,  # kp*elbow_gear_ratio^2
+    "l_ankle": STIFFNESS_A1,
+    "r_ankle": STIFFNESS_A1,
 }
 
 DAMPING = {
-    "l_hip_yaw": 1.0,
-    "l_shoulder_yaw": 0.5,
-    "r_hip_yaw": 1.0,
-    "r_shoulder_yaw": 0.5,
-    "l_hip_roll": 1.0,
-    "l_shoulder_pitch": 0.5,
-    "r_hip_roll": 1.0,
-    "r_shoulder_pitch": 0.5,
-    "l_hip_pitch": 1.0,
-    "l_shoulder_roll": 0.5,
-    "r_hip_pitch": 1.0,
-    "r_shoulder_roll": 0.5,
-    "l_knee": 2.0,  # kd*knee_gear_ratio^2
-    "l_elbow": 1.0,  # kd*elbow_gear_ratio^2
-    "r_knee": 2.0,  # kd*knee_gear_ratio^2
-    "r_elbow": 1.0,  # kd*elbow_gear_ratio^2
-    "l_ankle": 0.5,
-    "r_ankle": 0.5,
+    "l_hip_yaw": DAMPING_A1,
+    "l_shoulder_yaw": DAMPING_01,
+    "r_hip_yaw": DAMPING_A1,
+    "r_shoulder_yaw": DAMPING_01,
+    "l_hip_roll": DAMPING_A1,
+    "l_shoulder_pitch": DAMPING_01,
+    "r_hip_roll": DAMPING_A1,
+    "r_shoulder_pitch": DAMPING_01,
+    "l_hip_pitch": DAMPING_A1,
+    "l_shoulder_roll": DAMPING_01,
+    "r_hip_pitch": DAMPING_A1,
+    "r_shoulder_roll": DAMPING_01,
+    "l_knee": DAMPING_A1_KNEE,  # kp*knee_gear_ratio^2
+    "l_elbow": DAMPING_01_ELBOW,  # kp*elbow_gear_ratio^2
+    "r_knee": DAMPING_A1_KNEE,  # kp*knee_gear_ratio^2
+    "r_elbow": DAMPING_01_ELBOW,  # kp*elbow_gear_ratio^2
+    "l_ankle": DAMPING_A1,
+    "r_ankle": DAMPING_A1,
 }
 
 EFFORT_LIMIT = {
-    "l_hip_yaw": 33.5,
-    "l_shoulder_yaw": 17.0,
-    "r_hip_yaw": 33.5,
-    "r_shoulder_yaw": 17.0,
-    "l_hip_roll": 33.5,
-    "l_shoulder_pitch": 17.0,
-    "r_hip_roll": 33.5,
-    "r_shoulder_pitch": 17.0,
-    "l_hip_pitch": 33.5,
-    "l_shoulder_roll": 17.0,
-    "r_hip_pitch": 33.5,
-    "r_shoulder_roll": 17.0,
-    "l_knee": 67.0,  # motor_tau_max*knee_gear_ratio
-    "l_elbow": 24.089,  # motor_tau_max*elbow_gear_ratio
-    "r_knee": 67.0,  # motor_tau_max*knee_gear_ratio
-    "r_elbow": 24.089,  # motor_tau_max*elbow_gear_ratio
-    "l_ankle": 33.5,
-    "r_ankle": 33.5,
+    "l_hip_yaw": ACTUATOR_UNITREE_A1.effort_limit,
+    "l_shoulder_yaw": ACTUATOR_ROBOSTRIDE01.effort_limit,
+    "r_hip_yaw": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_shoulder_yaw": ACTUATOR_ROBOSTRIDE01.effort_limit,
+    "l_hip_roll": ACTUATOR_UNITREE_A1.effort_limit,
+    "l_shoulder_pitch": ACTUATOR_ROBOSTRIDE01.effort_limit,
+    "r_hip_roll": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_shoulder_pitch": ACTUATOR_ROBOSTRIDE01.effort_limit,
+    "l_hip_pitch": ACTUATOR_UNITREE_A1.effort_limit,
+    "l_shoulder_roll": ACTUATOR_ROBOSTRIDE01.effort_limit,
+    "r_hip_pitch": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_shoulder_roll": ACTUATOR_ROBOSTRIDE01.effort_limit,
+    "l_knee": ACTUATOR_UNITREE_A1_KNEE.effort_limit,  # kp*knee_gear_ratio^2
+    "l_elbow": ACTUATOR_ROBOSTRIDE01_ELBOW.effort_limit,  # kp*elbow_gear_ratio^2
+    "r_knee": ACTUATOR_UNITREE_A1_KNEE.effort_limit,  # kp*knee_gear_ratio^2
+    "r_elbow": ACTUATOR_ROBOSTRIDE01_ELBOW.effort_limit,  # kp*elbow_gear_ratio^2
+    "l_ankle": ACTUATOR_UNITREE_A1.effort_limit,
+    "r_ankle": ACTUATOR_UNITREE_A1.effort_limit,
 }
 
 VELOCITY_LIMIT = {
-    "l_hip_yaw": 21.0,
-    "l_shoulder_yaw": 32.0,
-    "r_hip_yaw": 21.0,
-    "r_shoulder_yaw": 32.0,
-    "l_hip_roll": 21.0,
-    "l_shoulder_pitch": 32.0,
-    "r_hip_roll": 21.0,
-    "r_shoulder_pitch": 32.0,
-    "l_hip_pitch": 21.0,
-    "l_shoulder_roll": 32.0,
-    "r_hip_pitch": 21.0,
-    "r_shoulder_roll": 32.0,
-    "l_knee": 10.5,  # motor_speed_max/knee_gear_ratio
-    "l_elbow": 22.582921665,  # motor_speed_max/elbow_gear_ratio
-    "r_knee": 10.5,  # motor_speed_max/knee_gear_ratio
-    "r_elbow": 22.582921665,  # motor_speed_max/elbow_gear_ratio
-    "l_ankle": 21.0,
-    "r_ankle": 21.0,
+    "l_hip_yaw": ACTUATOR_UNITREE_A1.velocity_limit,
+    "l_shoulder_yaw": ACTUATOR_ROBOSTRIDE01.velocity_limit,
+    "r_hip_yaw": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_shoulder_yaw": ACTUATOR_ROBOSTRIDE01.velocity_limit,
+    "l_hip_roll": ACTUATOR_UNITREE_A1.velocity_limit,
+    "l_shoulder_pitch": ACTUATOR_ROBOSTRIDE01.velocity_limit,
+    "r_hip_roll": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_shoulder_pitch": ACTUATOR_ROBOSTRIDE01.velocity_limit,
+    "l_hip_pitch": ACTUATOR_UNITREE_A1.velocity_limit,
+    "l_shoulder_roll": ACTUATOR_ROBOSTRIDE01.velocity_limit,
+    "r_hip_pitch": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_shoulder_roll": ACTUATOR_ROBOSTRIDE01.velocity_limit,
+    "l_knee": ACTUATOR_UNITREE_A1_KNEE.velocity_limit,  # kp*knee_gear_ratio^2
+    "l_elbow": ACTUATOR_ROBOSTRIDE01_ELBOW.velocity_limit,  # kp*elbow_gear_ratio^2
+    "r_knee": ACTUATOR_UNITREE_A1_KNEE.velocity_limit,  # kp*knee_gear_ratio^2
+    "r_elbow": ACTUATOR_ROBOSTRIDE01_ELBOW.velocity_limit,  # kp*elbow_gear_ratio^2
+    "l_ankle": ACTUATOR_UNITREE_A1.velocity_limit,
+    "r_ankle": ACTUATOR_UNITREE_A1.velocity_limit,
 }
 
 ARMATURE = {
-    "l_hip_yaw": 0.01,
-    "l_shoulder_yaw": 0.00414,
-    "r_hip_yaw": 0.01,
-    "r_shoulder_yaw": 0.00414,
-    "l_hip_roll": 0.01,
-    "l_shoulder_pitch": 0.00414,
-    "r_hip_roll": 0.01,
-    "r_shoulder_pitch": 0.00414,
-    "l_hip_pitch": 0.01,
-    "l_shoulder_roll": 0.00414,
-    "r_hip_pitch": 0.01,
-    "r_shoulder_roll": 0.00414,
-    "l_knee": 0.04,  # motor_speed_max/knee_gear_ratio
-    "l_elbow": 0.0093,  # motor_speed_max/elbow_gear_ratio
-    "r_knee": 0.04,  # motor_speed_max/knee_gear_ratio
-    "r_elbow": 0.0093,  # motor_speed_max/elbow_gear_ratio
-    "l_ankle": 0.01,
-    "r_ankle": 0.01,
+    "l_hip_yaw": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "l_shoulder_yaw": ACTUATOR_ROBOSTRIDE01.reflected_inertia,
+    "r_hip_yaw": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_shoulder_yaw": ACTUATOR_ROBOSTRIDE01.reflected_inertia,
+    "l_hip_roll": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "l_shoulder_pitch": ACTUATOR_ROBOSTRIDE01.reflected_inertia,
+    "r_hip_roll": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_shoulder_pitch": ACTUATOR_ROBOSTRIDE01.reflected_inertia,
+    "l_hip_pitch": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "l_shoulder_roll": ACTUATOR_ROBOSTRIDE01.reflected_inertia,
+    "r_hip_pitch": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_shoulder_roll": ACTUATOR_ROBOSTRIDE01.reflected_inertia,
+    "l_knee": ACTUATOR_UNITREE_A1_KNEE.reflected_inertia,  # kp*knee_gear_ratio^2
+    "l_elbow": ACTUATOR_ROBOSTRIDE01_ELBOW.reflected_inertia,  # kp*elbow_gear_ratio^2
+    "r_knee": ACTUATOR_UNITREE_A1_KNEE.reflected_inertia,  # kp*knee_gear_ratio^2
+    "r_elbow": ACTUATOR_ROBOSTRIDE01_ELBOW.reflected_inertia,  # kp*elbow_gear_ratio^2
+    "l_ankle": ACTUATOR_UNITREE_A1.reflected_inertia,
+    "r_ankle": ACTUATOR_UNITREE_A1.reflected_inertia,
 }
 
-MPCL = [
-    [-0.523599, 0.523599],  # l_hip_yaw_joint
-    [-1.309, 1.309],  # l_shoulder_yaw_joint
-    [-0.523599, 0.523599],  # r_hip_yaw_joint
-    [-1.309, 1.309],  # r_shoulder_yaw_joint
-    [-0.349066, 0.7900000214576721],  # l_hip_roll_joint
-    [-2.35619, 2.61799],  # l_shoulder_pitch_joint
-    [-0.7900000214576721, 0.349066],  # r_hip_roll_joint
-    [-2.35619, 2.61799],  # r_shoulder_pitch_joint
-    [-0.3, 2.1],  # l_hip_pitch_joint
-    [-1.5708, 0.0],  # l_shoulder_roll_joint
-    [-0.3, 2.1],  # r_hip_pitch_joint
-    [-0.0, 1.5708],  # r_shoulder_roll_joint
-    [-2.0, 0.0],  # l_knee_joint, joint limits * knee_gear_ratio
-    [-3.70969733, 3.70969733],  # l_elbow_joint
-    [-2.0, 0.0],  # r_knee_joint, joint limits * knee_gear_ratio
-    [-3.70969733, 3.70969733],  # r_elbow_joint
-    [-1.57, 0.7900000214576721],  # l_ankle_joint
-    [-1.57, 0.7900000214576721],  # r_ankle_joint
-]
+# 0.25 * effort / stiffness, in the same per-joint dict style
+ACTION_SCALE = {
+    name: 0.25 * EFFORT_LIMIT[name] / STIFFNESS[name]
+    for name in JOINT_NAMES_EXPR
+    if name in EFFORT_LIMIT and name in STIFFNESS and STIFFNESS[name] != 0
+}
 
 BAD_CONTACT_BODIES = [
     "torso",
@@ -210,24 +212,24 @@ END_EFFECTORS = {
         "actuated_joints": ["l_hip_yaw", "l_hip_roll", "l_hip_pitch", "l_knee", "l_ankle"],
         "links_in_chain": [
             "l_hip1",
-            "r_hip1",
             "l_hip_pitch",
             "l_thigh",
             "l_calf",
             "l_toe",
         ],
+        "commanded_contact": True,
     },
     "r_foot": {
         "body_name": "r_toe",
         "actuated_joints": ["r_hip_yaw", "r_hip_roll", "r_hip_pitch", "r_knee", "r_ankle"],
         "links_in_chain": [
             "r_hip1",
-            "l_hip1",
             "r_hip_pitch",
             "r_thigh",
             "r_calf",
             "r_toe",
         ],
+        "commanded_contact": True,
     },
     "l_wrist": {
         "body_name": "l_hand",
@@ -239,6 +241,7 @@ END_EFFECTORS = {
             "l_lower_arm",
             "l_hand",
         ],
+        "commanded_contact": False,
     },
     "r_wrist": {
         "body_name": "r_hand",
@@ -250,5 +253,6 @@ END_EFFECTORS = {
             "r_lower_arm",
             "r_hand",
         ],
+        "commanded_contact": False,
     },
 }

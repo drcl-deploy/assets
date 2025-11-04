@@ -1,3 +1,11 @@
+[project]
+name = "drcl_assets"
+version = "0.0.1"
+requires-python = ">=3.10"
+
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["source"]

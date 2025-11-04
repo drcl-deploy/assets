@@ -30,7 +30,7 @@ for loading and simulationg a model with zero ctrl, run
 
 for example,
 
-    python3 tests/load_robot_isaaclab.py --robot assets.hector_v2.feet --cfg WITHOUT_COUPLING_CFG
+    python3 tests/load_robot_isaaclab.py --robot assets.hector_v2.feet --cfg IMPLICIT_WO_COUPLING_CFG
 
 
 ### MuJoCo
@@ -56,13 +56,19 @@ then drag and drop the `.xml` model to be tested
         * `biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0"` 
         * no `ctrlrange`
         * has `frcrange` (or has `actuatorfrcrange` in the corresponding joint)
-    4. has the following sensors for the `root`  link
+        * add a name to the actuator
+    4. has the following sensors for each actuator named `<actuator_name>`, with the naming convention:
+        * `<actuator_name>_pos`  for actuator position 
+        * `<actuator_name>_vel`  for actuator velocity
+        * `<actuator_name>_frc`  for actuator force
+    5. has the following sensors for the `root`  link
         * `<framepos name="root_pos"  ..../>`
         * `<framequat name="root_quat"  ..../>`
         * `<framelinvel name="root_linvel"  ..../>`
         * `<frameangvel name="root_angvel"  ..../>`
-    5.  has the following sensors for the `imu`  link
+    6.  has the following sensors for the `imu`  link
         * `<framequat name="torso_imu_quat" ... />`
         * `<accelerometer name="torso_imu_acc" ... />`
         * `<gyro name="torso_imu_gyro" ... />`
-    6. has the equality constraint `<weld name="world_root" active="true" ... />` , set to **true** by default.
+    7. has the equality constraint `<weld name="world_root" active="true" ... />` , set to **true** by default.
+8. resuse or add `actuator parameters` by simply importing it in `actuator_params.py` and augment with `constants` you want. Do not make redundant copies inside this repo. 
