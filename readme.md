@@ -18,7 +18,11 @@ then add a global variable `SIM_ASSETS_PATH`
 
 to load as file: `SIM_ASSETS_PATH/<entity name>/.../<file_name>`
 
-to load in python code  `from assets.<entity_name>.<variant_name> import CFG, CONSTANT...`
+to load as python module  `from assets.<entity_name>.<variant_name> import CFG, CONSTANT...`
+
+> [!NOTE]
+> use assets as a python module in virtual environment only (load as module).                 
+> only use global python for ros2 deployments with `SIM_ASSETS_PATH`  (load as file)
 
 ## test
 
