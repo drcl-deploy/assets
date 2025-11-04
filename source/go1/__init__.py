@@ -1,2 +1,2 @@
-from isaaclab_assets import UNITREE_GO1_CFG
+from .go1 import UNITREE_GO1_CFG
 from .constants import *
