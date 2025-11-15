@@ -1,6 +1,6 @@
 import copy
 from dataclasses import dataclass
-from source.actuator_params import *
+from ...actuator_params import *
 
 NATURAL_FREQ = 10 * 2.0 * 3.1415926535  # 10Hz
 DAMPING_RATIO = 2.0
