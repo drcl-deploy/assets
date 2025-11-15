@@ -10,18 +10,18 @@ STIFFNESS_504736NE = ARMATURE_504736NE * NATURAL_FREQ**2
 DAMPING_504736NE = 2.0 * DAMPING_RATIO * ARMATURE_504736NE * NATURAL_FREQ
 
 JOINT_NAMES_EXPR = [
-    "r_hip_pitch_joint",
-    "r_hip_roll_joint",
-    "r_thigh_joint",
-    "r_calf_joint",
-    "r_ankle_pitch_joint",
-    "r_ankle_roll_joint",
-    "l_hip_pitch_joint",
-    "l_hip_roll_joint",
-    "l_thigh_joint",
-    "l_calf_joint",
-    "l_ankle_pitch_joint",
     "l_ankle_roll_joint",
+    "l_ankle_pitch_joint",
+    "l_calf_joint",
+    "l_thigh_joint",
+    "l_hip_roll_joint",
+    "l_hip_pitch_joint",
+    "r_ankle_roll_joint",
+    "r_ankle_pitch_joint",
+    "r_calf_joint",
+    "r_thigh_joint",
+    "r_hip_roll_joint",
+    "r_hip_pitch_joint",
 ]
 
 DEFAULT_JOINT_POS = {
