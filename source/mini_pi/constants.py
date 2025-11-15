@@ -25,17 +25,17 @@ JOINT_NAMES_EXPR = [
 ]
 
 DEFAULT_JOINT_POS = {
-    "r_hip_pitch_joint":0.0,
+    "r_hip_pitch_joint":-0.25,
     "r_hip_roll_joint":0.0,
     "r_thigh_joint":0.0,
-    "r_calf_joint":0.0,
-    "r_ankle_pitch_joint":0.0,
+    "r_calf_joint":0.65,
+    "r_ankle_pitch_joint":-0.4,
     "r_ankle_roll_joint":0.0,
-    "l_hip_pitch_joint":0.0,
+    "l_hip_pitch_joint":-0.25,
     "l_hip_roll_joint":0.0,
     "l_thigh_joint":0.0,
-    "l_calf_joint":0.0,
-    "l_ankle_pitch_joint":0.0,
+    "l_calf_joint":0.65,
+    "l_ankle_pitch_joint":-0.4,
     "l_ankle_roll_joint":0.0,
 }
 
