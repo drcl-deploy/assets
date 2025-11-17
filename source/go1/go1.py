@@ -39,19 +39,22 @@ def create_effort_limit():
             effort_limit.setdefault(".*_calf_joint", value)
     return effort_limit
 
-GO1_ACTUATOR_CFG_IDEAL = IdealPDActuatorCfg(
-    joint_names_expr=[".*_hip_joint", ".*_thigh_joint", ".*_calf_joint"],
+# GO1_ACTUATOR_CFG_IDEAL = IdealPDActuatorCfg(
+#     joint_names_expr=[".*_hip_joint", ".*_thigh_joint", ".*_calf_joint"],
     
-    velocity_limit=30.0,
-    effort_limit=create_effort_limit(),
-    stiffness=create_actuator_stiffness(),
-    damping=create_actuator_damping(),
-    armature=ARMATURE,
-    friction=0.2,
-)
+#     velocity_limit=30.0,
+#     effort_limit=create_effort_limit(),
+#     stiffness=create_actuator_stiffness(),
+#     damping=create_actuator_damping(),
+#     armature=ARMATURE,
+#     friction=0.2,
+# )
 
 UNITREE_GO1_CFG = UNITREE_GO1_CFG.copy()
 
-UNITREE_GO1_CFG.actuators={
-        "base_legs": GO1_ACTUATOR_CFG_IDEAL,
-    }
+# UNITREE_GO1_CFG.articulation_props.fix_root_link = True
+
+#Does not transfer SIM2SIM
+# UNITREE_GO1_CFG.actuators={
+#         "base_legs": GO1_ACTUATOR_CFG_IDEAL,
+#     }
