@@ -27,3 +27,6 @@ CARDBOARD_BOX_CFG = RigidObjectCfg(
         pos=(0.0, 0.0, CUBE_HEIGHT / 2), lin_vel=(0.0, 0.0, 0.0)
     ),
 )
+
+HEAVY_CARDBOARD_BOX_CFG = CARDBOARD_BOX_CFG.copy()  
+HEAVY_CARDBOARD_BOX_CFG.spawn.mass_props.mass = 10.0
