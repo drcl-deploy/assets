@@ -5,12 +5,12 @@ import os
 
 ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
 
-CUBE_SIZE = 0.4  # meters (adjust as needed)
-CUBE_HEIGHT = CUBE_SIZE  # for a cube
-CARDBOARD_BOX_CFG = RigidObjectCfg(
-    prim_path="{ENV_REGEX_NS}/Cube",
-    spawn=sim_utils.CuboidCfg(
-        size=(CUBE_SIZE, CUBE_SIZE, CUBE_HEIGHT),
+
+BASKETBALL_S5_CFG = RigidObjectCfg(
+    prim_path="{ENV_REGEX_NS}/basketball_s5",
+    spawn=sim_utils.SphereCfg(
+        # size=(CUBE_SIZE, CUBE_SIZE, CUBE_HEIGHT),
+        radius=0.1213,  # meters
         visual_material=PreviewSurfaceCfg(
             # Cardboard-like color #C19A6C → sRGB ~ (193,154,108)/255
             diffuse_color=(193/255.0, 154/255.0, 108/255.0),
@@ -24,9 +24,6 @@ CARDBOARD_BOX_CFG = RigidObjectCfg(
         activate_contact_sensors=False,
     ),
     init_state=RigidObjectCfg.InitialStateCfg(
-        pos=(0.0, 0.0, CUBE_HEIGHT / 2), lin_vel=(0.0, 0.0, 0.0)
+        pos=(0.0, 0.0, 0.1213), lin_vel=(0.0, 0.0, 0.0)
     ),
 )
-
-HEAVY_CARDBOARD_BOX_CFG = CARDBOARD_BOX_CFG.copy()  
-HEAVY_CARDBOARD_BOX_CFG.spawn.mass_props.mass = 10.0
