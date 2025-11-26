@@ -1,20 +1,21 @@
 <mujoco model="cardboard_box">
-  <compiler angle="radian"/>
+  mpiler angle="radian"/>
   <option timestep='0.001'/>
-  <option/>
-
+  
   <asset>
-    <material name="cardboard" rgba="0.7569 0.6039 0.4235 1.0"/>
+    <material name="cardboard"
+          rgba="0.7569 0.6039 0.4235 1.0"
+          reflectance="0.1"/>
   </asset>
 
   <worldbody>
-    <body name="cube" pos="1.9 -0.3 0.2">
+    <body name="cube" pos="3.0 -0.3 0.2">
       <freejoint/>
       <geom name="cube_geom"
             type="box"
             size="0.2 0.2 0.2"
             material="cardboard"
-            friction="0.3 0.005 0.0001"
+            friction="1.0 0.005 0.0001"
             mass="1.0"
             contype="1" conaffinity="1"/>
     </body>

@@ -54,8 +54,6 @@ STIFFNESS = {
     "RR_calf_joint": 50.0,
 }
 
-# for key, value in STIFFNESS.items():
-#     STIFFNESS[key] = value * 1.5  # Increase stiffness by a factor of 2
 
 DAMPING = {
     # Hip joints
@@ -77,8 +75,6 @@ DAMPING = {
     "RR_calf_joint": 1.2,
 }
 
-# for key, value in DAMPING.items():
-#     DAMPING[key] = value * 1.5  # Increase damping by a factor of 2
 
 EFFORT_LIMIT = {
     # Hip joints
