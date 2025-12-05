@@ -51,7 +51,7 @@
 		</collision>
 	</link>
 	<joint name="r_hip_pitch_joint" type="revolute">
-		<origin xyz="-5.1979E-05 -0.0233 -0.033" rpy="0 -0.25 0" />
+		<origin xyz="-5.1979E-05 -0.0233 -0.033" rpy="0 0 0" />
 		<parent link="base_link" />
 		<child link="r_hip_pitch_link" />
 		<axis xyz="0 1 0" />
@@ -141,7 +141,7 @@
 		</collision> -->
 	</link>
 	<joint name="r_calf_joint" type="revolute">
-		<origin xyz="0 -0.0027 -0.07025" rpy="0 0.65 0" />
+		<origin xyz="0 -0.0027 -0.07025" rpy="0 0 0" />
 		<parent link="r_thigh_link" />
 		<child link="r_calf_link" />
 		<axis xyz="0 1 0" />
@@ -170,7 +170,7 @@
 		</collision> -->
 	</link>
 	<joint name="r_ankle_pitch_joint" type="revolute">
-		<origin xyz="0 0 -0.14" rpy="0 -0.4 0" />
+		<origin xyz="0 0 -0.14" rpy="0 0 0" />
 		<parent link="r_calf_link" />
 		<child link="r_ankle_pitch_link" />
 		<axis xyz="0 1 0" />
@@ -229,7 +229,7 @@
 		</collision>
 	</link>
 	<joint name="l_hip_pitch_joint" type="revolute">
-		<origin xyz="-5.1979E-05 0.0233 -0.033" rpy="0 -0.25 0" />
+		<origin xyz="-5.1979E-05 0.0233 -0.033" rpy="0 0 0" />
 		<parent link="base_link" />
 		<child link="l_hip_pitch_link" />
 		<axis xyz="0 1 0" />
@@ -319,7 +319,7 @@
 		</collision> -->
 	</link>
 	<joint name="l_calf_joint" type="revolute">
-		<origin xyz="0 0 -0.07025" rpy="0 0.65 0" />
+		<origin xyz="0 0 -0.07025" rpy="0 0 0" />
 		<parent link="l_thigh_link" />
 		<child link="l_calf_link" />
 		<axis xyz="0 1 0" />
@@ -348,7 +348,7 @@
 		</collision> -->
 	</link>
 	<joint name="l_ankle_pitch_joint" type="revolute">
-		<origin xyz="0 0 -0.14" rpy="0 -0.4 0" />
+		<origin xyz="0 0 -0.14" rpy="0 0 0" />
 		<parent link="l_calf_link" />
 		<child link="l_ankle_pitch_link" />
 		<axis xyz="0 1 0" />
