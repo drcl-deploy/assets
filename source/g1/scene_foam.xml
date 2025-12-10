@@ -1,0 +1,5 @@
+<mujoco model="g1_foam">
+<include file="../terrain/flat_ground.xml"/>
+<include file="../foam_block/soft_foam.xml"/>
+<include file="g1_bm.xml"/>
+</mujoco>

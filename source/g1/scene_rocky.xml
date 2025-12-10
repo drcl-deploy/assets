@@ -1,0 +1,4 @@
+<mujoco model="g1_rocky">
+<include file="../terrain/rocky_ground.xml"/>
+<include file="g1_bm.xml"/>
+</mujoco>
