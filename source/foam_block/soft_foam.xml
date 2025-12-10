@@ -1,0 +1,27 @@
+<mujoco model="soft_foam">
+
+    <compiler angle="radian"/>
+
+    <worldbody>
+        <flexcomp
+            type="grid"
+            name="softbody"
+            dim="3"
+            count="8 5 2"
+            spacing="0.3 0.3 0.1"
+            pos="0 0 0"
+            radius="0.02"
+            mass="20"
+            rgba="0 .7 .7 1">
+
+            <contact
+                condim="3"
+                solref="0.04 2.5"
+                solimp="0.62 0.92 0.015"
+                selfcollide="none"/>
+
+            <elasticity young="5e4" poisson="0.1"/>
+        </flexcomp>
+    </worldbody>
+
+</mujoco>
