@@ -93,9 +93,9 @@
 
   <link name="left_hip_pitch_joint">
     <inertial>
-      <origin xyz="0.0001 0.03687 -0.09013" rpy="0 0 0"/>
+      <origin xyz="0.000077 0.022843 -0.090984" rpy="0 0 0"/>
       <mass value="0.9856"/>
-      <inertia ixx="0.003092" iyy="0.003075" izz="0.00060" ixy="0" ixz="0" iyz="0"/>
+      <inertia ixx="0.006125" iyy="0.005941" izz="0.000571" ixy="0" ixz="0" iyz="0"/>
     </inertial>
     <visual>
       <geometry>
@@ -257,9 +257,9 @@
 
   <link name="right_hip_pitch_joint">
     <inertial>
-      <origin xyz="0.0001 -0.03687 -0.09013" rpy="0 0 0"/>
+      <origin xyz="0.000077 -0.022843 -0.090984" rpy="0 0 0"/>
       <mass value="0.9856"/>
-      <inertia ixx="0.003092" iyy="0.003075" izz="0.00060" ixy="0" ixz="0" iyz="0"/>
+      <inertia ixx="0.006125" iyy="0.005941" izz="0.000571" ixy="0" ixz="0" iyz="0"/>
     </inertial>
     <visual>
       <geometry>
