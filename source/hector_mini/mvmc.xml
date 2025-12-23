@@ -44,7 +44,7 @@
           <joint name="left_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1"/>
           <geom type="mesh" material="metal_silver" mesh="left_hip2"/>
           <body name="left_hip_pitch_joint" pos="0.04875 0.0155 0" quat="0.9238795 0 -0.3826834 0">
-            <inertial pos="0.000077 0.022843 -0.090984" quat="1 0 0 0" mass="0.9856" diaginertia="0.006125 0.005941 0.000571"/>
+            <inertial pos="0.000077 0.022843 -0.090984" quat="1 0 0 0" mass="0.5" diaginertia="0.006125 0.005941 0.000571"/>
             <joint name="left_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
             <geom type="mesh" material="metal_silver" mesh="left_thigh"/>
             <!-- <geom type="mesh" material="metal_silver" mesh="left_thigh"/> -->
@@ -81,7 +81,7 @@
           <joint name="right_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1"/>
           <geom type="mesh" material="metal_silver" mesh="right_hip2"/>
           <body name="right_hip_pitch_joint" pos="0.04875 -0.0155 0" quat="0.9238795 0 -0.3826834 0">
-            <inertial pos="0.000077 -0.022843 -0.090984" quat="1 0 0 0" mass="0.9856" diaginertia="0.006125 0.005941 0.000571"/>
+            <inertial pos="0.000077 -0.022843 -0.090984" quat="1 0 0 0" mass="0.5" diaginertia="0.006125 0.005941 0.000571"/>
             <joint name="right_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
             <geom type="mesh" material="metal_silver" mesh="right_thigh"/>
             <!-- <geom type="mesh" material="metal_silver" mesh="right_thigh"/> -->
