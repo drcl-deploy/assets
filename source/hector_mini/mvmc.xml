@@ -44,7 +44,7 @@
           <joint name="left_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1"/>
           <geom type="mesh" material="metal_silver" mesh="left_hip2"/>
           <body name="left_hip_pitch_joint" pos="0.04875 0.0155 0" quat="0.9238795 0 -0.3826834 0">
-            <inertial pos="0.0001 0.03687 -0.09013" quat="1 0 0 0" mass="0.9856" diaginertia="0.003092 0.003075 0.00060"/>
+            <inertial pos="0.000077 0.022843 -0.090984" quat="1 0 0 0" mass="0.9856" diaginertia="0.006125 0.005941 0.000571"/>
             <joint name="left_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
             <geom type="mesh" material="metal_silver" mesh="left_thigh"/>
             <!-- <geom type="mesh" material="metal_silver" mesh="left_thigh"/> -->
@@ -53,7 +53,7 @@
               <joint name="left_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
               <geom type="mesh" material="metal_silver" mesh="left_bracket"/>
               <body name="left_calf_link" pos="0 0 -0.051">
-                <inertial pos="0.005608 0.001267 -0.04554" quat="1 0 0 0" mass="0.1464" diaginertia="0.00047 0.000476 0.000035"/>
+                <inertial pos="0.00448557 0.00019276 -0.03346255" quat="1 0 0 0" mass="0.16835497" diaginertia="0.00064782 0.00067324 0.00005282"/>
                 <joint name="left_calf_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
                 <geom type="mesh" material="metal_silver" mesh="left_calf"/>
                 <body name="left_ankle_link" pos="0 0 -0.18">
@@ -81,7 +81,7 @@
           <joint name="right_hip_roll_joint" pos="0 0 0" axis="1 0 0" damping="0.0" range="-1 1"/>
           <geom type="mesh" material="metal_silver" mesh="right_hip2"/>
           <body name="right_hip_pitch_joint" pos="0.04875 -0.0155 0" quat="0.9238795 0 -0.3826834 0">
-            <inertial pos="0.0001 -0.03687 -0.09013" quat="1 0 0 0" mass="0.9856" diaginertia="0.003092 0.003075 0.00060"/>
+            <inertial pos="0.000077 -0.022843 -0.090984" quat="1 0 0 0" mass="0.9856" diaginertia="0.006125 0.005941 0.000571"/>
             <joint name="right_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
             <geom type="mesh" material="metal_silver" mesh="right_thigh"/>
             <!-- <geom type="mesh" material="metal_silver" mesh="right_thigh"/> -->
@@ -90,7 +90,7 @@
               <joint name="right_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
               <geom type="mesh" material="metal_silver" mesh="right_bracket"/>
               <body name="right_calf_link" pos="0 0 -0.051">
-                <inertial pos="0.005608 -0.001267 -0.04554" quat="1 0 0 0" mass="0.1464" diaginertia="0.00047 0.000476 0.000035"/>
+                <inertial pos="0.00448557 -0.00019276 -0.03346255" quat="1 0 0 0" mass="0.16835497" diaginertia="0.00064782 0.00067324 0.00005282"/>
                 <joint name="right_calf_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
                 <geom type="mesh" material="metal_silver" mesh="right_calf"/>
                 <body name="right_ankle_link" pos="0 0 -0.18">
