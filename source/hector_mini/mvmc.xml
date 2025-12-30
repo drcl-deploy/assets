@@ -23,13 +23,17 @@
   </asset>
 
   <default>
-    <!-- robstride_01 / 02 -->
-    <joint damping="0.01" armature="0.01" frictionloss="0.1" actuatorfrcrange="-17 17"/>
-    <general biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0" forcerange="-17.0 17.0"/>
+    <default class="robstride_01_joint">
+      <joint axis="0 1 0" armature="0.0042 " frictionloss="0.0" damping="0.1" actuatorfrcrange="-17 17"/>
+    </default>
+
+    <default class="robstride_01_actuator">
+      <general biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0" forcerange="-17.0 17.0"/>
+    </default>
   </default>
 
   <worldbody>
-    <body name="body" pos="0 0 0.64">
+    <body name="body" pos="0 0 0.64" childclass="robstride_01_joint">
       <inertial pos="0.031602 0.0 -0.022894" quat="1 0 0 0" mass="1.8" diaginertia="0.008616 0.009058 0.005317"/>
       <joint name="floating_base_joint" type="free" limited="false" actuatorfrclimited="false"/>
       <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="body"/>
@@ -114,16 +118,18 @@
 
 
   <actuator>
-    <general name="left_hip_yaw" joint="left_hip_yaw_joint" />
-    <general name="left_hip_roll" joint="left_hip_roll_joint" />
-    <general name="left_hip_pitch" joint="left_hip_pitch_joint" />
-    <general name="left_knee" joint="left_knee_joint" />
-    <general name="left_ankle" joint="left_ankle_joint" />
-    <general name="right_hip_yaw" joint="right_hip_yaw_joint" />
-    <general name="right_hip_roll" joint="right_hip_roll_joint" />
-    <general name="right_hip_pitch" joint="right_hip_pitch_joint" />
-    <general name="right_knee" joint="right_knee_joint" />
-    <general name="right_ankle" joint="right_ankle_joint" />
+    <general class="robstride_01_actuator" name="left_hip_yaw" joint="left_hip_yaw_joint" />
+    <general class="robstride_01_actuator" name="left_hip_roll" joint="left_hip_roll_joint" />
+    <general class="robstride_01_actuator" name="left_hip_pitch" joint="left_hip_pitch_joint" />
+    <general class="robstride_01_actuator" name="left_knee" joint="left_knee_joint" />
+    <general class="robstride_01_actuator" name="left_calf" joint="left_calf_joint" />
+    <general class="robstride_01_actuator" name="left_ankle" joint="left_ankle_joint" />
+    <general class="robstride_01_actuator" name="right_hip_yaw" joint="right_hip_yaw_joint" />
+    <general class="robstride_01_actuator" name="right_hip_roll" joint="right_hip_roll_joint" />
+    <general class="robstride_01_actuator" name="right_hip_pitch" joint="right_hip_pitch_joint" />
+    <general class="robstride_01_actuator" name="right_knee" joint="right_knee_joint" />
+    <general class="robstride_01_actuator" name="right_calf" joint="right_calf_joint" />
+    <general class="robstride_01_actuator" name="right_ankle" joint="right_ankle_joint" />
   </actuator>
 
 
@@ -136,8 +142,8 @@
     <!-- constraint to weld the root to the world, fixed base -->
     <weld name="world_root" active="true" body1="body" relpose="0 0 -0.7 1 0 0 0"/> 
     <!-- constraint to couple the left hip pitch and left knee joints -->
-    <joint name="left_pitch_knee" joint1="left_knee_joint" joint2="left_calf_joint" polycoef="0 1 0 0 0"/>
-    <joint name="right_pitch_knee" joint1="right_knee_joint" joint2="right_calf_joint" polycoef="0 1 0 0 0"/>
+    <!-- <joint name="left_pitch_knee" joint1="left_knee_joint" joint2="left_calf_joint" polycoef="0 1 0 0 0"/>
+    <joint name="right_pitch_knee" joint1="right_knee_joint" joint2="right_calf_joint" polycoef="0 1 0 0 0"/> -->
   </equality>
 
   <sensor>
@@ -156,33 +162,39 @@
     <jointpos name="left_hip_roll_pos" joint="left_hip_roll_joint" />
     <jointpos name="left_hip_pitch_pos" joint="left_hip_pitch_joint" />
     <jointpos name="left_knee_pos" joint="left_knee_joint" />
+    <jointpos name="left_calf_pos" joint="left_calf_joint" />
     <jointpos name="left_ankle_pos" joint="left_ankle_joint" />
     <jointpos name="right_hip_yaw_pos" joint="right_hip_yaw_joint" />
     <jointpos name="right_hip_roll_pos" joint="right_hip_roll_joint" />
     <jointpos name="right_hip_pitch_pos" joint="right_hip_pitch_joint" />
     <jointpos name="right_knee_pos" joint="right_knee_joint" />
+    <jointpos name="right_calf_pos" joint="right_calf_joint" />
     <jointpos name="right_ankle_pos" joint="right_ankle_joint" />
 
     <jointvel name="left_hip_yaw_vel" joint="left_hip_yaw_joint" />
     <jointvel name="left_hip_roll_vel" joint="left_hip_roll_joint" />
     <jointvel name="left_hip_pitch_vel" joint="left_hip_pitch_joint" />
     <jointvel name="left_knee_vel" joint="left_knee_joint" />
+    <jointvel name="left_calf_vel" joint="left_calf_joint" />
     <jointvel name="left_ankle_vel" joint="left_ankle_joint" />
     <jointvel name="right_hip_yaw_vel" joint="right_hip_yaw_joint" />
     <jointvel name="right_hip_roll_vel" joint="right_hip_roll_joint" />
     <jointvel name="right_hip_pitch_vel" joint="right_hip_pitch_joint" />
     <jointvel name="right_knee_vel" joint="right_knee_joint" />
+    <jointvel name="right_calf_vel" joint="right_calf_joint" />
     <jointvel name="right_ankle_vel" joint="right_ankle_joint" />
 
     <jointactuatorfrc name="left_hip_yaw_frc" joint="left_hip_yaw_joint" />
     <jointactuatorfrc name="left_hip_roll_frc" joint="left_hip_roll_joint" />
     <jointactuatorfrc name="left_hip_pitch_frc" joint="left_hip_pitch_joint" />
     <jointactuatorfrc name="left_knee_frc" joint="left_knee_joint" />
+    <jointactuatorfrc name="left_calf_frc" joint="left_calf_joint" />
     <jointactuatorfrc name="left_ankle_frc" joint="left_ankle_joint" />
     <jointactuatorfrc name="right_hip_yaw_frc" joint="right_hip_yaw_joint" />
     <jointactuatorfrc name="right_hip_roll_frc" joint="right_hip_roll_joint" />
     <jointactuatorfrc name="right_hip_pitch_frc" joint="right_hip_pitch_joint" />
     <jointactuatorfrc name="right_knee_frc" joint="right_knee_joint" />
+    <jointactuatorfrc name="right_calf_frc" joint="right_calf_joint" />
     <jointactuatorfrc name="right_ankle_frc" joint="right_ankle_joint" />
 
   </sensor>
