@@ -17,8 +17,6 @@ JOINT_NAMES_EXPR = [
     "right_hip_pitch_joint",
     "left_knee_joint",
     "right_knee_joint",
-    # "left_calf_joint",
-    # "right_calf_joint",
     "left_ankle_joint",
     "right_ankle_joint",
 ]
@@ -32,8 +30,6 @@ DEFAULT_JOINT_POS = {
     "right_hip_pitch_joint": -0.4,  # 8
     "left_knee_joint": 0.5,  # 3
     "right_knee_joint": 0.5,  # 14
-    # "left_calf_joint": 0.1,  # 4
-    # "right_calf_joint": 0.1,  # 9
     "left_ankle_joint": -0.3,  # 5
     "right_ankle_joint": -0.3,  # 10
 }
@@ -47,8 +43,6 @@ STIFFNESS = {
     "right_hip_pitch_joint": STIFFNESS_02,
     "left_knee_joint": STIFFNESS_02,
     "right_knee_joint": STIFFNESS_02,
-    # "left_calf_joint": STIFFNESS_02,
-    # "right_calf_joint": STIFFNESS_02,
     "left_ankle_joint": STIFFNESS_02,
     "right_ankle_joint": STIFFNESS_02,
 }
@@ -62,8 +56,6 @@ DAMPING = {
     "right_hip_pitch_joint": DAMPING_02,
     "left_knee_joint": DAMPING_02,
     "right_knee_joint": DAMPING_02,
-    # "left_calf_joint": DAMPING_02,
-    # "right_calf_joint": DAMPING_02,
     "left_ankle_joint": DAMPING_02,
     "right_ankle_joint": DAMPING_02,
 }
@@ -77,8 +69,6 @@ EFFORT_LIMIT = {
     "right_hip_pitch_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
     "left_knee_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
     "right_knee_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
-    # "left_calf_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
-    # "right_calf_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
     "left_ankle_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
     "right_ankle_joint": ACTUATOR_ROBOSTRIDE02.effort_limit,
 }
@@ -92,8 +82,6 @@ VELOCITY_LIMIT = {
     "right_hip_pitch_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
     "left_knee_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
     "right_knee_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
-    # "left_calf_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
-    # "right_calf_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
     "left_ankle_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
     "right_ankle_joint": ACTUATOR_ROBOSTRIDE02.velocity_limit,
 }
@@ -108,8 +96,6 @@ ARMATURE = {
     "right_hip_pitch_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
     "left_knee_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
     "right_knee_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
-    # "left_calf_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
-    # "right_calf_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
     "left_ankle_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
     "right_ankle_joint": ACTUATOR_ROBOSTRIDE02.reflected_inertia,
 }

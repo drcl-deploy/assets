@@ -142,8 +142,8 @@
     <!-- constraint to weld the root to the world, fixed base -->
     <weld name="world_root" active="true" body1="body" relpose="0 0 -0.7 1 0 0 0"/> 
     <!-- constraint to couple the left hip pitch and left knee joints -->
-    <!-- <joint name="left_pitch_knee" joint1="left_knee_joint" joint2="left_calf_joint" polycoef="0 1 0 0 0"/>
-    <joint name="right_pitch_knee" joint1="right_knee_joint" joint2="right_calf_joint" polycoef="0 1 0 0 0"/> -->
+    <joint name="left_pitch_knee" joint1="left_knee_joint" joint2="left_calf_joint" polycoef="0 1 0 0 0"/>
+    <joint name="right_pitch_knee" joint1="right_knee_joint" joint2="right_calf_joint" polycoef="0 1 0 0 0"/>
   </equality>
 
   <sensor>
