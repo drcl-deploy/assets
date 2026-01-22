@@ -4,13 +4,12 @@ from isaaclab.sim.spawners.materials import PreviewSurfaceCfg, RigidBodyMaterial
 import os
 
 ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
-BALL_SIZE = 0.1213  # meters (standard basketball radius)
+BALL_RADIUS = 0.1213  # meters (standard basketball size5 radius)
 
-BASKETBALL_S5_CFG = RigidObjectCfg(
+BASKETBALL_CFG = RigidObjectCfg(
     prim_path="{ENV_REGEX_NS}/basketball_s5",
     spawn=sim_utils.SphereCfg(
-        # size=(CUBE_SIZE, CUBE_SIZE, CUBE_HEIGHT),
-        radius=BALL_SIZE,  # meters
+        radius=BALL_RADIUS,  # meters
         visual_material=PreviewSurfaceCfg(
             # Cardboard-like color #C19A6C → sRGB ~ (193,154,108)/255
             diffuse_color=(193 / 255.0, 154 / 255.0, 108 / 255.0),
