@@ -1,5 +1,6 @@
 <mujoco model="g1">
     <compiler angle="radian" meshdir="./meshes/"/>
+
     <default>
         <general biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0"/>
         <default class="g1">
@@ -131,7 +132,7 @@
     </asset>
 
     <worldbody>
-        <body name="pelvis" pos="0 0 1.0" childclass="g1">
+        <body name="pelvis" pos="0 0 0.793" childclass="g1">
             <inertial pos="0 0 -0.07605" quat="1 0 -0.000399148 0" mass="3.813" diaginertia="0.010549 0.0093089 0.0079184"/>
             <freejoint name="floating_base_joint"/>
             <geom class="visual" material="black" mesh="pelvis"/>
@@ -426,6 +427,8 @@
         <!-- root sensors -->
         <framepos name="root_pos" objtype="body" objname="pelvis"/>
         <framequat name="root_quat" objtype="body" objname="pelvis"/>
+        <framepos name="torso_pos" objtype="body" objname="torso_link"/>
+        <framequat name="torso_quat" objtype="body" objname="torso_link"/>
         <framelinvel name="root_linvel" objtype="body" objname="pelvis"/>
         <frameangvel name="root_angvel" objtype="body" objname="pelvis"/>
 
@@ -523,5 +526,20 @@
     <equality>
 		<weld name="world_root" active="true" body1="pelvis" relpose="0 0 -1.0 1 0 0 0"/> 
 	</equality>
+
+    <keyframe>
+      <key name="home" qpos="
+      0 0 0.79
+      1 0 0 0
+      0 0 0 0 0 0 0 0 0 0
+      0 0 0 0 0 0 0 0 0 0
+      0 0 0 0 0 0 0 0 0
+      "
+      ctrl="
+      0 0 0 0 0 0 0 0 0 0
+      0 0 0 0 0 0 0 0 0 0
+      0 0 0 0 0 0 0 0 0
+      "/>
+    </keyframe>
 
 </mujoco>
