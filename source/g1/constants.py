@@ -357,3 +357,9 @@ END_EFFECTORS = {
     },
 
 }
+
+ACTION_SCALE = {
+    name: 0.25 * EFFORT_LIMIT[name] / STIFFNESS[name]
+    for name in JOINT_NAMES_EXPR
+    if name in EFFORT_LIMIT and name in STIFFNESS and STIFFNESS[name] != 0
+}
