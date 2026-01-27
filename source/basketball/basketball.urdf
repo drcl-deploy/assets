@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot name="basketball">
+
+  <link name="ball_link">
+    
+    <inertial>
+      <mass value="0.485"/>
+      <inertia ixx="0.002347" ixy="0.0" ixz="0.0" iyy="0.002347" iyz="0.0" izz="0.002347"/>
+    </inertial>
+
+    <visual>
+      <geometry>
+        <sphere radius="0.16"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <geometry>
+        <sphere radius="0.16"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0.6</mu>
+            <mu2>0.6</mu2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <kp>1000000.0</kp>
+            <kd>1.0</kd>
+            <max_vel>100.0</max_vel>
+            <min_depth>0.001</min_depth>
+          </ode>
+        </contact>
+      </surface>
+    </collision>
+    
+  </link>
+</robot>
