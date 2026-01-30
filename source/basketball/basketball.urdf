@@ -4,7 +4,7 @@
   <link name="ball_link">
     
     <inertial>
-      <mass value="0.485"/>
+      <mass value="0.62369"/>
       <inertia ixx="0.002347" ixy="0.0" ixz="0.0" iyy="0.002347" iyz="0.0" izz="0.002347"/>
     </inertial>
 
