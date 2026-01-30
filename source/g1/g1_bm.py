@@ -172,7 +172,12 @@ G1_BM_CFG = ArticulationCfg(
     },
 )
 
+G1_BM_HAND_MESH_CFG = G1_BM_CFG.copy()
+G1_BM_HAND_MESH_CFG.spawn.asset_path = os.path.join(ASSETS_DIR, "g1/g1_bm_hand_mesh.urdf")
+G1_BM_HAND_MESH_CFG.spawn.collider_type = "convex_decomposition"
+
 G1_BM_ACTION_SCALE = {}
+
 for a in G1_BM_CFG.actuators.values():
     e = a.effort_limit_sim
     s = a.stiffness
