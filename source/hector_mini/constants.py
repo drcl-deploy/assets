@@ -26,12 +26,12 @@ DEFAULT_JOINT_POS = {
     "right_hip_yaw_joint": 0.0,  # 6
     "left_hip_roll_joint": 0.0,  # 1
     "right_hip_roll_joint": 0.0,  # 7
-    "left_hip_pitch_joint": -0.4,  # 2
-    "right_hip_pitch_joint": -0.4,  # 8
-    "left_knee_joint": 0.5,  # 3
-    "right_knee_joint": 0.5,  # 14
-    "left_ankle_joint": -0.5,  # 5
-    "right_ankle_joint": -0.5,  # 10
+    "left_hip_pitch_joint": -0.6,  # 2
+    "right_hip_pitch_joint": -0.6,  # 8
+    "left_knee_joint": 0.7,  # 3
+    "right_knee_joint": 0.7,  # 14
+    "left_ankle_joint": -0.6,  # 5
+    "right_ankle_joint": -0.6,  # 10
 }
 
 STIFFNESS = {
