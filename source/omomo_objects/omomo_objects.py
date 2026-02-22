@@ -12,9 +12,7 @@ dir_path = Path(__file__).parent
 def create_rigid_object_cfg(folder_name: str):
     """Create a RigidObjectCfg for a given folder."""
     print("asset_path: ", os.path.join(ASSETS_DIR, folder_name, folder_name + ".urdf")  )
-    return RigidObjectCfg(
-    prim_path="{ENV_REGEX_NS}/" + folder_name,
-    spawn=sim_utils.UrdfFileCfg(
+    return sim_utils.UrdfFileCfg(
                                 fix_base=False,
                                 replace_cylinders_with_capsules=True,
                                 asset_path=os.path.join(ASSETS_DIR,'omomo_objects', folder_name, folder_name + ".urdf"),
@@ -32,15 +30,28 @@ def create_rigid_object_cfg(folder_name: str):
                                         stiffness=0, damping=0
                                     )
                                 ),
-                            ),
-                            init_state=RigidObjectCfg.InitialStateCfg(
-                                pos=(0.0, 0.0, 0.1213), lin_vel=(0.0, 0.0, 0.0)
-                            ),
-                        )
-
+                            )
 # Build config dictionary
 OBJECT_CONFIGS = {}
 for folder in os.listdir(dir_path):
     folder_path = dir_path / folder
     if folder_path.is_dir() and not folder.startswith('__'):
         OBJECT_CONFIGS[folder.upper()] = create_rigid_object_cfg(folder)
+
+
+# remove eveyrthing that has a box in the name
+
+OMOMO_OBJECTS_CFG = RigidObjectCfg(
+                                    prim_path="{ENV_REGEX_NS}/Object",
+                                    spawn=sim_utils.MultiAssetSpawnerCfg(
+                                                    assets_cfg=list(OBJECT_CONFIGS.values()),
+                                                    # randomize_position=False,
+                                                    # randomize_rotation=False,
+                                                    # randomize_scale=False,
+                                                    random_choice=True,
+                                                ),
+                                    init_state=RigidObjectCfg.InitialStateCfg(
+                                        pos=(0.0, 0.0, 0.1213), lin_vel=(0.0, 0.0, 0.0)
+                                    ),
+                                )
+
