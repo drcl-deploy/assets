@@ -13,10 +13,10 @@ parser = argparse.ArgumentParser(
     description="This script loads omomo objects and simulates them in isaaclab"
 )
 parser.add_argument(
-    "--object",
-    type=str,
-    default=None,
-    help="Specific object to load (e.g. 'CHAIR'). If not provided, loads all objects.",
+    "--num_objects",
+    type=int,
+    default=30,
+    help="Number of object instances to spawn (default: 30)",
 )
 
 # append AppLauncher cli args
@@ -38,7 +38,7 @@ from isaaclab.sim import SimulationContext
 
 sys.path.append("./")
 
-from source.omomo_objects.omomo_objects import OBJECT_CONFIGS
+from source.omomo_objects.omomo_objects import OMOMO_OBJECTS_CFG
 
 
 def main():
@@ -53,7 +53,7 @@ def main():
         )
     )
     # Set main camera
-    sim.set_camera_view(eye=[5.0, 5.0, 5.0], target=[0.0, 0.0, 0.0])
+    sim.set_camera_view(eye=[10.0, 10.0, 8.0], target=[0.0, 0.0, 0.0])
 
     # Spawn things into stage
     # Ground-plane
@@ -63,21 +63,8 @@ def main():
     cfg = sim_utils.DomeLightCfg(intensity=2000.0, color=(0.75, 0.75, 0.75))
     cfg.func("/World/Light", cfg)
 
-    # Get objects to load
-    if args_cli.object:
-        # Load specific object
-        object_name = args_cli.object.upper()
-        if object_name not in OBJECT_CONFIGS:
-            print(f"[ERROR]: Object '{object_name}' not found in OBJECT_CONFIGS")
-            print(f"Available objects: {list(OBJECT_CONFIGS.keys())}")
-            exit(1)
-        objects_to_load = {object_name: OBJECT_CONFIGS[object_name]}
-    else:
-        # Load all objects
-        objects_to_load = OBJECT_CONFIGS
-
-    n_objects = len(objects_to_load)
-    print(f"[INFO]: Loading {n_objects} objects: {list(objects_to_load.keys())}")
+    n_objects = args_cli.num_objects
+    print(f"[INFO]: Spawning {n_objects} random object instances")
 
     # Calculate grid layout (closest to square)
     n_cols = int(math.ceil(math.sqrt(n_objects)))
@@ -95,22 +82,14 @@ def main():
 
     origins = torch.tensor(origins, device=sim.device)
 
-    # Load objects
+    # Spawn objects using MultiAssetSpawnerCfg (random selection)
+    # Create multiple prim paths for each instance
     rigid_objects = []
-    object_names = []
-    
-    for idx, (name, obj_cfg) in enumerate(objects_to_load.items()):
-        try:
-            obj = RigidObject(obj_cfg.replace(prim_path=f"/World/object_{idx}"))
-            rigid_objects.append(obj)
-            object_names.append(name)
-            print(f"[INFO]: Loaded object {idx}: {name}")
-        except Exception as e:
-            print(f"[WARNING]: Failed to load {name}: {e}")
-
-    if not rigid_objects:
-        print("[ERROR]: No objects were loaded successfully")
-        exit(1)
+    for idx in range(n_objects):
+        obj_cfg = OMOMO_OBJECTS_CFG.replace(prim_path=f"/World/Object_{idx}")
+        obj = RigidObject(obj_cfg)
+        rigid_objects.append(obj)
+        print(f"[INFO]: Spawned object instance {idx}")
 
     # Play the simulator
     sim.reset()
@@ -121,16 +100,12 @@ def main():
 
     # Print object information
     print(f"\n{'='*60}")
-    print(f"Loaded {len(rigid_objects)} objects:")
+    print(f"Spawned {len(rigid_objects)} random object instances")
+    print(f"Grid: {n_rows} rows x {n_cols} cols, spacing: {spacing}m")
     print(f"{'='*60}")
-    
-    for idx, (obj, name) in enumerate(zip(rigid_objects, object_names)):
-        print(f"\nObject {idx}: {name}")
-        print(f"  Position: {origins[idx].tolist()}")
-        print(f"  Bodies: {obj.body_names}")
-        if hasattr(obj.data, 'default_mass'):
-            total_mass = obj.data.default_mass.sum().item()
-            print(f"  Total mass: {total_mass:.4f} kg")
+
+    for idx, obj in enumerate(rigid_objects):
+        print(f"  Object {idx}: pos={origins[idx].tolist()}, bodies={obj.body_names}")
 
     print(f"\n{'='*60}")
     print("Simulation running. Close the window to exit.")
@@ -139,7 +114,7 @@ def main():
     sim_dt = sim.get_physics_dt()
     sim_time = 0.0
     count = 0
-    reset_interval = 500  # Reset every N steps
+    reset_interval = 100  # Reset every N steps
 
     while simulation_app.is_running():
         # Reset periodically
@@ -148,7 +123,7 @@ def main():
             for idx, obj in enumerate(rigid_objects):
                 # Reset object state
                 root_state = obj.data.default_root_state.clone()
-                root_state[:, :3] += origins[idx]
+                root_state[:, :3] = origins[idx]
                 obj.write_root_state_to_sim(root_state)
                 obj.reset()
             print(f"[INFO]: Reset at step {count}")
