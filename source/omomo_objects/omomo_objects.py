@@ -45,10 +45,8 @@ OMOMO_OBJECTS_CFG = RigidObjectCfg(
                                     prim_path="{ENV_REGEX_NS}/Object",
                                     spawn=sim_utils.MultiAssetSpawnerCfg(
                                                     assets_cfg=list(OBJECT_CONFIGS.values()),
-                                                    # randomize_position=False,
-                                                    # randomize_rotation=False,
-                                                    # randomize_scale=False,
-                                                    random_choice=True,
+                                                    random_choice=False,
+                                                    semantic_tags=list( (("class", folder_name) for folder_name in OBJECT_CONFIGS.keys()) )
                                                 ),
                                     init_state=RigidObjectCfg.InitialStateCfg(
                                         pos=(0.0, 0.0, 0.1213), lin_vel=(0.0, 0.0, 0.0)

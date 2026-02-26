@@ -1,32 +1,40 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <robot name="largebox">
-  <dynamics damping="0.5" friction="0.9"/>
-  <link name="largebox_link">
+
+  <link name="base_link">
+    
     <inertial>
-      <mass value="0.1"/>
-      <origin xyz="0 0 0"/>
-      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      <mass value="1.00000"/>
+      <inertia ixx="0.029720" ixy="0.0" ixz="0.0" iyy="0.002547" iyz="0.0" izz="-0.008531"/>
     </inertial>
-    <contact>
-      <lateral_friction value="0.9"/>
-      <rolling_friction value="0.5"/>
-      <stiffness value="30000"/>
-      <damping value="1000"/>
-    </contact>
+
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="largebox.obj" scale="1.0 1.0 1.0"/>
+        <mesh filename="largebox.obj"/>
       </geometry>
-       <material name="mat">
-        <color rgba="0.7 0.8 0.9 0.7"/>
-      </material>
     </visual>
-    <collision name="largebox">
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+
+    <collision>
       <geometry>
-        <mesh filename="largebox.obj" scale="1.0 1.0 1.0"/>
+        <mesh filename="largebox.obj"/>
       </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0.6</mu>
+            <mu2>0.6</mu2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <kp>1000000.0</kp>
+            <kd>1.0</kd>
+            <max_vel>100.0</max_vel>
+            <min_depth>0.001</min_depth>
+          </ode>
+        </contact>
+      </surface>
     </collision>
+    
   </link>
 </robot>
