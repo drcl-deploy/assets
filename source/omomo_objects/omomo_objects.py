@@ -46,7 +46,8 @@ OMOMO_OBJECTS_CFG = RigidObjectCfg(
                                     spawn=sim_utils.MultiAssetSpawnerCfg(
                                                     assets_cfg=list(OBJECT_CONFIGS.values()),
                                                     random_choice=False,
-                                                    semantic_tags=list( (("class", folder_name) for folder_name in OBJECT_CONFIGS.keys()) )
+                                                    semantic_tags=list( (("class", folder_name) for folder_name in OBJECT_CONFIGS.keys()) ),
+                                                    activate_contact_sensors=True
                                                 ),
                                     init_state=RigidObjectCfg.InitialStateCfg(
                                         pos=(0.0, 0.0, 0.1213), lin_vel=(0.0, 0.0, 0.0)
