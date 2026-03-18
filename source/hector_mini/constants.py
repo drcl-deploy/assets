@@ -8,16 +8,29 @@ STIFFNESS_02 = ARMATURE_ROBOSTRIDE02 * NATURAL_FREQ**2
 
 DAMPING_02 = 2.0 * DAMPING_RATIO * ARMATURE_ROBOSTRIDE02 * NATURAL_FREQ
 
+# JOINT_NAMES_EXPR = [
+#     "left_hip_yaw_joint",
+#     "right_hip_yaw_joint",
+#     "left_hip_roll_joint",
+#     "right_hip_roll_joint",
+#     "left_hip_pitch_joint",
+#     "right_hip_pitch_joint",
+#     "left_knee_joint",
+#     "right_knee_joint",
+#     "left_ankle_joint",
+#     "right_ankle_joint",
+# ]
+
 JOINT_NAMES_EXPR = [
     "left_hip_yaw_joint",
-    "right_hip_yaw_joint",
     "left_hip_roll_joint",
-    "right_hip_roll_joint",
     "left_hip_pitch_joint",
-    "right_hip_pitch_joint",
     "left_knee_joint",
-    "right_knee_joint",
     "left_ankle_joint",
+    "right_hip_yaw_joint",
+    "right_hip_roll_joint",
+    "right_hip_pitch_joint",
+    "right_knee_joint",
     "right_ankle_joint",
 ]
 
@@ -26,12 +39,12 @@ DEFAULT_JOINT_POS = {
     "right_hip_yaw_joint": 0.0,  # 6
     "left_hip_roll_joint": 0.0,  # 1
     "right_hip_roll_joint": 0.0,  # 7
-    "left_hip_pitch_joint": -0.6,  # 2
-    "right_hip_pitch_joint": -0.6,  # 8
-    "left_knee_joint": 0.7,  # 3
-    "right_knee_joint": 0.7,  # 14
-    "left_ankle_joint": -0.6,  # 5
-    "right_ankle_joint": -0.6,  # 10
+    "left_hip_pitch_joint": -0.4,  # 2
+    "right_hip_pitch_joint": -0.4,  # 8
+    "left_knee_joint": 0.5,  # 3
+    "right_knee_joint": 0.5,  # 14
+    "left_ankle_joint": -0.3,  # 5
+    "right_ankle_joint": -0.3,  # 10
 }
 
 STIFFNESS = {

@@ -1,9 +1,9 @@
 <mujoco model="hector_mini">
   <compiler angle="radian" meshdir="meshes/"/>
 
-  <option timestep='0.001' o_solref='-100000 -1000' >
+  <!-- <option timestep='0.001' o_solref='-100000 -1000' >
 		<flag override='enable' />
-	</option>
+	</option> -->
 
   <asset>
     <mesh name="body" file="body2.stl"/>
@@ -140,8 +140,8 @@
     <!-- constraint to weld the root to the world, fixed base -->
     <weld name="world_root" active="true" body1="body" relpose="0 0 -0.7 1 0 0 0"/> 
     <!-- constraint to couple the left hip pitch and left knee joints -->
-    <joint name="left_pitch_knee" joint1="left_knee_joint" joint2="left_calf_joint" polycoef="0 1 0 0 0"/>
-    <joint name="right_pitch_knee" joint1="right_knee_joint" joint2="right_calf_joint" polycoef="0 1 0 0 0"/>
+    <joint name="left_pitch_knee" joint1="left_knee_joint" joint2="left_calf_joint" polycoef="0 1 0 0 0" solref="0.004 1"/>
+    <joint name="right_pitch_knee" joint1="right_knee_joint" joint2="right_calf_joint" polycoef="0 1 0 0 0" solref="0.004 1"/>
   </equality>
 
   <sensor>
