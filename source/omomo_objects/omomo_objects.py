@@ -30,6 +30,7 @@ def create_rigid_object_cfg(folder_name: str):
                                         stiffness=0, damping=0
                                     )
                                 ),
+                                collider_type = "convex_decomposition"
                             )
 # Build config dictionary
 OBJECT_CONFIGS = {}
