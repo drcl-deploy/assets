@@ -9,7 +9,7 @@
     
     <body name="basketball" pos="0.0 0.5 0.2">
       <freejoint/>
-      <geom type="sphere" size="0.11" rgba="0.5 0.7 0.5 1" material="bb_material" />
+      <geom type="sphere" size="0.12" rgba="0.5 0.7 0.5 1" material="bb_material" />
       <inertial mass="0.624" pos="0 0 0.0" diaginertia="0.00354 0.00354 0.00354"/>
     </body>
   </worldbody>

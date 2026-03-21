@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="basketball">
 
-  <link name="ball_link">
+  <link name="base_link">
     
     <inertial>
       <mass value="0.62369"/>
@@ -10,13 +10,13 @@
 
     <visual>
       <geometry>
-        <sphere radius="0.16"/>
+        <sphere radius="0.12"/>
       </geometry>
     </visual>
 
     <collision>
       <geometry>
-        <sphere radius="0.16"/>
+        <sphere radius="0.12"/>
       </geometry>
       <surface>
         <friction>
