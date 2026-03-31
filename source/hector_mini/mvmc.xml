@@ -1,10 +1,6 @@
 <mujoco model="hector_mini">
   <compiler angle="radian" meshdir="meshes/"/>
 
-  <!-- <option timestep='0.001' o_solref='-100000 -1000' >
-		<flag override='enable' />
-	</option> -->
-
   <asset>
     <mesh name="body" file="body2.stl"/>
     <mesh name="left_hip1" file="hip_short_1.stl"/>
@@ -37,7 +33,6 @@
       <inertial pos="0.031602 0.0 -0.022894" quat="1 0 0 0" mass="1.8" diaginertia="0.008616 0.009058 0.005317"/>
       <joint name="floating_base_joint" type="free" limited="false" actuatorfrclimited="false"/>
       <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="body"/>
-      <!-- <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="body"/> -->
          <site name="imu" size="0.01" pos="-0.0 -0.0 0.0" />
       <body name="left_hip1" pos="0 0.05 -0.125" quat="0.9238795 0 0.3826834 0">
         <inertial pos="-0.0107 0 -0.0455" quat="1 0 0 0" mass="0.385" diaginertia="0.00023228 0.00017208 0.00012534"/>
@@ -51,7 +46,6 @@
             <inertial pos="0.000045 0.029387 -0.087297" quat="1 0 0 0" mass="1.084915" diaginertia="0.012414 0.011627 0.001553"/>
             <joint name="left_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
             <geom type="mesh" material="metal_silver" mesh="left_thigh"/>
-            <!-- <geom type="mesh" material="metal_silver" mesh="left_thigh"/> -->
             <body name="left_bracket_link" pos="0 0.0175 -0.18">
               <inertial pos="0 0 -0.0255" quat="1 0 0 0" mass="0.020" diaginertia="0.00000719 0.00000323 0.00000450"/>
               <joint name="left_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
@@ -64,10 +58,6 @@
                   <inertial pos="0.0154 0 -0.0154" quat="1 0 0 0" mass="0.026" diaginertia="0.00000274 0.0000111 0.00001109"/>
                   <joint name="left_ankle_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-2 2" /> 
                   <geom type="mesh" material="metal_silver" mesh="left_foot"/>
-                  <!-- <geom size="0.005" pos="-0.02 0.015 -0.024" rgba="0.2 0.2 0.2 1" />
-                  <geom size="0.005" pos="-0.02 -0.015 -0.024" rgba="0.2 0.2 0.2 1" />
-                  <geom size="0.005" pos="0.06 0.015 -0.024" rgba="0.2 0.2 0.2 1" />
-                  <geom size="0.005" pos="0.06 -0.015 -0.024" rgba="0.2 0.2 0.2 1" /> -->
                   <geom type="box" size="0.04 0.01 0.001" pos="0.02 0 -0.024" condim="4"  
                   friction="2 0.005 0.0001" solref="-5e-4 -0.02" solimp="0.9 0.95 0.001 0.5 2"/>
                 </body>
@@ -88,7 +78,6 @@
             <inertial pos="0.000045 -0.029387 -0.087297" quat="1 0 0 0" mass="1.084915" diaginertia="0.012414 0.011627 0.001553"/>
             <joint name="right_hip_pitch_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-1 2.57"/>
             <geom type="mesh" material="metal_silver" mesh="right_thigh"/>
-            <!-- <geom type="mesh" material="metal_silver" mesh="right_thigh"/> -->
             <body name="right_bracket_link" pos="0 -0.0175 -0.18">
               <inertial pos="0 0 -0.0255" quat="1 0 0 0" mass="0.020" diaginertia="0.00000719 0.00000323 0.00000450"/>
               <joint name="right_knee_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="0.1 1.57"/>
@@ -101,10 +90,6 @@
                   <inertial pos="0.0154 0 -0.0154" quat="1 0 0 0" mass="0.026" diaginertia="0.00000274 0.0000111 0.00001109"/>
                   <joint name="right_ankle_joint" pos="0 0 0" axis="0 1 0" damping="0.0" range="-2 2" /> 
                   <geom type="mesh" material="metal_silver" mesh="right_foot"/>
-                  <!-- <geom size="0.005" pos="-0.02 0.015 -0.024" rgba="0.2 0.2 0.2 1" />
-                  <geom size="0.005" pos="-0.02 -0.015 -0.024" rgba="0.2 0.2 0.2 1" />
-                  <geom size="0.005" pos="0.06 0.015 -0.024" rgba="0.2 0.2 0.2 1" />
-                  <geom size="0.005" pos="0.06 -0.015 -0.024" rgba="0.2 0.2 0.2 1" /> -->
                   <geom type="box" size="0.04 0.01 0.001" pos="0.02 0 -0.024" condim="4"  
                   friction="2 0.005 0.0001" solref="-5e-4 -0.02" solimp="0.9 0.95 0.001 0.5 2"/>
                 </body>
