@@ -21,7 +21,7 @@
     <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
 
-    <body name="trashcan" pos="1.0 0.0 0.3">
+    <body name="trashcan" pos="0.5332 0.0677 0.252" quat="0.3468 -0.2839 0.6791 -0.5814">
       <freejoint/>
       <geom type="mesh" mesh="trashcan" mass="0.8" friction="0.6 0.6 0.0001"/>
     </body>

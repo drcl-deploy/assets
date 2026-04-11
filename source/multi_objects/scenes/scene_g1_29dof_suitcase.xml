@@ -21,7 +21,7 @@
     <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
 
-    <body name="suitcase" pos="1.0 0.0 0.3">
+    <body name="suitcase" pos="0.4803 -0.0100 0.0175" quat="0.6488 0.6423 0.2996 0.2771">
       <freejoint/>
       <geom type="mesh" mesh="suitcase" mass="2.0" friction="0.6 0.6 0.0001"/>
     </body>

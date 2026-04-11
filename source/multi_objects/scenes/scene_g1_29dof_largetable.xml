@@ -21,7 +21,7 @@
     <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
 
-    <body name="largetable" pos="1.0 0.0 0.3">
+    <body name="largetable" pos="0.5067 -0.0256 0.3549" quat="0.7109 0.7029 -0.0143 -0.0158">
       <freejoint/>
       <geom type="mesh" mesh="largetable" mass="4.5" friction="0.6 0.6 0.0001"/>
     </body>

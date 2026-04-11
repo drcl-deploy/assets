@@ -21,7 +21,7 @@
     <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
 
-    <body name="plasticbox" pos="1.0 0.0 0.3">
+    <body name="plasticbox" pos="0.4896 -0.0857 0.0077" quat="0.6342 0.6015 0.3272 0.3591">
       <freejoint/>
       <geom type="mesh" mesh="plasticbox" mass="1.5" friction="0.6 0.6 0.0001"/>
     </body>
