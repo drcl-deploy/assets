@@ -37,6 +37,7 @@ def _make_urdf_cfg(urdf_path: str) -> sim_utils.UrdfFileCfg:
         ),
         collider_type="convex_hull", # convex_decomposition
         # collision_from_visuals=True,
+        # collider_type = "convex_decomposition"
     )
 
 
