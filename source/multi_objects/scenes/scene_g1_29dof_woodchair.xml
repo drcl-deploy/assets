@@ -18,6 +18,9 @@
             markrgb="1.0 1.0 1.0"
             width="512" height="512"/>
         <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="3 3" reflectance="0"/>
+
+        <texture name="object_texture" type="2d" file="/HDD/drcl_projects/assets/source/textures/Wood/Oak/Oak_BaseColor.png"/>
+        <material name="object_material" texture="object_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
     <mesh name="woodchair" file="/HDD/drcl_projects/assets/source/omomo_objects/woodchair/woodchair.obj"/>
   </asset>
 
@@ -27,7 +30,7 @@
 
     <body name="woodchair" pos="0.7313 -0.0432 -0.0211" quat="-0.2404 -0.0004 0.0165 0.9705">
       <freejoint/>
-      <geom type="mesh" mesh="woodchair" mass="4.5" friction="0.6 0.6 0.0001"/>
+      <geom type="mesh" mesh="woodchair" mass="4.5" friction="0.6 0.6 0.0001" material="object_material"/>
     </body>
   </worldbody>
 </mujoco>

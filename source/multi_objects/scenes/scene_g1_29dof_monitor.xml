@@ -18,6 +18,9 @@
             markrgb="1.0 1.0 1.0"
             width="512" height="512"/>
         <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="3 3" reflectance="0"/>
+
+        <texture name="object_texture" type="2d" file="/HDD/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+        <material name="object_material" texture="object_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
     <mesh name="monitor" file="/HDD/drcl_projects/assets/source/omomo_objects/monitor/monitor.obj"/>
   </asset>
 
@@ -27,7 +30,7 @@
 
     <body name="monitor" pos="0.1796 -0.3790 0.0825" quat="0.7210 0.6849 -0.0063 0.1054">
       <freejoint/>
-      <geom type="mesh" mesh="monitor" mass="2.0" friction="0.6 0.6 0.0001"/>
+      <geom type="mesh" mesh="monitor" mass="2.0" friction="0.6 0.6 0.0001" material="object_material"/>
     </body>
   </worldbody>
 </mujoco>

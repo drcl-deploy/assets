@@ -22,6 +22,7 @@ Generated scenes can be used directly in unitree_mujoco's config.yaml:
 """
 
 import argparse
+import json
 import os
 import glob
 import xml.etree.ElementTree as ET
@@ -31,8 +32,19 @@ from pathlib import Path
 # ── Paths ────────────────────────────────────────────────────────────────────
 
 ASSETS_DIR = Path(os.environ.get("SIM_ASSETS_PATH", "/HDD/drcl_projects/assets/source"))
+WORKSPACE_ROOT = ASSETS_DIR.parent
 UNITREE_ROBOTS_DIR = Path("/home/lkrajan/ros2/unitree_ros2/unitree_mujoco/unitree_robots")
 DEFAULT_OUT_DIR = ASSETS_DIR / "multi_objects" / "scenes"
+
+
+# ── Metadata ─────────────────────────────────────────────────────────────────
+
+def load_metadata(object_dir: Path) -> dict:
+    """Load per-object metadata (initial_pos, initial_quat, texture)."""
+    meta_path = object_dir / "metadata.json"
+    if not meta_path.exists():
+        raise FileNotFoundError(f"Missing metadata.json for object at {object_dir}")
+    return json.loads(meta_path.read_text())
 
 
 # ── URDF parsing ─────────────────────────────────────────────────────────────
@@ -127,6 +139,9 @@ SCENE_TEMPLATE = """\
             markrgb="1.0 1.0 1.0"
             width="512" height="512"/>
         <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="3 3" reflectance="0"/>
+
+        <texture name="object_texture" type="2d" file="{object_texture_abs}"/>
+        <material name="object_material" texture="object_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
 {object_assets}
   </asset>
 
@@ -134,7 +149,7 @@ SCENE_TEMPLATE = """\
         <light pos="2 2 4" dir="-0.5 -0.5 -1" directional="true" diffuse="0.6 0.6 0.6" specular="0.2 0.2 0.2"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
 
-    <body name="{object_name}"">
+    <body name="{object_name}" pos="{object_pos}" quat="{object_quat}">
       <freejoint/>
 {object_geom}
     </body>
@@ -149,7 +164,7 @@ def generate_scene(
     object_name: str,
     urdf_data: dict,
     object_dir: Path,
-    object_pos: str = "1.0 0.0 0.3",
+    metadata: dict,
 ) -> str:
     """Generate a complete scene XML string."""
     # Resolve the robot XML that the original scene includes
@@ -174,24 +189,29 @@ def generate_scene(
     mass = urdf_data["mass"]
     friction_attr = f'friction="{urdf_data["friction"]} {urdf_data["friction"]} 0.0001"'
     mass_attr = f'mass="{mass}"'
+    material_attr = 'material="object_material"'
 
     if geom["type"] == "mesh":
         mesh_abs_path = str(object_dir / geom["filename"])
         object_assets = f'    <mesh name="{object_name}" file="{mesh_abs_path}"/>'
-        geom_line = f'      <geom type="mesh" mesh="{object_name}" {mass_attr} {friction_attr}/>'
+        geom_line = f'      <geom type="mesh" mesh="{object_name}" {mass_attr} {friction_attr} {material_attr}/>'
     elif geom["type"] == "sphere":
-        geom_line = f'      <geom type="sphere" size="{geom["size"]}" {mass_attr} {friction_attr}/>'
+        geom_line = f'      <geom type="sphere" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
     elif geom["type"] == "box":
-        geom_line = f'      <geom type="box" size="{geom["size"]}" {mass_attr} {friction_attr}/>'
+        geom_line = f'      <geom type="box" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
     elif geom["type"] == "cylinder":
-        geom_line = f'      <geom type="cylinder" size="{geom["size"]}" {mass_attr} {friction_attr}/>'
+        geom_line = f'      <geom type="cylinder" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
+
+    object_texture_abs = str(WORKSPACE_ROOT / metadata["texture"])
 
     return SCENE_TEMPLATE.format(
         model_name=model_name,
         robot_xml_abs=robot_xml_abs,
         object_assets=object_assets,
         object_name=object_name,
-        object_pos=object_pos,
+        object_pos=metadata["initial_pos"],
+        object_quat=metadata["initial_quat"],
+        object_texture_abs=object_texture_abs,
         object_geom=geom_line,
     )
 
@@ -230,7 +250,6 @@ def main():
     parser.add_argument("--robot", default="g1", help="Robot name (default: g1)")
     parser.add_argument("--robot-scene", default="scene_29dof.xml", help="Base robot scene file (default: scene_29dof.xml)")
     parser.add_argument("--object", default=None, help="Generate for a single object only")
-    parser.add_argument("--object-pos", default="1.0 0.0 0.3", help="Object spawn position 'x y z' (default: '1.0 0.0 0.3')")
     parser.add_argument("--out-dir", default=None, help=f"Output directory (default: {DEFAULT_OUT_DIR})")
     args = parser.parse_args()
 
@@ -268,13 +287,14 @@ def main():
 
     for name, urdf_path, obj_dir in objects:
         urdf_data = parse_urdf(urdf_path)
+        metadata = load_metadata(obj_dir)
         scene_xml = generate_scene(
             robot=args.robot,
             robot_scene_name=args.robot_scene,
             object_name=name,
             urdf_data=urdf_data,
             object_dir=obj_dir,
-            object_pos=args.object_pos,
+            metadata=metadata,
         )
 
         if scene_variant:
