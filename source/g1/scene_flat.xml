@@ -1,4 +1,4 @@
 <mujoco model="g1_flat">
 <include file="../terrain/flat_ground.xml"/>
-<include file="g1_flat_0.xml"/>
+<include file="g1_bm.xml"/>
 </mujoco>
