@@ -176,9 +176,9 @@ G1_BM_HAND_MESH_CFG = G1_BM_CFG.copy()
 G1_BM_HAND_MESH_CFG.spawn.asset_path = os.path.join(ASSETS_DIR, "g1/g1_bm_hand_mesh.urdf")
 G1_BM_HAND_MESH_CFG.spawn.collider_type = "convex_decomposition"
 
-G1_FLAT_0_CFG = G1_BM_CFG.copy()
-G1_FLAT_0_CFG.spawn.asset_path = os.path.join(ASSETS_DIR, "g1/g1_flat_0.urdf")
-G1_FLAT_0_CFG.spawn.collider_type = "convex_decomposition"
+G1_FLAT_0_HAND_CFG = G1_BM_CFG.copy()
+G1_FLAT_0_HAND_CFG.spawn.asset_path = os.path.join(ASSETS_DIR, "g1/g1_flat_0_hand.urdf")
+G1_FLAT_0_HAND_CFG.spawn.collider_type = "convex_decomposition"
 
 G1_BM_ACTION_SCALE = {}
 
