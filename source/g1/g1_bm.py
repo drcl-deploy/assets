@@ -34,6 +34,7 @@ G1_BM_CFG = ArticulationCfg(
                 stiffness=0, damping=0
             )
         ),
+        merge_fixed_joints=False,
     ),
     init_state=ArticulationCfg.InitialStateCfg(
         pos=(0.0, 0.0, 0.76),

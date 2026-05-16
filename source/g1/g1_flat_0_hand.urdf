@@ -783,9 +783,9 @@
             </material>
         </visual>
         <collision>
-            <origin xyz="0.075 0 0" rpy="0 -1.5708 0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <cylinder radius="0.05" length="0.05"/>
+                <mesh filename="meshes/left_wrist_yaw_link.STL"/>
             </geometry>
         </collision>
     </link>
@@ -810,6 +810,24 @@
                 <color rgba="0.7 0.7 0.7 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/left_flat_hand.stl"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="left_force_applicator" type="fixed">
+        <origin xyz="0.12 0 0" rpy="0 0 0"/>
+        <parent link="left_wrist_yaw_link"/>
+        <child link="left_force_applicator_link"/>
+    </joint>
+    <link name="left_force_applicator_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+        </inertial>
     </link>
     <link name="right_shoulder_pitch_link">
         <inertial>
@@ -987,11 +1005,23 @@
             </material>
         </visual>
         <collision>
-            <origin xyz="0.075 0 0" rpy="0 -1.5708 0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <cylinder radius="0.05" length="0.05"/>
+                <mesh filename="meshes/right_wrist_yaw_link.STL"/>
             </geometry>
         </collision>
+    </link>
+    <joint name="right_force_applicator" type="fixed">
+        <origin xyz="0.12 0 0" rpy="0 0 0"/>
+        <parent link="right_wrist_yaw_link"/>
+        <child link="right_force_applicator_link"/>
+    </joint>
+    <link name="right_force_applicator_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+        </inertial>
     </link>
     <joint name="right_hand_palm_joint" type="fixed">
         <origin xyz="0.0415 -0.003 0" rpy="0 0 0"/>
@@ -1014,6 +1044,12 @@
                 <color rgba="0.7 0.7 0.7 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/right_flat_hand.stl"/>
+            </geometry>
+        </collision>
     </link>
 
     <link name="LL_FOOT">
