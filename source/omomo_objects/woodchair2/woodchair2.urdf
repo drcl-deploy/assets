@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="drcl-woodchair">
+<robot name="woodchair2">
 
   <link name="base_link">
     
@@ -10,13 +10,13 @@
 
     <visual>
       <geometry>
-        <mesh filename="drcl-woodchair.obj"/>
+        <mesh filename="woodchair2.obj"/>
       </geometry>
     </visual>
 
     <collision>
       <geometry>
-        <mesh filename="drcl-woodchair.obj"/>
+        <mesh filename="woodchair2.obj"/>
       </geometry>
       <surface>
         <friction>
