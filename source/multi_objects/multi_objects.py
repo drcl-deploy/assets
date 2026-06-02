@@ -133,4 +133,5 @@ def build_multi_object_cfg(
 MULTI_OBJECTS_CFG = build_multi_object_cfg([
     "basketball/basketball.urdf",
     "omomo_objects/*",
+    "sugar_objects/*",
 ])

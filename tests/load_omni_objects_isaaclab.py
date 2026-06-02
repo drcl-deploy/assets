@@ -44,7 +44,7 @@ from isaaclab.utils import configclass
 
 sys.path.append("./")
 
-from source.omomo_objects.omomo_objects import OMOMO_OBJECTS_CFG
+from source.multi_objects.multi_objects import MULTI_OBJECTS_CFG
 
 
 def filter_objects(object_cfg, object_names):
@@ -82,7 +82,7 @@ class OmomoObjectsSceneCfg(InteractiveSceneCfg):
 
     # the object cfg uses prim_path="{ENV_REGEX_NS}/Object" which is what
     # triggers MultiAssetSpawnerCfg's round-robin distribution across envs
-    object = OMOMO_OBJECTS_CFG
+    object = MULTI_OBJECTS_CFG
 
 
 def main():
