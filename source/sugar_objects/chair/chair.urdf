@@ -10,13 +10,13 @@
 
     <visual>
       <geometry>
-        <mesh filename="chair.obj"/>
+        <mesh filename="chair_decimated.obj"/>
       </geometry>
     </visual>
 
     <collision>
       <geometry>
-        <mesh filename="chair.obj"/>
+        <mesh filename="chair_decimated.obj"/>
       </geometry>
       <surface>
         <friction>
