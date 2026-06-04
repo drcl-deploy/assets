@@ -1,68 +1,39 @@
 #!/usr/bin/env python3
-"""Generate MuJoCo scene XMLs that compose a Unitree robot with a single dynamic object.
-
-Each generated scene uses absolute paths so it can be loaded from anywhere — no
-asset copying required.
-
-Usage:
-    # Generate scenes for all objects with the default robot (g1 / scene_29dof):
-    python generate_mujoco_scenes.py
-
-    # Specify robot and scene:
-    python generate_mujoco_scenes.py --robot g1 --robot-scene scene_29dof.xml
-
-    # Generate for a single object:
-    python generate_mujoco_scenes.py --object trashcan
-
-    # Custom output directory:
-    python generate_mujoco_scenes.py --out-dir /tmp/scenes
-
-Generated scenes can be used directly in unitree_mujoco's config.yaml:
-    robot_scene: "/HDD/drcl_projects/assets/source/multi_objects/scenes/scene_g1_29dof_trashcan.xml"
-"""
+"""Generate UOLM scene XMLs (robot + dynamic object). See readme.md for details."""
 
 import argparse
 import json
-import os
-import glob
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
-# ── Paths ────────────────────────────────────────────────────────────────────
+# ── Paths (auto-detected from script location) ──────────────────────────────
 
-ASSETS_DIR = Path(os.environ.get("SIM_ASSETS_PATH", "/HDD/drcl_projects/assets/source"))
-WORKSPACE_ROOT = ASSETS_DIR.parent
-UNITREE_ROBOTS_DIR = Path("/home/lkrajan/ros2/unitree_ros2/unitree_mujoco/unitree_robots")
-DEFAULT_OUT_DIR = ASSETS_DIR / "multi_objects" / "scenes"
+SCRIPT_DIR = Path(__file__).resolve().parent     # .../source/multi_objects
+ASSETS_DIR = SCRIPT_DIR.parent                   # .../source
+WORKSPACE_ROOT = ASSETS_DIR.parent               # .../assets
+DEFAULT_OUT_DIR = SCRIPT_DIR / "scenes"
 
 
-# ── Metadata ─────────────────────────────────────────────────────────────────
+# ── Helpers ──────────────────────────────────────────────────────────────────
 
 def load_metadata(object_dir: Path) -> dict:
-    """Load per-object metadata (initial_pos, initial_quat, texture)."""
     meta_path = object_dir / "metadata.json"
     if not meta_path.exists():
-        raise FileNotFoundError(f"Missing metadata.json for object at {object_dir}")
+        raise FileNotFoundError(f"Missing metadata.json at {object_dir}")
     return json.loads(meta_path.read_text())
 
 
-# ── URDF parsing ─────────────────────────────────────────────────────────────
-
 def parse_urdf(urdf_path: Path) -> dict:
-    """Extract mass and geometry from a single-link URDF.
+    """Extract mass, geometry, and friction from a single-link URDF.
 
-    Inertia is NOT extracted — MuJoCo auto-computes it from the geom shape
-    and mass, which gives correct CoM position and principal axes.
+    Inertia is NOT extracted -- MuJoCo auto-computes it from geom shape + mass.
     """
     tree = ET.parse(urdf_path)
-    root = tree.getroot()
-    link = root.find("link")
-    inertial = link.find("inertial")
+    link = tree.getroot().find("link")
+    mass = float(link.find("inertial").find("mass").get("value"))
 
-    mass = float(inertial.find("mass").get("value"))
-
-    # Geometry — check collision first, fall back to visual
+    # Geometry -- prefer collision, fall back to visual
     geom_el = None
     for tag in ("collision", "visual"):
         container = link.find(tag)
@@ -71,10 +42,8 @@ def parse_urdf(urdf_path: Path) -> dict:
             if geom_el is not None:
                 break
 
-    geom_info = _parse_geometry(geom_el)
-
-    # Friction from URDF (if present)
-    friction = 0.6  # default
+    # Friction
+    friction = 0.6
     collision = link.find("collision")
     if collision is not None:
         surface = collision.find("surface")
@@ -87,26 +56,18 @@ def parse_urdf(urdf_path: Path) -> dict:
                     if mu is not None:
                         friction = float(mu.text)
 
-    return {
-        "mass": mass,
-        "geom": geom_info,
-        "friction": friction,
-    }
+    return {"mass": mass, "geom": _parse_geometry(geom_el), "friction": friction}
 
 
 def _parse_geometry(geom_el) -> dict:
-    """Parse URDF geometry element into MuJoCo-friendly dict."""
-    child = geom_el[0]  # first child is the geometry type
+    child = geom_el[0]
     tag = child.tag
-
     if tag == "mesh":
-        filename = child.get("filename")
-        return {"type": "mesh", "filename": filename}
+        return {"type": "mesh", "filename": child.get("filename")}
     elif tag == "sphere":
         return {"type": "sphere", "size": child.get("radius")}
     elif tag == "box":
-        size = child.get("size")  # URDF: full extents "x y z"
-        halfs = " ".join(str(float(v) / 2) for v in size.split())
+        halfs = " ".join(str(float(v) / 2) for v in child.get("size").split())
         return {"type": "box", "size": halfs}
     elif tag == "cylinder":
         r = child.get("radius")
@@ -158,51 +119,25 @@ SCENE_TEMPLATE = """\
 """
 
 
-def generate_scene(
-    robot: str,
-    robot_scene_name: str,
-    object_name: str,
-    urdf_data: dict,
-    object_dir: Path,
-    metadata: dict,
-) -> str:
-    """Generate a complete scene XML string."""
-    # Resolve the robot XML that the original scene includes
-    # Parse the original scene to find the <include file="..."/>
-    original_scene = UNITREE_ROBOTS_DIR / robot / robot_scene_name
-    orig_tree = ET.parse(original_scene)
-    include_el = orig_tree.getroot().find("include")
-    robot_xml_name = include_el.get("file")
-    robot_xml_abs = str(UNITREE_ROBOTS_DIR / robot / robot_xml_name)
+def generate_scene(robot_xml_abs: str, object_name: str,
+                   urdf_data: dict, object_dir: Path, metadata: dict) -> str:
+    model_name = f"{Path(robot_xml_abs).stem} + {object_name}"
 
-    # Derive scene variant name from robot_scene (e.g. "scene_29dof.xml" -> "29dof")
-    scene_variant = robot_scene_name.replace("scene_", "").replace("scene", "").replace(".xml", "")
-    if scene_variant:
-        model_name = f"{robot}_{scene_variant} + {object_name}"
-    else:
-        model_name = f"{robot} + {object_name}"
-
-    # Build object geometry and assets
     geom = urdf_data["geom"]
+    mass_attr = f'mass="{urdf_data["mass"]}"'
+    friction_attr = f'friction="{urdf_data["friction"]} {urdf_data["friction"]} 0.0001"'
+    material_attr = 'material="object_material"'
     object_assets = ""
     geom_line = ""
-    mass = urdf_data["mass"]
-    friction_attr = f'friction="{urdf_data["friction"]} {urdf_data["friction"]} 0.0001"'
-    mass_attr = f'mass="{mass}"'
-    material_attr = 'material="object_material"'
 
     if geom["type"] == "mesh":
-        mesh_abs_path = str(object_dir / geom["filename"])
-        object_assets = f'    <mesh name="{object_name}" file="{mesh_abs_path}"/>'
+        mesh_abs = str((object_dir / geom["filename"]).resolve())
+        object_assets = f'    <mesh name="{object_name}" file="{mesh_abs}"/>'
         geom_line = f'      <geom type="mesh" mesh="{object_name}" {mass_attr} {friction_attr} {material_attr}/>'
-    elif geom["type"] == "sphere":
-        geom_line = f'      <geom type="sphere" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
-    elif geom["type"] == "box":
-        geom_line = f'      <geom type="box" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
-    elif geom["type"] == "cylinder":
-        geom_line = f'      <geom type="cylinder" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
+    else:
+        geom_line = f'      <geom type="{geom["type"]}" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
 
-    object_texture_abs = str(WORKSPACE_ROOT / metadata["texture"])
+    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
 
     return SCENE_TEMPLATE.format(
         model_name=model_name,
@@ -211,7 +146,7 @@ def generate_scene(
         object_name=object_name,
         object_pos=metadata["initial_pos"],
         object_quat=metadata["initial_quat"],
-        object_texture_abs=object_texture_abs,
+        object_texture_abs=texture_abs,
         object_geom=geom_line,
     )
 
@@ -219,15 +154,13 @@ def generate_scene(
 # ── Object discovery ─────────────────────────────────────────────────────────
 
 def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path, Path]]:
-    """Discover available objects. Returns list of (name, urdf_path, object_dir)."""
+    """Returns list of (name, urdf_path, object_dir)."""
     objects = []
 
-    # Basketball (special case — sphere, no mesh)
     bb_urdf = ASSETS_DIR / "basketball" / "basketball.urdf"
     if bb_urdf.exists():
         objects.append(("basketball", bb_urdf, ASSETS_DIR / "basketball"))
 
-    # Omomo objects
     omomo_dir = ASSETS_DIR / "omomo_objects"
     if omomo_dir.exists():
         for obj_dir in sorted(omomo_dir.iterdir()):
@@ -239,7 +172,6 @@ def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path, Pa
 
     if filter_name:
         objects = [(n, u, d) for n, u, d in objects if n == filter_name]
-
     return objects
 
 
@@ -247,26 +179,30 @@ def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path, Pa
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--robot", default="g1", help="Robot name (default: g1)")
-    parser.add_argument("--robot-scene", default="scene_29dof.xml", help="Base robot scene file (default: scene_29dof.xml)")
+    parser.add_argument("--robot-xml", default=None,
+                        help="Absolute path to robot MuJoCo XML (e.g. .../unitree_robots/g1/g1_29dof.xml)")
     parser.add_argument("--object", default=None, help="Generate for a single object only")
     parser.add_argument("--out-dir", default=None, help=f"Output directory (default: {DEFAULT_OUT_DIR})")
     args = parser.parse_args()
 
+    robot_xml = args.robot_xml
+    if not robot_xml:
+        robot_xml = input("Absolute path to robot XML (e.g. .../unitree_robots/g1/g1_29dof.xml): ").strip()
+    robot_xml_path = Path(robot_xml).resolve()
+    if not robot_xml_path.is_file():
+        print(f"ERROR: {robot_xml_path} not found.")
+        return
+    robot_xml_abs = str(robot_xml_path)
+
     out_dir = Path(args.out_dir) if args.out_dir else DEFAULT_OUT_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Create a symlink for the robot's meshdir so MuJoCo can resolve it
-    # from the scene file's directory. MuJoCo resolves meshdir relative to
-    # the top-level file, even inside <include>'d files.
-    robot_xml_path = UNITREE_ROBOTS_DIR / args.robot / args.robot_scene
-    orig_tree = ET.parse(robot_xml_path)
-    include_el = orig_tree.getroot().find("include")
-    robot_xml_name = include_el.get("file")
-    robot_tree = ET.parse(UNITREE_ROBOTS_DIR / args.robot / robot_xml_name)
+    # Symlink robot meshdir -- MuJoCo resolves meshdir relative to the
+    # top-level file, not the <include>'d file.
+    robot_tree = ET.parse(robot_xml_path)
     robot_compiler = robot_tree.getroot().find("compiler")
     meshdir_rel = robot_compiler.get("meshdir", ".") if robot_compiler is not None else "."
-    robot_meshdir_abs = (UNITREE_ROBOTS_DIR / args.robot / meshdir_rel).resolve()
+    robot_meshdir_abs = (robot_xml_path.parent / meshdir_rel).resolve()
 
     symlink_path = out_dir / meshdir_rel
     if symlink_path.is_symlink():
@@ -283,31 +219,20 @@ def main():
         print(f"No objects found{f' matching {args.object!r}' if args.object else ''}.")
         return
 
-    scene_variant = args.robot_scene.replace("scene_", "").replace("scene", "").replace(".xml", "")
+    robot_stem = robot_xml_path.stem
 
     for name, urdf_path, obj_dir in objects:
         urdf_data = parse_urdf(urdf_path)
         metadata = load_metadata(obj_dir)
-        scene_xml = generate_scene(
-            robot=args.robot,
-            robot_scene_name=args.robot_scene,
-            object_name=name,
-            urdf_data=urdf_data,
-            object_dir=obj_dir,
-            metadata=metadata,
-        )
+        scene_xml = generate_scene(robot_xml_abs, name, urdf_data, obj_dir, metadata)
 
-        if scene_variant:
-            out_name = f"scene_{args.robot}_{scene_variant}_{name}.xml"
-        else:
-            out_name = f"scene_{args.robot}_{name}.xml"
-        out_path = out_dir / out_name
+        out_path = out_dir / f"{robot_stem}_{name}.xml"
         out_path.write_text(scene_xml)
         print(f"  Generated: {out_path}")
 
     print(f"\nDone. {len(objects)} scene(s) in {out_dir}/")
-    print(f"\nTo use, set in config.yaml:")
-    print(f'  robot_scene: "{out_dir}/scene_{args.robot}_{scene_variant}_{objects[0][0]}.xml"')
+    print(f"\nTo use in config.yaml:")
+    print(f'  robot_scene: "{out_dir}/{robot_stem}_{objects[0][0]}.xml"')
 
 
 if __name__ == "__main__":
