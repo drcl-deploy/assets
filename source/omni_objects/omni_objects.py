@@ -1,7 +1,7 @@
 '''
-custom muti-object cfgs that can be used to spawn a variety of objects with a single spawner.
+custom omni-object cfgs that can be used to spawn a variety of objects with a single spawner.
 
-to reuse existing assets, we support flexible pattern-based asset resolution. See build_multi_object_cfg and resolve_assets for details.
+to reuse existing assets, we support flexible pattern-based asset resolution. See build_omni_object_cfg and resolve_assets for details.
 '''
 
 
@@ -10,6 +10,8 @@ import glob
 from pathlib import Path
 import isaaclab.sim as sim_utils
 from isaaclab.assets import RigidObjectCfg
+
+from .object_groups import OBJECT_GROUP_PATTERNS
 
 
 ASSETS_DIR = os.environ.get("SIM_ASSETS_PATH")
@@ -64,7 +66,7 @@ def resolve_assets(patterns: list[str]) -> dict[str, sim_utils.UrdfFileCfg]:
                 name = Path(full_pattern).stem.upper()
                 configs[name] = _make_urdf_cfg(full_pattern)
             else:
-                print(f"[multi_objects] WARNING: URDF not found: {full_pattern}")
+                print(f"[omni_objects] WARNING: URDF not found: {full_pattern}")
             continue
 
         # Glob pattern — expand and look for subfolders with matching URDFs
@@ -79,12 +81,12 @@ def resolve_assets(patterns: list[str]) -> dict[str, sim_utils.UrdfFileCfg]:
             if os.path.isfile(urdf_path):
                 configs[folder_name.upper()] = _make_urdf_cfg(urdf_path)
             else:
-                print(f"[multi_objects] WARNING: expected URDF not found: {urdf_path}")
+                print(f"[omni_objects] WARNING: expected URDF not found: {urdf_path}")
 
     return configs
 
 
-def build_multi_object_cfg(
+def build_omni_object_cfg(
     patterns: list[str],
     prim_path: str = "{ENV_REGEX_NS}/Object",
     random_choice: bool = False,
@@ -101,7 +103,7 @@ def build_multi_object_cfg(
         activate_contact_sensors: Enable contact sensors on spawned objects.
 
     Example:
-        cfg = build_multi_object_cfg([
+        cfg = build_omni_object_cfg([
             "basketball/basketball.urdf",
             "omomo_objects/*",
         ])
@@ -130,9 +132,4 @@ def build_multi_object_cfg(
 
 # ── Pre-built configs ──────────────────────────────────────────────────────────
 
-MULTI_OBJECTS_CFG = build_multi_object_cfg([
-    "basketball/basketball.urdf",
-    "omomo_objects/*",
-    "sugar_objects/*",
-    "custom_objects/*"
-])
+OMNI_OBJECTS_CFG = build_omni_object_cfg(OBJECT_GROUP_PATTERNS)

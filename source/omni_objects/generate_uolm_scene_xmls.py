@@ -153,22 +153,35 @@ def generate_scene(robot_xml_abs: str, object_name: str,
 
 # ── Object discovery ─────────────────────────────────────────────────────────
 
+# Single source of truth (dep-free) shared with the sim spawner in
+# omni_objects.py, so the scene generator covers exactly the same object groups.
+from object_groups import OBJECT_GROUP_PATTERNS
+
+
 def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path, Path]]:
-    """Returns list of (name, urdf_path, object_dir)."""
-    objects = []
+    """Returns list of (name, urdf_path, object_dir) across all OBJECT_GROUP_PATTERNS."""
+    objects: list[tuple[str, Path, Path]] = []
+    seen: set[str] = set()
 
-    bb_urdf = ASSETS_DIR / "basketball" / "basketball.urdf"
-    if bb_urdf.exists():
-        objects.append(("basketball", bb_urdf, ASSETS_DIR / "basketball"))
+    for pattern in OBJECT_GROUP_PATTERNS:
+        # Direct .urdf path
+        if pattern.endswith(".urdf"):
+            urdf = ASSETS_DIR / pattern
+            if urdf.is_file():
+                name = urdf.stem
+                if name not in seen:
+                    seen.add(name)
+                    objects.append((name, urdf, urdf.parent))
+            continue
 
-    omomo_dir = ASSETS_DIR / "omomo_objects"
-    if omomo_dir.exists():
-        for obj_dir in sorted(omomo_dir.iterdir()):
-            if not obj_dir.is_dir() or obj_dir.name.startswith("__"):
+        # Folder glob — each matched subdir holds {name}/{name}.urdf
+        for match in sorted(ASSETS_DIR.glob(pattern)):
+            if not match.is_dir() or match.name.startswith("__"):
                 continue
-            urdf = obj_dir / f"{obj_dir.name}.urdf"
-            if urdf.exists():
-                objects.append((obj_dir.name, urdf, obj_dir))
+            urdf = match / f"{match.name}.urdf"
+            if urdf.is_file() and match.name not in seen:
+                seen.add(match.name)
+                objects.append((match.name, urdf, match))
 
     if filter_name:
         objects = [(n, u, d) for n, u, d in objects if n == filter_name]
