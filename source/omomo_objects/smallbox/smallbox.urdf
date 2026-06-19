@@ -2,10 +2,10 @@
 <robot name="smallbox">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="0.80000"/>
-      <inertia ixx="0.006412" ixy="0.0" ixz="0.0" iyy="0.005152" iyz="0.0" izz="0.008910"/>
+      <inertia ixx="0.005297" ixy="0.001191" ixz="-0.000514" iyy="0.004352" iyz="0.000941" izz="0.007213"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

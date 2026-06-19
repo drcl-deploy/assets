@@ -2,10 +2,10 @@
 <robot name="trashcan">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="0.80000"/>
-      <inertia ixx="0.011183" ixy="0.0" ixz="0.0" iyy="0.009232" iyz="0.0" izz="0.011653"/>
+      <inertia ixx="0.011799" ixy="-0.000503" ixz="-0.001439" iyy="0.008060" iyz="-0.000071" izz="0.012233"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

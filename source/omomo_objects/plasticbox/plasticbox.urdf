@@ -2,10 +2,10 @@
 <robot name="plasticbox">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="1.50000"/>
-      <inertia ixx="0.029720" ixy="0.0" ixz="0.0" iyy="0.002547" iyz="0.0" izz="-0.008531"/>
+      <inertia ixx="0.015980" ixy="0.000027" ixz="0.000015" iyy="0.031713" iyz="0.000024" izz="0.027706"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

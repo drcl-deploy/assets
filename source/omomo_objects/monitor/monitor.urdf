@@ -2,10 +2,10 @@
 <robot name="monitor">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="2.00000"/>
-      <inertia ixx="0.029720" ixy="0.0" ixz="0.0" iyy="0.002547" iyz="0.0" izz="-0.008531"/>
+      <inertia ixx="0.022091" ixy="0.001699" ixz="-0.001959" iyy="0.030092" iyz="-0.002441" izz="0.048405"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

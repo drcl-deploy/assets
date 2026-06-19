@@ -1,0 +1,69 @@
+<mujoco model="woodchair2_cvx_dcmp">
+  <asset>
+    <mesh name="woodchair2_visual" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/woodchair2.obj"/>
+    <mesh name="woodchair2_cvx_000" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_000.obj"/>
+    <mesh name="woodchair2_cvx_001" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_001.obj"/>
+    <mesh name="woodchair2_cvx_002" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_002.obj"/>
+    <mesh name="woodchair2_cvx_003" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_003.obj"/>
+    <mesh name="woodchair2_cvx_004" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_004.obj"/>
+    <mesh name="woodchair2_cvx_005" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_005.obj"/>
+    <mesh name="woodchair2_cvx_006" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_006.obj"/>
+    <mesh name="woodchair2_cvx_007" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_007.obj"/>
+    <mesh name="woodchair2_cvx_008" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_008.obj"/>
+    <mesh name="woodchair2_cvx_009" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_009.obj"/>
+    <mesh name="woodchair2_cvx_010" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_010.obj"/>
+    <mesh name="woodchair2_cvx_011" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_011.obj"/>
+    <mesh name="woodchair2_cvx_012" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_012.obj"/>
+    <mesh name="woodchair2_cvx_013" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_013.obj"/>
+    <mesh name="woodchair2_cvx_014" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_014.obj"/>
+    <mesh name="woodchair2_cvx_015" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_015.obj"/>
+    <mesh name="woodchair2_cvx_016" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_016.obj"/>
+    <mesh name="woodchair2_cvx_017" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_017.obj"/>
+    <mesh name="woodchair2_cvx_018" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_018.obj"/>
+    <mesh name="woodchair2_cvx_019" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_019.obj"/>
+    <mesh name="woodchair2_cvx_020" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_020.obj"/>
+    <mesh name="woodchair2_cvx_021" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_021.obj"/>
+    <mesh name="woodchair2_cvx_022" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_022.obj"/>
+    <mesh name="woodchair2_cvx_023" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_023.obj"/>
+    <mesh name="woodchair2_cvx_024" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_024.obj"/>
+    <mesh name="woodchair2_cvx_025" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_025.obj"/>
+    <mesh name="woodchair2_cvx_026" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_026.obj"/>
+    <mesh name="woodchair2_cvx_027" file="/home/loki/drcl_projects/assets/source/custom_objects/woodchair2/convex_decomp_meshes/woodchair2_cvx_027.obj"/>
+    <texture name="woodchair2_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Oak/Oak_BaseColor.png"/>
+    <material name="woodchair2_material" texture="woodchair2_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="woodchair2" pos="0.460 0.064 0.264" quat="0.7056 0.7066 -0.0381 -0.0376">
+      <freejoint/>
+      <geom name="woodchair2_visual" type="mesh" mesh="woodchair2_visual" contype="0" conaffinity="0" material="woodchair2_material"/>
+      <geom type="mesh" mesh="woodchair2_cvx_000" mass="0.0521303" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_001" mass="0.197836" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_002" mass="0.29635" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_003" mass="0.0781237" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_004" mass="0.0406963" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_005" mass="0.0864176" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_006" mass="0.242031" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_007" mass="0.26524" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_008" mass="0.168797" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_009" mass="0.347957" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_010" mass="0.191258" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_011" mass="0.0888647" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_012" mass="0.22587" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_013" mass="0.0565931" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_014" mass="0.159455" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_015" mass="0.204171" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_016" mass="0.270986" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_017" mass="0.193959" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_018" mass="1.06162" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_019" mass="0.0555226" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_020" mass="0.168441" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_021" mass="0.284957" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_022" mass="0.101256" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_023" mass="0.0252562" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_024" mass="0.193077" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_025" mass="0.204464" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_026" mass="0.0435285" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="woodchair2_cvx_027" mass="0.195142" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>

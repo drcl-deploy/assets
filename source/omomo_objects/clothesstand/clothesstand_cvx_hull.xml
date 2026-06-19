@@ -1,0 +1,13 @@
+<mujoco model="clothesstand_cvx_hull">
+  <asset>
+    <mesh name="clothesstand" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/clothesstand.obj"/>
+    <texture name="clothesstand_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Cherry/Cherry_BaseColor.png"/>
+    <material name="clothesstand_material" texture="clothesstand_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="clothesstand" pos="1.0 0.0 0.3" quat="1 0 0 0">
+      <freejoint/>
+      <geom type="mesh" mesh="clothesstand" mass="1.5" friction="0.6 0.6 0.0001" material="clothesstand_material"/>
+    </body>
+  </worldbody>
+</mujoco>

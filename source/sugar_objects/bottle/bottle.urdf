@@ -2,9 +2,9 @@
 <robot name="bottle">
 
   <link name="base_link">
-    
+
     <inertial>
-       <mass value="0.70000"/>
+      <mass value="0.70000"/>
       <inertia ixx="0.015441" ixy="-0.000240" ixz="0.000112" iyy="0.010247" iyz="0.002701" izz="0.014075"/>
     </inertial>
 
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

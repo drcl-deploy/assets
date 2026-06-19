@@ -1,0 +1,77 @@
+<mujoco model="trashcan_cvx_dcmp">
+  <asset>
+    <mesh name="trashcan_visual" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/trashcan.obj"/>
+    <mesh name="trashcan_cvx_000" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_000.obj"/>
+    <mesh name="trashcan_cvx_001" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_001.obj"/>
+    <mesh name="trashcan_cvx_002" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_002.obj"/>
+    <mesh name="trashcan_cvx_003" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_003.obj"/>
+    <mesh name="trashcan_cvx_004" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_004.obj"/>
+    <mesh name="trashcan_cvx_005" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_005.obj"/>
+    <mesh name="trashcan_cvx_006" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_006.obj"/>
+    <mesh name="trashcan_cvx_007" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_007.obj"/>
+    <mesh name="trashcan_cvx_008" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_008.obj"/>
+    <mesh name="trashcan_cvx_009" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_009.obj"/>
+    <mesh name="trashcan_cvx_010" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_010.obj"/>
+    <mesh name="trashcan_cvx_011" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_011.obj"/>
+    <mesh name="trashcan_cvx_012" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_012.obj"/>
+    <mesh name="trashcan_cvx_013" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_013.obj"/>
+    <mesh name="trashcan_cvx_014" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_014.obj"/>
+    <mesh name="trashcan_cvx_015" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_015.obj"/>
+    <mesh name="trashcan_cvx_016" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_016.obj"/>
+    <mesh name="trashcan_cvx_017" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_017.obj"/>
+    <mesh name="trashcan_cvx_018" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_018.obj"/>
+    <mesh name="trashcan_cvx_019" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_019.obj"/>
+    <mesh name="trashcan_cvx_020" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_020.obj"/>
+    <mesh name="trashcan_cvx_021" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_021.obj"/>
+    <mesh name="trashcan_cvx_022" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_022.obj"/>
+    <mesh name="trashcan_cvx_023" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_023.obj"/>
+    <mesh name="trashcan_cvx_024" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_024.obj"/>
+    <mesh name="trashcan_cvx_025" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_025.obj"/>
+    <mesh name="trashcan_cvx_026" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_026.obj"/>
+    <mesh name="trashcan_cvx_027" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_027.obj"/>
+    <mesh name="trashcan_cvx_028" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_028.obj"/>
+    <mesh name="trashcan_cvx_029" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_029.obj"/>
+    <mesh name="trashcan_cvx_030" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_030.obj"/>
+    <mesh name="trashcan_cvx_031" file="/home/loki/drcl_projects/assets/source/omomo_objects/trashcan/convex_decomp_meshes/trashcan_cvx_031.obj"/>
+    <texture name="trashcan_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+    <material name="trashcan_material" texture="trashcan_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="trashcan" pos="0.5332 0.0677 0.252" quat="0.3468 -0.2839 0.6791 -0.5814">
+      <freejoint/>
+      <geom name="trashcan_visual" type="mesh" mesh="trashcan_visual" contype="0" conaffinity="0" material="trashcan_material"/>
+      <geom type="mesh" mesh="trashcan_cvx_000" mass="0.0152866" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_001" mass="0.0532667" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_002" mass="0.0381768" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_003" mass="0.00425972" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_004" mass="0.0223335" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_005" mass="0.123878" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_006" mass="0.132876" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_007" mass="0.00723755" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_008" mass="0.0236976" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_009" mass="0.0295576" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_010" mass="0.0049351" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_011" mass="0.00310144" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_012" mass="0.042698" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_013" mass="0.00974396" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_014" mass="0.0452048" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_015" mass="0.0391719" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_016" mass="0.0109621" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_017" mass="0.00113721" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_018" mass="0.00238337" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_019" mass="0.0235857" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_020" mass="0.00504548" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_021" mass="0.00245531" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_022" mass="0.00189445" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_023" mass="0.0693186" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_024" mass="0.00659234" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_025" mass="0.00864547" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_026" mass="0.00288686" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_027" mass="0.0022934" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_028" mass="0.00280034" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_029" mass="0.0526418" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_030" mass="0.00284507" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="trashcan_cvx_031" mass="0.00908744" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>

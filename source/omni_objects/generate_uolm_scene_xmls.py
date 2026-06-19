@@ -1,83 +1,66 @@
 #!/usr/bin/env python3
-"""Generate UOLM scene XMLs (robot + dynamic object). See readme.md for details."""
+"""Generate UOLM scene XMLs: robot + object via <include>.
+
+Each scene XML includes the robot model and one object model (hull or
+decomposed).  Swap collision model by commenting/uncommenting the object
+<include> line.
+
+Usage:
+    python generate_uolm_scene_xmls.py --robot-xml /path/to/g1_29dof.xml
+    python generate_uolm_scene_xmls.py --robot-xml /path/to/g1_29dof.xml --object trashcan
+    python generate_uolm_scene_xmls.py --robot-xml /path/to/g1_29dof.xml --model dcmp
+"""
 
 import argparse
-import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+# ── Paths ────────────────────────────────────────────────────────────────────
 
-# ── Paths (auto-detected from script location) ──────────────────────────────
-
-SCRIPT_DIR = Path(__file__).resolve().parent     # .../source/multi_objects
-ASSETS_DIR = SCRIPT_DIR.parent                   # .../source
-WORKSPACE_ROOT = ASSETS_DIR.parent               # .../assets
+SCRIPT_DIR = Path(__file__).resolve().parent
+ASSETS_DIR = SCRIPT_DIR.parent
 DEFAULT_OUT_DIR = SCRIPT_DIR / "scenes"
 
+# ── Object discovery ─────────────────────────────────────────────────────────
 
-# ── Helpers ──────────────────────────────────────────────────────────────────
-
-def load_metadata(object_dir: Path) -> dict:
-    meta_path = object_dir / "metadata.json"
-    if not meta_path.exists():
-        raise FileNotFoundError(f"Missing metadata.json at {object_dir}")
-    return json.loads(meta_path.read_text())
+from object_groups import OBJECT_GROUP_PATTERNS
 
 
-def parse_urdf(urdf_path: Path) -> dict:
-    """Extract mass, geometry, and friction from a single-link URDF.
+def discover_objects(filter_name: str | None = None,
+                     model: str = "hull") -> list[tuple[str, Path, Path]]:
+    """Returns list of (name, object_xml_path, object_dir).
 
-    Inertia is NOT extracted -- MuJoCo auto-computes it from geom shape + mass.
+    Looks for <name>_cvx_{model}.xml in each object directory.
     """
-    tree = ET.parse(urdf_path)
-    link = tree.getroot().find("link")
-    mass = float(link.find("inertial").find("mass").get("value"))
+    suffix = f"_cvx_{model}.xml"
+    objects: list[tuple[str, Path, Path]] = []
+    seen: set[str] = set()
 
-    # Geometry -- prefer collision, fall back to visual
-    geom_el = None
-    for tag in ("collision", "visual"):
-        container = link.find(tag)
-        if container is not None:
-            geom_el = container.find("geometry")
-            if geom_el is not None:
-                break
+    for pattern in OBJECT_GROUP_PATTERNS:
+        if pattern.endswith(".urdf"):
+            obj_dir = (ASSETS_DIR / pattern).parent
+            name = obj_dir.name
+            xml_path = obj_dir / f"{name}{suffix}"
+            if name not in seen and xml_path.is_file():
+                seen.add(name)
+                objects.append((name, xml_path, obj_dir))
+            continue
 
-    # Friction
-    friction = 0.6
-    collision = link.find("collision")
-    if collision is not None:
-        surface = collision.find("surface")
-        if surface is not None:
-            fric = surface.find("friction")
-            if fric is not None:
-                ode = fric.find("ode")
-                if ode is not None:
-                    mu = ode.find("mu")
-                    if mu is not None:
-                        friction = float(mu.text)
+        for match in sorted(ASSETS_DIR.glob(pattern)):
+            if not match.is_dir() or match.name.startswith("__"):
+                continue
+            name = match.name
+            xml_path = match / f"{name}{suffix}"
+            if name not in seen and xml_path.is_file():
+                seen.add(name)
+                objects.append((name, xml_path, match))
 
-    return {"mass": mass, "geom": _parse_geometry(geom_el), "friction": friction}
+    if filter_name:
+        objects = [(n, x, d) for n, x, d in objects if n == filter_name]
+    return objects
 
 
-def _parse_geometry(geom_el) -> dict:
-    child = geom_el[0]
-    tag = child.tag
-    if tag == "mesh":
-        return {"type": "mesh", "filename": child.get("filename")}
-    elif tag == "sphere":
-        return {"type": "sphere", "size": child.get("radius")}
-    elif tag == "box":
-        halfs = " ".join(str(float(v) / 2) for v in child.get("size").split())
-        return {"type": "box", "size": halfs}
-    elif tag == "cylinder":
-        r = child.get("radius")
-        h = float(child.get("length")) / 2
-        return {"type": "cylinder", "size": f"{r} {h}"}
-    else:
-        raise ValueError(f"Unsupported geometry type: {tag}")
-
-
-# ── Scene generation ─────────────────────────────────────────────────────────
+# ── Scene template ───────────────────────────────────────────────────────────
 
 SCENE_TEMPLATE = """\
 <mujoco model="{model_name}">
@@ -86,121 +69,67 @@ SCENE_TEMPLATE = """\
   <statistic center="0 0 0.5" extent="2.0"/>
 
   <visual>
-        <headlight diffuse="0.6 0.6 0.6" ambient="0.6 0.6 0.6" specular="0.1 0.1 0.1"/>
-        <rgba haze="0.85 0.87 0.9 1"/>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.6 0.6 0.6" specular="0.1 0.1 0.1"/>
+    <rgba haze="0.85 0.87 0.9 1"/>
     <global azimuth="-130" elevation="-20"/>
-        <map force="0.1" zfar="30"/>
-        <quality shadowsize="4096"/>
+    <map force="0.1" zfar="30"/>
+    <quality shadowsize="4096"/>
   </visual>
 
   <asset>
-        <texture type="skybox" builtin="flat" rgb1="0.8 0.85 0.9" rgb2="0.8 0.85 0.9" width="512" height="512"/>
-        <texture type="2d" name="groundplane" builtin="checker" mark="edge"
-            rgb1="0.05 0.05 0.05" rgb2="0.05 0.05 0.05"
-            markrgb="1.0 1.0 1.0"
-            width="512" height="512"/>
-        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="3 3" reflectance="0"/>
-
-        <texture name="object_texture" type="2d" file="{object_texture_abs}"/>
-        <material name="object_material" texture="object_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
-{object_assets}
+    <texture type="skybox" builtin="flat" rgb1="0.8 0.85 0.9" rgb2="0.8 0.85 0.9" width="512" height="512"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge"
+        rgb1="0.05 0.05 0.05" rgb2="0.05 0.05 0.05"
+        markrgb="1.0 1.0 1.0"
+        width="512" height="512"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="3 3" reflectance="0"/>
   </asset>
 
   <worldbody>
-        <light pos="2 2 4" dir="-0.5 -0.5 -1" directional="true" diffuse="0.6 0.6 0.6" specular="0.2 0.2 0.2"/>
+    <light pos="2 2 4" dir="-0.5 -0.5 -1" directional="true" diffuse="0.6 0.6 0.6" specular="0.2 0.2 0.2"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
-
-    <body name="{object_name}" pos="{object_pos}" quat="{object_quat}">
-      <freejoint/>
-{object_geom}
-    </body>
   </worldbody>
+
+  <!-- Object model (swap hull/dcmp by commenting) -->
+  <include file="{object_xml_abs}"/>
+{alt_include}
 </mujoco>
 """
 
 
 def generate_scene(robot_xml_abs: str, object_name: str,
-                   urdf_data: dict, object_dir: Path, metadata: dict) -> str:
+                   object_xml_abs: str, alt_xml_abs: str | None) -> str:
     model_name = f"{Path(robot_xml_abs).stem} + {object_name}"
-
-    geom = urdf_data["geom"]
-    mass_attr = f'mass="{urdf_data["mass"]}"'
-    friction_attr = f'friction="{urdf_data["friction"]} {urdf_data["friction"]} 0.0001"'
-    material_attr = 'material="object_material"'
-    object_assets = ""
-    geom_line = ""
-
-    if geom["type"] == "mesh":
-        mesh_abs = str((object_dir / geom["filename"]).resolve())
-        object_assets = f'    <mesh name="{object_name}" file="{mesh_abs}"/>'
-        geom_line = f'      <geom type="mesh" mesh="{object_name}" {mass_attr} {friction_attr} {material_attr}/>'
-    else:
-        geom_line = f'      <geom type="{geom["type"]}" size="{geom["size"]}" {mass_attr} {friction_attr} {material_attr}/>'
-
-    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
-
+    alt_include = ""
+    if alt_xml_abs:
+        alt_include = f'  <!-- <include file="{alt_xml_abs}"/> -->'
     return SCENE_TEMPLATE.format(
         model_name=model_name,
         robot_xml_abs=robot_xml_abs,
-        object_assets=object_assets,
-        object_name=object_name,
-        object_pos=metadata["initial_pos"],
-        object_quat=metadata["initial_quat"],
-        object_texture_abs=texture_abs,
-        object_geom=geom_line,
+        object_xml_abs=object_xml_abs,
+        alt_include=alt_include,
     )
-
-
-# ── Object discovery ─────────────────────────────────────────────────────────
-
-# Single source of truth (dep-free) shared with the sim spawner in
-# omni_objects.py, so the scene generator covers exactly the same object groups.
-from object_groups import OBJECT_GROUP_PATTERNS
-
-
-def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path, Path]]:
-    """Returns list of (name, urdf_path, object_dir) across all OBJECT_GROUP_PATTERNS."""
-    objects: list[tuple[str, Path, Path]] = []
-    seen: set[str] = set()
-
-    for pattern in OBJECT_GROUP_PATTERNS:
-        # Direct .urdf path
-        if pattern.endswith(".urdf"):
-            urdf = ASSETS_DIR / pattern
-            if urdf.is_file():
-                name = urdf.stem
-                if name not in seen:
-                    seen.add(name)
-                    objects.append((name, urdf, urdf.parent))
-            continue
-
-        # Folder glob — each matched subdir holds {name}/{name}.urdf
-        for match in sorted(ASSETS_DIR.glob(pattern)):
-            if not match.is_dir() or match.name.startswith("__"):
-                continue
-            urdf = match / f"{match.name}.urdf"
-            if urdf.is_file() and match.name not in seen:
-                seen.add(match.name)
-                objects.append((match.name, urdf, match))
-
-    if filter_name:
-        objects = [(n, u, d) for n, u, d in objects if n == filter_name]
-    return objects
 
 
 # ── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--robot-xml", default=None,
-                        help="Absolute path to robot MuJoCo XML (e.g. .../unitree_robots/g1/g1_29dof.xml)")
-    parser.add_argument("--object", default=None, help="Generate for a single object only")
-    parser.add_argument("--out-dir", default=None, help=f"Output directory (default: {DEFAULT_OUT_DIR})")
+                        help="Absolute path to robot MuJoCo XML")
+    parser.add_argument("--object", default=None,
+                        help="Generate for a single object only")
+    parser.add_argument("--model", choices=["hull", "dcmp"], default="hull",
+                        help="Object collision model (default: hull)")
+    parser.add_argument("--out-dir", default=None,
+                        help=f"Output directory (default: {DEFAULT_OUT_DIR})")
     args = parser.parse_args()
 
     robot_xml = args.robot_xml
     if not robot_xml:
-        robot_xml = input("Absolute path to robot XML (e.g. .../unitree_robots/g1/g1_29dof.xml): ").strip()
+        robot_xml = input("Absolute path to robot XML: ").strip()
     robot_xml_path = Path(robot_xml).resolve()
     if not robot_xml_path.is_file():
         print(f"ERROR: {robot_xml_path} not found.")
@@ -210,8 +139,7 @@ def main():
     out_dir = Path(args.out_dir) if args.out_dir else DEFAULT_OUT_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Symlink robot meshdir -- MuJoCo resolves meshdir relative to the
-    # top-level file, not the <include>'d file.
+    # Symlink robot meshdir (MuJoCo resolves meshdir relative to top-level file)
     robot_tree = ET.parse(robot_xml_path)
     robot_compiler = robot_tree.getroot().find("compiler")
     meshdir_rel = robot_compiler.get("meshdir", ".") if robot_compiler is not None else "."
@@ -227,18 +155,22 @@ def main():
         symlink_path.symlink_to(robot_meshdir_abs)
         print(f"  Created symlink: {symlink_path} -> {robot_meshdir_abs}")
 
-    objects = discover_objects(args.object)
+    objects = discover_objects(args.object, args.model)
     if not objects:
         print(f"No objects found{f' matching {args.object!r}' if args.object else ''}.")
+        print("  Did you run make_object_models.py first?")
         return
 
     robot_stem = robot_xml_path.stem
+    alt_model = "dcmp" if args.model == "hull" else "hull"
 
-    for name, urdf_path, obj_dir in objects:
-        urdf_data = parse_urdf(urdf_path)
-        metadata = load_metadata(obj_dir)
-        scene_xml = generate_scene(robot_xml_abs, name, urdf_data, obj_dir, metadata)
+    for name, obj_xml, obj_dir in objects:
+        # check for alternative model XML
+        alt_xml = obj_dir / f"{name}_cvx_{alt_model}.xml"
+        alt_abs = str(alt_xml.resolve()) if alt_xml.is_file() else None
 
+        scene_xml = generate_scene(robot_xml_abs, name,
+                                   str(obj_xml.resolve()), alt_abs)
         out_path = out_dir / f"{robot_stem}_{name}.xml"
         out_path.write_text(scene_xml)
         print(f"  Generated: {out_path}")

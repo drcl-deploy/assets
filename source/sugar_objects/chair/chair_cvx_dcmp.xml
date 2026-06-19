@@ -1,0 +1,77 @@
+<mujoco model="chair_cvx_dcmp">
+  <asset>
+    <mesh name="chair_visual" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/chair.obj"/>
+    <mesh name="chair_cvx_000" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_000.obj"/>
+    <mesh name="chair_cvx_001" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_001.obj"/>
+    <mesh name="chair_cvx_002" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_002.obj"/>
+    <mesh name="chair_cvx_003" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_003.obj"/>
+    <mesh name="chair_cvx_004" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_004.obj"/>
+    <mesh name="chair_cvx_005" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_005.obj"/>
+    <mesh name="chair_cvx_006" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_006.obj"/>
+    <mesh name="chair_cvx_007" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_007.obj"/>
+    <mesh name="chair_cvx_008" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_008.obj"/>
+    <mesh name="chair_cvx_009" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_009.obj"/>
+    <mesh name="chair_cvx_010" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_010.obj"/>
+    <mesh name="chair_cvx_011" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_011.obj"/>
+    <mesh name="chair_cvx_012" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_012.obj"/>
+    <mesh name="chair_cvx_013" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_013.obj"/>
+    <mesh name="chair_cvx_014" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_014.obj"/>
+    <mesh name="chair_cvx_015" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_015.obj"/>
+    <mesh name="chair_cvx_016" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_016.obj"/>
+    <mesh name="chair_cvx_017" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_017.obj"/>
+    <mesh name="chair_cvx_018" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_018.obj"/>
+    <mesh name="chair_cvx_019" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_019.obj"/>
+    <mesh name="chair_cvx_020" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_020.obj"/>
+    <mesh name="chair_cvx_021" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_021.obj"/>
+    <mesh name="chair_cvx_022" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_022.obj"/>
+    <mesh name="chair_cvx_023" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_023.obj"/>
+    <mesh name="chair_cvx_024" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_024.obj"/>
+    <mesh name="chair_cvx_025" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_025.obj"/>
+    <mesh name="chair_cvx_026" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_026.obj"/>
+    <mesh name="chair_cvx_027" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_027.obj"/>
+    <mesh name="chair_cvx_028" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_028.obj"/>
+    <mesh name="chair_cvx_029" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_029.obj"/>
+    <mesh name="chair_cvx_030" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_030.obj"/>
+    <mesh name="chair_cvx_031" file="/home/loki/drcl_projects/assets/source/sugar_objects/chair/convex_decomp_meshes/chair_cvx_031.obj"/>
+    <texture name="chair_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+    <material name="chair_material" texture="chair_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="chair" pos="1.384  0.750 0.501" quat="-0.587 -0.728 0.284 0.211">
+      <freejoint/>
+      <geom name="chair_visual" type="mesh" mesh="chair_visual" contype="0" conaffinity="0" material="chair_material"/>
+      <geom type="mesh" mesh="chair_cvx_000" mass="0.0195104" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_001" mass="0.0168562" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_002" mass="0.0125689" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_003" mass="0.0885986" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_004" mass="0.040954" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_005" mass="0.0891787" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_006" mass="0.0133132" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_007" mass="0.0348504" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_008" mass="0.0182141" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_009" mass="0.0104478" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_010" mass="0.0456766" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_011" mass="0.0749012" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_012" mass="0.023571" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_013" mass="0.0741492" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_014" mass="0.0299718" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_015" mass="0.18048" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_016" mass="0.0144557" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_017" mass="0.0120492" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_018" mass="0.0405593" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_019" mass="0.000771865" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_020" mass="0.0910395" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_021" mass="0.143874" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_022" mass="0.0542293" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_023" mass="0.0149568" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_024" mass="0.00964806" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_025" mass="0.106945" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_026" mass="0.00947024" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_027" mass="0.026312" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_028" mass="0.07068" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_029" mass="0.00945261" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_030" mass="0.112753" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="chair_cvx_031" mass="0.0095607" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>

@@ -2,10 +2,10 @@
 <robot name="tripod">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="0.80000"/>
-      <inertia ixx="0.114937" ixy="0.0" ixz="0.0" iyy="0.150476" iyz="0.0" izz="0.259964"/>
+      <inertia ixx="0.056916" ixy="0.057735" ixz="0.003754" iyy="0.073599" iyz="-0.003243" izz="0.123445"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

@@ -2,10 +2,10 @@
 <robot name="clothesstand">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="1.50000"/>
-      <inertia ixx="0.098570" ixy="0.0" ixz="0.0" iyy="0.064222" iyz="0.0" izz="0.149425"/>
+      <inertia ixx="0.105753" ixy="0.071721" ixz="0.014914" iyy="0.068346" iyz="-0.019321" izz="0.157330"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

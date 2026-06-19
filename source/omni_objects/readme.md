@@ -1,84 +1,105 @@
-# UOLM scene generator
+# Object model pipeline
 
-Generates MuJoCo scene XMLs: robot + single dynamic object (UniObject Loco Manipulation).
+Two-script workflow for generating consistent object models usable in both IsaacLab and MuJoCo sim2sim.
 
-> **Note:** `scenes/` contains absolute paths and is **not portable** across machines.
-> Do NOT copy scene XMLs between devices -- re-generate them locally with `generate_uolm_scene_xmls.py`.
+> **Note:** Generated files contain absolute paths and are **not portable** across machines.
+> Re-generate locally after cloning.
 
-## usage
+## Workflow
+
+```
+metadata.json + .obj mesh
+        |
+        v
+ make_object_models.py          # Step 1: per-object model files
+        |
+        +-- <name>.urdf                 (auto-computed inertia)
+        +-- <name>_cvx_hull.xml         (MuJoCo body: single convex hull)
+        +-- <name>_cvx_dcmp.xml         (MuJoCo body: CoACD decomposed)
+        +-- collision/<name>_cvx_*.obj  (convex parts)
+        |
+        v
+ generate_uolm_scene_xmls.py   # Step 2: robot + object scene
+        |
+        +-- scenes/<robot>_<object>.xml
+```
+
+## Step 1: generate object models
 
 ```bash
-# All objects (prompts for robot XML path):
-python generate_uolm_scene_xmls.py
-
-# Pass robot XML directly:
-python generate_uolm_scene_xmls.py --robot-xml /path/to/unitree_robots/g1/g1_29dof.xml
+# All objects:
+python make_object_models.py --all
 
 # Single object:
-python generate_uolm_scene_xmls.py --object trashcan
+python make_object_models.py ../custom_objects/tire
+
+# Hull only (skip CoACD decomposition):
+python make_object_models.py --all --no-decompose
+
+# Tighter decomposition:
+python make_object_models.py ../omomo_objects/*/ --threshold 0.03 --force
 ```
 
-Output lands in `scenes/` (gitignored, generated per-machine):
+Each object directory needs:
+- `<name>.obj` — visual/collision mesh
+- `metadata.json` — with fields: `mass`, `initial_pos`, `initial_quat`, `texture`
+
+```json
+{
+  "mass": 0.8,
+  "initial_pos": "1.0 0.0 0.3",
+  "initial_quat": "1 0 0 0",
+  "texture": "source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"
+}
+```
+
+**Inertia** is auto-computed from mesh geometry assuming homogeneous density (trimesh). Non-watertight meshes fall back to convex hull for volume estimation.
+
+| Flag | Default | Description |
+|---|---|---|
+| `--all` | off | Process every object in `OBJECT_GROUP_PATTERNS` |
+| `--object` | *(all)* | Process a single object by name (with `--all`) |
+| `--force` | off | Regenerate even if outputs exist |
+| `--no-decompose` | off | Skip CoACD decomposition (only URDF + hull) |
+| `--threshold` | `0.05` | CoACD concavity threshold (0.02..0.1) |
+| `--max-hulls` | `-1` | Cap on convex parts (-1 = none) |
+| `--quiet` | off | Silence CoACD logging |
+
+## Step 2: generate scene XMLs
 
 ```bash
-# <robot>_<object>.xml
-scenes/
-  g1_29dof_trashcan.xml
-  g1_29dof_woodchair.xml
-  ...
-  meshes -> <robot_meshes_dir>   # symlink, auto-created
+# All objects:
+python generate_uolm_scene_xmls.py --robot-xml /path/to/g1_29dof.xml
+
+# Single object:
+python generate_uolm_scene_xmls.py --robot-xml /path/to/g1_29dof.xml --object trashcan
+
+# Use decomposed collision model:
+python generate_uolm_scene_xmls.py --robot-xml /path/to/g1_29dof.xml --model dcmp
 ```
 
-## rationale
-
-- **No asset duplication.** Meshes/textures referenced via absolute paths, auto-detected from script location.
-- **Robot meshdir symlink.** MuJoCo resolves `meshdir` relative to the top-level file. The generator creates `scenes/meshes -> <robot_meshes_dir>` so `<include>` resolves correctly.
-- **Auto-computed inertia.** Mass set on `<geom>`, no `<inertial>`. MuJoCo derives CoM and inertia from geometry.
-
-## cli
+Scene XMLs use `<include>` for both robot and object — no inlined bodies. The generated file has both hull and dcmp includes (one commented out) for easy swapping during sim2sim.
 
 | Flag | Default | Description |
 |---|---|---|
 | `--robot-xml` | *(prompt)* | Absolute path to robot MuJoCo XML |
 | `--object` | *(all)* | Generate for a single object only |
+| `--model` | `hull` | Object collision model: `hull` or `dcmp` |
 | `--out-dir` | `scenes/` | Output directory |
 
----
+## Adding a new object
 
-# Convex colliders (`make_convex_colliders.py`)
+1. Create `source/<group>/<name>/` with `<name>.obj` and `metadata.json`
+2. Add the group pattern to `object_groups.py` (if new group)
+3. Run `make_object_models.py` then `generate_uolm_scene_xmls.py`
 
-Standalone, independent of the scene generator. MuJoCo collides a `<geom type="mesh">` as a
-single **convex hull** (no auto-decomposition, unlike IsaacLab/PhysX) → concave objects get
-phantom contacts. This runs **CoACD** offline and writes a single-body **multi-geom** collider
-that MuJoCo treats exactly. Wire it into scenes yourself when needed.
+## Interactive drop test (`view_drop_test.py`)
+
+Side-by-side physics comparison: LEFT = convex hull, RIGHT = CoACD decomposed.
+Requires both `_cvx_hull.xml` and `_cvx_dcmp.xml` to exist (run `make_object_models.py` first).
 
 ```bash
-pip install coacd
-# one object (dir or .obj):
-python make_convex_colliders.py ../custom_objects/woodchair2
-# batch + tighter fit:
-python make_convex_colliders.py ../omomo_objects/*/ --threshold 0.03 --force
-# interactive physics DROP TEST: BEFORE (single hull) | AFTER (decomposed), contacts on:
-python make_convex_colliders.py ../custom_objects/woodchair2 --view
-#   SPACE = pause/play,  BACKSPACE = re-drop at a new random orientation
+python view_drop_test.py ../omomo_objects/trashcan
+python view_drop_test.py ../custom_objects/woodchair2
+#   SPACE = pause/play,  BACKSPACE = re-drop at new random orientation
 ```
-
-Per object `<dir>/<name>.obj` it writes, **inside that folder**:
-
-```
-<dir>/collision/<name>_cvx_000.obj ...   # convex parts
-<dir>/<name>_collision.xml               # one body + freejoint + N mesh geoms (loadable alone)
-```
-
-Mass is read from a sibling `<name>.urdf` (else 1.0) and split across parts by volume.
-e.g. `woodchair2` → 28 parts, AABB matches source to ~7 mm.
-
-| Flag | Default | Description |
-|---|---|---|
-| `--threshold` | `0.05` | CoACD concavity; lower = more parts = tighter (0.02..0.1) |
-| `--max-hulls` | `-1` | cap on convex parts (-1 = none) |
-| `--preprocess-resolution` | `50` | voxel res for the watertight pre-remesh |
-| `--seed` | `0` | deterministic |
-| `--force` | off | redo even if `<name>_collision.xml` exists |
-| `--quiet` | off | silence CoACD's own logging |
-| `--view` | off | interactive drop test (hull vs decomposed); SPACE=pause, BACKSPACE=re-drop |

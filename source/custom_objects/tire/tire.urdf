@@ -2,10 +2,10 @@
 <robot name="tire">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="8.00000"/>
-      <inertia ixx="0.006412" ixy="0.0" ixz="0.0" iyy="0.005152" iyz="0.0" izz="0.008910"/>
+      <inertia ixx="0.242278" ixy="-0.000000" ixz="-0.000000" iyy="0.242278" iyz="0.000000" izz="0.390747"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

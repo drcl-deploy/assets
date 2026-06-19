@@ -1,0 +1,13 @@
+<mujoco model="bottle_cvx_hull">
+  <asset>
+    <mesh name="bottle" file="/home/loki/drcl_projects/assets/source/sugar_objects/bottle/bottle.obj"/>
+    <texture name="bottle_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+    <material name="bottle_material" texture="bottle_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="bottle" pos="0.206 -0.007 0.198" quat="0.150 0.290 0.800 0.503">
+      <freejoint/>
+      <geom type="mesh" mesh="bottle" mass="0.7" friction="0.6 0.6 0.0001" material="bottle_material"/>
+    </body>
+  </worldbody>
+</mujoco>

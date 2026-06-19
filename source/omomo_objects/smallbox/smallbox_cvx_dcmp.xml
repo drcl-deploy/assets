@@ -1,0 +1,25 @@
+<mujoco model="smallbox_cvx_dcmp">
+  <asset>
+    <mesh name="smallbox_visual" file="/home/loki/drcl_projects/assets/source/omomo_objects/smallbox/smallbox.obj"/>
+    <mesh name="smallbox_cvx_000" file="/home/loki/drcl_projects/assets/source/omomo_objects/smallbox/convex_decomp_meshes/smallbox_cvx_000.obj"/>
+    <mesh name="smallbox_cvx_001" file="/home/loki/drcl_projects/assets/source/omomo_objects/smallbox/convex_decomp_meshes/smallbox_cvx_001.obj"/>
+    <mesh name="smallbox_cvx_002" file="/home/loki/drcl_projects/assets/source/omomo_objects/smallbox/convex_decomp_meshes/smallbox_cvx_002.obj"/>
+    <mesh name="smallbox_cvx_003" file="/home/loki/drcl_projects/assets/source/omomo_objects/smallbox/convex_decomp_meshes/smallbox_cvx_003.obj"/>
+    <mesh name="smallbox_cvx_004" file="/home/loki/drcl_projects/assets/source/omomo_objects/smallbox/convex_decomp_meshes/smallbox_cvx_004.obj"/>
+    <mesh name="smallbox_cvx_005" file="/home/loki/drcl_projects/assets/source/omomo_objects/smallbox/convex_decomp_meshes/smallbox_cvx_005.obj"/>
+    <texture name="smallbox_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+    <material name="smallbox_material" texture="smallbox_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="smallbox" pos="1.0 0.0 0.3" quat="1 0 0 0">
+      <freejoint/>
+      <geom name="smallbox_visual" type="mesh" mesh="smallbox_visual" contype="0" conaffinity="0" material="smallbox_material"/>
+      <geom type="mesh" mesh="smallbox_cvx_000" mass="0.137967" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="smallbox_cvx_001" mass="0.158955" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="smallbox_cvx_002" mass="0.0648057" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="smallbox_cvx_003" mass="0.0923885" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="smallbox_cvx_004" mass="0.211494" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="smallbox_cvx_005" mass="0.13439" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>

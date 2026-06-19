@@ -2,21 +2,21 @@
 <robot name="chair">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="1.50000"/>
-      <inertia ixx="0.014512" ixy="0.0" ixz="0.0" iyy="0.019450" iyz="0.0" izz="0.024648"/>
+      <inertia ixx="0.062328" ixy="0.007880" ixz="-0.005568" iyy="0.073494" iyz="0.012011" izz="0.050750"/>
     </inertial>
 
     <visual>
       <geometry>
-        <mesh filename="chair_decimated.obj"/>
+        <mesh filename="chair.obj"/>
       </geometry>
     </visual>
 
     <collision>
       <geometry>
-        <mesh filename="chair_decimated.obj"/>
+        <mesh filename="chair.obj"/>
       </geometry>
       <surface>
         <friction>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

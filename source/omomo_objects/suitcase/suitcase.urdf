@@ -2,10 +2,10 @@
 <robot name="suitcase">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="2.00000"/>
-      <inertia ixx="0.018362" ixy="0.0" ixz="0.0" iyy="0.010541" iyz="0.0" izz="0.018328"/>
+      <inertia ixx="0.036723" ixy="0.000018" ixz="0.003746" iyy="0.021082" iyz="0.000152" izz="0.036656"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

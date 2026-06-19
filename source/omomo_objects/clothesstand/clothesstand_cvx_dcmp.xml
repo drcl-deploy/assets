@@ -1,0 +1,37 @@
+<mujoco model="clothesstand_cvx_dcmp">
+  <asset>
+    <mesh name="clothesstand_visual" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/clothesstand.obj"/>
+    <mesh name="clothesstand_cvx_000" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_000.obj"/>
+    <mesh name="clothesstand_cvx_001" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_001.obj"/>
+    <mesh name="clothesstand_cvx_002" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_002.obj"/>
+    <mesh name="clothesstand_cvx_003" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_003.obj"/>
+    <mesh name="clothesstand_cvx_004" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_004.obj"/>
+    <mesh name="clothesstand_cvx_005" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_005.obj"/>
+    <mesh name="clothesstand_cvx_006" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_006.obj"/>
+    <mesh name="clothesstand_cvx_007" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_007.obj"/>
+    <mesh name="clothesstand_cvx_008" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_008.obj"/>
+    <mesh name="clothesstand_cvx_009" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_009.obj"/>
+    <mesh name="clothesstand_cvx_010" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_010.obj"/>
+    <mesh name="clothesstand_cvx_011" file="/home/loki/drcl_projects/assets/source/omomo_objects/clothesstand/convex_decomp_meshes/clothesstand_cvx_011.obj"/>
+    <texture name="clothesstand_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Cherry/Cherry_BaseColor.png"/>
+    <material name="clothesstand_material" texture="clothesstand_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="clothesstand" pos="1.0 0.0 0.3" quat="1 0 0 0">
+      <freejoint/>
+      <geom name="clothesstand_visual" type="mesh" mesh="clothesstand_visual" contype="0" conaffinity="0" material="clothesstand_material"/>
+      <geom type="mesh" mesh="clothesstand_cvx_000" mass="0.520708" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_001" mass="0.280597" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_002" mass="0.239632" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_003" mass="0.0257503" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_004" mass="0.0790636" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_005" mass="0.0675972" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_006" mass="0.033827" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_007" mass="0.0806487" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_008" mass="0.02113" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_009" mass="0.0522274" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_010" mass="0.0655972" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="clothesstand_cvx_011" mass="0.0332217" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>

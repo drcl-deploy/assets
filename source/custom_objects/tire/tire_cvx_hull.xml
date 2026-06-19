@@ -1,0 +1,13 @@
+<mujoco model="tire_cvx_hull">
+  <asset>
+    <mesh name="tire" file="/home/loki/drcl_projects/assets/source/custom_objects/tire/tire.obj"/>
+    <texture name="tire_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Oak/Oak_BaseColor.png"/>
+    <material name="tire_material" texture="tire_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="tire" pos="0.460 0.064 0.264" quat="0.7056 0.7066 -0.0381 -0.0376">
+      <freejoint/>
+      <geom type="mesh" mesh="tire" mass="8.0" friction="0.6 0.6 0.0001" material="tire_material"/>
+    </body>
+  </worldbody>
+</mujoco>

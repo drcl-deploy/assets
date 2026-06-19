@@ -1,0 +1,77 @@
+<mujoco model="plasticbox_cvx_dcmp">
+  <asset>
+    <mesh name="plasticbox_visual" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/plasticbox.obj"/>
+    <mesh name="plasticbox_cvx_000" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_000.obj"/>
+    <mesh name="plasticbox_cvx_001" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_001.obj"/>
+    <mesh name="plasticbox_cvx_002" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_002.obj"/>
+    <mesh name="plasticbox_cvx_003" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_003.obj"/>
+    <mesh name="plasticbox_cvx_004" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_004.obj"/>
+    <mesh name="plasticbox_cvx_005" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_005.obj"/>
+    <mesh name="plasticbox_cvx_006" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_006.obj"/>
+    <mesh name="plasticbox_cvx_007" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_007.obj"/>
+    <mesh name="plasticbox_cvx_008" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_008.obj"/>
+    <mesh name="plasticbox_cvx_009" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_009.obj"/>
+    <mesh name="plasticbox_cvx_010" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_010.obj"/>
+    <mesh name="plasticbox_cvx_011" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_011.obj"/>
+    <mesh name="plasticbox_cvx_012" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_012.obj"/>
+    <mesh name="plasticbox_cvx_013" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_013.obj"/>
+    <mesh name="plasticbox_cvx_014" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_014.obj"/>
+    <mesh name="plasticbox_cvx_015" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_015.obj"/>
+    <mesh name="plasticbox_cvx_016" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_016.obj"/>
+    <mesh name="plasticbox_cvx_017" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_017.obj"/>
+    <mesh name="plasticbox_cvx_018" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_018.obj"/>
+    <mesh name="plasticbox_cvx_019" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_019.obj"/>
+    <mesh name="plasticbox_cvx_020" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_020.obj"/>
+    <mesh name="plasticbox_cvx_021" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_021.obj"/>
+    <mesh name="plasticbox_cvx_022" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_022.obj"/>
+    <mesh name="plasticbox_cvx_023" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_023.obj"/>
+    <mesh name="plasticbox_cvx_024" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_024.obj"/>
+    <mesh name="plasticbox_cvx_025" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_025.obj"/>
+    <mesh name="plasticbox_cvx_026" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_026.obj"/>
+    <mesh name="plasticbox_cvx_027" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_027.obj"/>
+    <mesh name="plasticbox_cvx_028" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_028.obj"/>
+    <mesh name="plasticbox_cvx_029" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_029.obj"/>
+    <mesh name="plasticbox_cvx_030" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_030.obj"/>
+    <mesh name="plasticbox_cvx_031" file="/home/loki/drcl_projects/assets/source/omomo_objects/plasticbox/convex_decomp_meshes/plasticbox_cvx_031.obj"/>
+    <texture name="plasticbox_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+    <material name="plasticbox_material" texture="plasticbox_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="plasticbox" pos="0.4896 -0.0857 0.0077" quat="0.6342 0.6015 0.3272 0.3591">
+      <freejoint/>
+      <geom name="plasticbox_visual" type="mesh" mesh="plasticbox_visual" contype="0" conaffinity="0" material="plasticbox_material"/>
+      <geom type="mesh" mesh="plasticbox_cvx_000" mass="0.0765945" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_001" mass="0.0110613" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_002" mass="0.0490926" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_003" mass="0.209668" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_004" mass="0.00730417" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_005" mass="0.107106" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_006" mass="0.0289199" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_007" mass="0.0205011" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_008" mass="0.0699449" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_009" mass="0.0167606" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_010" mass="0.16054" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_011" mass="0.0068419" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_012" mass="0.0176756" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_013" mass="0.00652239" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_014" mass="0.00573993" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_015" mass="0.0165903" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_016" mass="0.00573966" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_017" mass="0.0226225" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_018" mass="0.0289633" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_019" mass="0.0216762" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_020" mass="0.00579653" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_021" mass="0.0142739" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_022" mass="0.084111" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_023" mass="0.0222012" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_024" mass="0.358295" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_025" mass="0.0154989" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_026" mass="0.0404129" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_027" mass="0.00957438" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_028" mass="0.00898348" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_029" mass="0.0181155" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_030" mass="0.0179148" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="plasticbox_cvx_031" mass="0.014957" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>

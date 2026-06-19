@@ -2,10 +2,10 @@
 <robot name="whitechair">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="1.50000"/>
-      <inertia ixx="0.014512" ixy="0.0" ixz="0.0" iyy="0.019450" iyz="0.0" izz="0.024648"/>
+      <inertia ixx="0.038563" ixy="-0.001392" ixz="-0.012264" iyy="0.051533" iyz="0.000717" izz="0.041607"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

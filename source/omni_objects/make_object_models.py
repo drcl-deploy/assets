@@ -1,0 +1,375 @@
+#!/usr/bin/env python3
+"""Auto-generate object model files (URDF + MuJoCo XMLs) from mesh + metadata.
+
+Given an object directory containing:
+  <name>.obj      -- visual/collision mesh
+  metadata.json   -- {"mass": ..., "initial_pos": ..., "initial_quat": ..., "texture": ...}
+
+Generates (all inside the object directory):
+  <name>.urdf              -- single-link URDF with auto-computed inertia
+  <name>_cvx_hull.xml      -- MuJoCo includable body: single convex-hull collision
+  <name>_cvx_dcmp.xml      -- MuJoCo includable body: CoACD decomposed collision
+  collision/<name>_cvx_*.obj  -- convex decomposition parts
+
+Usage:
+    python make_object_models.py ../omomo_objects/smallbox
+    python make_object_models.py ../omomo_objects/*/ --force
+    python make_object_models.py ../custom_objects/tire --no-decompose
+    python make_object_models.py --all                  # every object in OBJECT_GROUP_PATTERNS
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+import numpy as np
+import trimesh
+
+# ── Paths ────────────────────────────────────────────────────────────────────
+
+SCRIPT_DIR = Path(__file__).resolve().parent       # .../source/omni_objects
+ASSETS_DIR = SCRIPT_DIR.parent                     # .../source
+WORKSPACE_ROOT = ASSETS_DIR.parent                 # .../assets
+
+# ── Metadata ─────────────────────────────────────────────────────────────────
+
+def load_metadata(obj_dir: Path) -> dict:
+    meta_path = obj_dir / "metadata.json"
+    if not meta_path.exists():
+        raise FileNotFoundError(f"Missing metadata.json in {obj_dir}")
+    meta = json.loads(meta_path.read_text())
+    if "mass" not in meta:
+        raise ValueError(f"metadata.json in {obj_dir} has no 'mass' field")
+    return meta
+
+
+def resolve_obj(path: Path) -> Path:
+    """Accept an .obj file or an object dir holding <name>/<name>.obj."""
+    if path.is_file() and path.suffix.lower() == ".obj":
+        return path
+    if path.is_dir():
+        cand = path / f"{path.name}.obj"
+        if cand.is_file():
+            return cand
+    raise FileNotFoundError(f"No <name>.obj found for: {path}")
+
+
+# ── Inertia computation ─────────────────────────────────────────────────────
+
+def compute_inertia(obj_path: Path, mass: float) -> dict:
+    """Compute inertia tensor assuming homogeneous density.
+
+    Uses trimesh: sets density = mass / volume, reads moment_inertia.
+    Falls back to convex hull volume if the mesh isn't watertight.
+    """
+    mesh = trimesh.load(obj_path, force="mesh")
+    if not mesh.is_watertight or mesh.volume <= 0:
+        mesh = mesh.convex_hull
+    vol = mesh.volume
+    if vol <= 0:
+        raise ValueError(f"Could not compute volume for {obj_path}")
+    mesh.density = mass / vol
+    I = mesh.moment_inertia  # 3x3 about CoM
+    return dict(ixx=I[0, 0], ixy=I[0, 1], ixz=I[0, 2],
+                iyy=I[1, 1], iyz=I[1, 2], izz=I[2, 2])
+
+
+# ── URDF generation ─────────────────────────────────────────────────────────
+
+URDF_TEMPLATE = """\
+<?xml version="1.0"?>
+<robot name="{name}">
+
+  <link name="base_link">
+
+    <inertial>
+      <mass value="{mass:.5f}"/>
+      <inertia ixx="{ixx:.6f}" ixy="{ixy:.6f}" ixz="{ixz:.6f}" iyy="{iyy:.6f}" iyz="{iyz:.6f}" izz="{izz:.6f}"/>
+    </inertial>
+
+    <visual>
+      <geometry>
+        <mesh filename="{name}.obj"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="{name}.obj"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>{friction}</mu>
+            <mu2>{friction}</mu2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <kp>1000000.0</kp>
+            <kd>1.0</kd>
+            <max_vel>100.0</max_vel>
+            <min_depth>0.001</min_depth>
+          </ode>
+        </contact>
+      </surface>
+    </collision>
+
+  </link>
+</robot>
+"""
+
+
+def write_urdf(obj_dir: Path, name: str, mass: float, inertia: dict,
+               friction: float) -> Path:
+    out = obj_dir / f"{name}.urdf"
+    out.write_text(URDF_TEMPLATE.format(name=name, mass=mass, friction=friction,
+                                        **inertia))
+    return out
+
+
+# ── MuJoCo XML: convex hull (single-geom body) ─────────────────────────────
+
+CVX_HULL_TEMPLATE = """\
+<mujoco model="{name}_cvx_hull">
+  <asset>
+    <mesh name="{name}" file="{mesh_abs}"/>
+    <texture name="{name}_texture" type="2d" file="{texture_abs}"/>
+    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="{name}" pos="{pos}" quat="{quat}">
+      <freejoint/>
+      <geom type="mesh" mesh="{name}" mass="{mass}" friction="{friction} {friction} 0.0001" material="{name}_material"/>
+    </body>
+  </worldbody>
+</mujoco>
+"""
+
+
+def write_cvx_hull_xml(obj_dir: Path, name: str, metadata: dict,
+                       friction: float) -> Path:
+    mesh_abs = str((obj_dir / f"{name}.obj").resolve())
+    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
+    xml = CVX_HULL_TEMPLATE.format(
+        name=name, mesh_abs=mesh_abs, texture_abs=texture_abs,
+        mass=metadata["mass"], friction=friction,
+        pos=metadata["initial_pos"], quat=metadata["initial_quat"],
+    )
+    out = obj_dir / f"{name}_cvx_hull.xml"
+    out.write_text(xml)
+    return out
+
+
+# ── MuJoCo XML: convex decomposition (multi-geom body) ─────────────────────
+
+CVX_DCMP_TEMPLATE = """\
+<mujoco model="{name}_cvx_dcmp">
+  <asset>
+    <mesh name="{name}_visual" file="{mesh_abs}"/>
+{part_assets}
+    <texture name="{name}_texture" type="2d" file="{texture_abs}"/>
+    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="{name}" pos="{pos}" quat="{quat}">
+      <freejoint/>
+      <geom name="{name}_visual" type="mesh" mesh="{name}_visual" contype="0" conaffinity="0" material="{name}_material"/>
+{part_geoms}
+    </body>
+  </worldbody>
+</mujoco>
+"""
+
+
+def decompose_mesh(obj_path: Path, threshold: float, max_hulls: int,
+                   preprocess_resolution: int, seed: int) -> list[trimesh.Trimesh]:
+    import coacd
+    mesh = trimesh.load(obj_path, force="mesh")
+    cmesh = coacd.Mesh(np.asarray(mesh.vertices, np.float64),
+                       np.asarray(mesh.faces, np.int32))
+    parts = coacd.run_coacd(
+        cmesh, threshold=threshold, max_convex_hull=max_hulls,
+        preprocess_mode="auto", preprocess_resolution=preprocess_resolution,
+        merge=True, seed=seed,
+    )
+    return [trimesh.Trimesh(vertices=v, faces=f, process=False) for v, f in parts]
+
+
+def write_cvx_dcmp_xml(obj_dir: Path, name: str, metadata: dict,
+                       parts: list[trimesh.Trimesh], friction: float,
+                       subdir: str = "convex_decomp_meshes") -> Path:
+    coll_dir = obj_dir / subdir
+    coll_dir.mkdir(exist_ok=True)
+    for old in coll_dir.glob(f"{name}_cvx_*.obj"):
+        old.unlink()
+
+    total_mass = metadata["mass"]
+    vols = np.array([max(p.volume, 1e-9) for p in parts], dtype=np.float64)
+    mass_frac = vols / vols.sum()
+
+    part_assets, part_geoms = [], []
+    for i, part in enumerate(parts):
+        part_path = coll_dir / f"{name}_cvx_{i:03d}.obj"
+        part.export(part_path)
+        mname = f"{name}_cvx_{i:03d}"
+        part_assets.append(
+            f'    <mesh name="{mname}" file="{part_path.resolve()}"/>')
+        m = total_mass * mass_frac[i]
+        part_geoms.append(
+            f'      <geom type="mesh" mesh="{mname}" mass="{m:.6g}" '
+            f'friction="{friction} {friction} 0.0001" group="3"/>')
+
+    mesh_abs = str((obj_dir / f"{name}.obj").resolve())
+    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
+
+    xml = CVX_DCMP_TEMPLATE.format(
+        name=name, mesh_abs=mesh_abs, texture_abs=texture_abs,
+        part_assets="\n".join(part_assets), part_geoms="\n".join(part_geoms),
+        pos=metadata["initial_pos"], quat=metadata["initial_quat"],
+    )
+    out = obj_dir / f"{name}_cvx_dcmp.xml"
+    out.write_text(xml)
+    return out
+
+
+# ── Object discovery (shared with scene generator) ──────────────────────────
+
+from object_groups import OBJECT_GROUP_PATTERNS
+
+
+def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path]]:
+    """Returns list of (name, object_dir) for objects that have a .obj mesh."""
+    objects: list[tuple[str, Path]] = []
+    seen: set[str] = set()
+
+    for pattern in OBJECT_GROUP_PATTERNS:
+        if pattern.endswith(".urdf"):
+            obj_dir = (ASSETS_DIR / pattern).parent
+            name = obj_dir.name
+            if name not in seen and (obj_dir / f"{name}.obj").is_file():
+                seen.add(name)
+                objects.append((name, obj_dir))
+            continue
+
+        for match in sorted(ASSETS_DIR.glob(pattern)):
+            if not match.is_dir() or match.name.startswith("__"):
+                continue
+            name = match.name
+            if name not in seen and (match / f"{name}.obj").is_file():
+                seen.add(name)
+                objects.append((name, match))
+
+    if filter_name:
+        objects = [(n, d) for n, d in objects if n == filter_name]
+    return objects
+
+
+# ── Process one object ───────────────────────────────────────────────────────
+
+def process(obj_dir: Path, *, force: bool, do_decompose: bool,
+            threshold: float, max_hulls: int, preprocess_resolution: int,
+            seed: int, quiet: bool):
+    name = obj_dir.name
+    obj_path = resolve_obj(obj_dir)
+    metadata = load_metadata(obj_dir)
+    mass = metadata["mass"]
+    friction = metadata.get("friction", 0.6)
+
+    # 1. Inertia
+    inertia = compute_inertia(obj_path, mass)
+
+    # 2. URDF
+    urdf_path = write_urdf(obj_dir, name, mass, inertia, friction)
+    print(f"  [urdf] {urdf_path.name}  (mass={mass}, "
+          f"Ixx={inertia['ixx']:.6f} Iyy={inertia['iyy']:.6f} Izz={inertia['izz']:.6f})")
+
+    # 3. Convex-hull XML
+    hull_path = write_cvx_hull_xml(obj_dir, name, metadata, friction)
+    print(f"  [hull] {hull_path.name}")
+
+    # 4. Convex-decomposition XML (optional)
+    if do_decompose:
+        dcmp_path = obj_dir / f"{name}_cvx_dcmp.xml"
+        if dcmp_path.exists() and not force:
+            print(f"  [skip] {dcmp_path.name} exists (--force to redo)")
+        else:
+            try:
+                import coacd  # noqa: F811
+            except ImportError:
+                print("  [skip] coacd not installed — run: pip install coacd")
+                return
+            if quiet:
+                coacd.set_log_level("error")
+            parts = decompose_mesh(obj_path, threshold, max_hulls,
+                                   preprocess_resolution, seed)
+            out = write_cvx_dcmp_xml(obj_dir, name, metadata, parts, friction)
+            print(f"  [dcmp] {out.name}  ({len(parts)} convex parts)")
+            if len(parts) > 64:
+                print(f"         ! {len(parts)} parts is a lot — raise --threshold")
+
+
+# ── Main ─────────────────────────────────────────────────────────────────────
+
+def main():
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("paths", nargs="*", type=Path,
+                    help="object dir(s) or .obj file(s)")
+    ap.add_argument("--all", action="store_true",
+                    help="process every object in OBJECT_GROUP_PATTERNS")
+    ap.add_argument("--object", default=None,
+                    help="process a single object by name (with --all)")
+    ap.add_argument("--force", action="store_true",
+                    help="regenerate even if outputs exist")
+    ap.add_argument("--no-decompose", action="store_true",
+                    help="skip CoACD decomposition (only URDF + hull)")
+    ap.add_argument("--threshold", type=float, default=0.05,
+                    help="CoACD concavity threshold (0.02..0.1)")
+    ap.add_argument("--max-hulls", type=int, default=32,
+                    help="cap on convex parts (default 32, -1 = no cap)")
+    ap.add_argument("--preprocess-resolution", type=int, default=50,
+                    help="voxel resolution for watertight pre-remesh")
+    ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--quiet", action="store_true",
+                    help="silence CoACD logging")
+    args = ap.parse_args()
+
+    if args.all:
+        targets = [(name, obj_dir) for name, obj_dir
+                    in discover_objects(args.object)]
+        if not targets:
+            print("No mesh objects found.")
+            return
+        for name, obj_dir in targets:
+            print(f"\n[{name}]")
+            try:
+                process(obj_dir, force=args.force,
+                        do_decompose=not args.no_decompose,
+                        threshold=args.threshold, max_hulls=args.max_hulls,
+                        preprocess_resolution=args.preprocess_resolution,
+                        seed=args.seed, quiet=args.quiet)
+            except Exception as e:
+                print(f"  [fail] {e}")
+        print(f"\nDone. {len(targets)} object(s) processed.")
+    elif args.paths:
+        for p in args.paths:
+            obj_dir = p if p.is_dir() else p.parent
+            print(f"\n[{obj_dir.name}]")
+            try:
+                process(obj_dir, force=args.force,
+                        do_decompose=not args.no_decompose,
+                        threshold=args.threshold, max_hulls=args.max_hulls,
+                        preprocess_resolution=args.preprocess_resolution,
+                        seed=args.seed, quiet=args.quiet)
+            except Exception as e:
+                print(f"  [fail] {e}")
+    else:
+        ap.print_help()
+
+
+if __name__ == "__main__":
+    main()

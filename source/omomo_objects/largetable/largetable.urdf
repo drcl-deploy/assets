@@ -2,10 +2,10 @@
 <robot name="largetable">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="4.50000"/>
-      <inertia ixx="0.027742" ixy="0.0" ixz="0.0" iyy="0.041069" iyz="0.0" izz="0.027715"/>
+      <inertia ixx="0.117365" ixy="-0.000000" ixz="0.000000" iyy="0.140171" iyz="0.000000" izz="0.117365"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>

@@ -1,0 +1,25 @@
+<mujoco model="largetable_cvx_dcmp">
+  <asset>
+    <mesh name="largetable_visual" file="/home/loki/drcl_projects/assets/source/omomo_objects/largetable/largetable.obj"/>
+    <mesh name="largetable_cvx_000" file="/home/loki/drcl_projects/assets/source/omomo_objects/largetable/convex_decomp_meshes/largetable_cvx_000.obj"/>
+    <mesh name="largetable_cvx_001" file="/home/loki/drcl_projects/assets/source/omomo_objects/largetable/convex_decomp_meshes/largetable_cvx_001.obj"/>
+    <mesh name="largetable_cvx_002" file="/home/loki/drcl_projects/assets/source/omomo_objects/largetable/convex_decomp_meshes/largetable_cvx_002.obj"/>
+    <mesh name="largetable_cvx_003" file="/home/loki/drcl_projects/assets/source/omomo_objects/largetable/convex_decomp_meshes/largetable_cvx_003.obj"/>
+    <mesh name="largetable_cvx_004" file="/home/loki/drcl_projects/assets/source/omomo_objects/largetable/convex_decomp_meshes/largetable_cvx_004.obj"/>
+    <mesh name="largetable_cvx_005" file="/home/loki/drcl_projects/assets/source/omomo_objects/largetable/convex_decomp_meshes/largetable_cvx_005.obj"/>
+    <texture name="largetable_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+    <material name="largetable_material" texture="largetable_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="largetable" pos="0.5067 -0.0256 0.3549" quat="0.7109 0.7029 -0.0143 -0.0158">
+      <freejoint/>
+      <geom name="largetable_visual" type="mesh" mesh="largetable_visual" contype="0" conaffinity="0" material="largetable_material"/>
+      <geom type="mesh" mesh="largetable_cvx_000" mass="0.47121" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largetable_cvx_001" mass="2.98544" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largetable_cvx_002" mass="0.239725" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largetable_cvx_003" mass="0.239706" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largetable_cvx_004" mass="0.282561" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largetable_cvx_005" mass="0.281359" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>

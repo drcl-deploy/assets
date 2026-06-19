@@ -1,0 +1,51 @@
+<mujoco model="largebox_cvx_dcmp">
+  <asset>
+    <mesh name="largebox_visual" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/largebox.obj"/>
+    <mesh name="largebox_cvx_000" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_000.obj"/>
+    <mesh name="largebox_cvx_001" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_001.obj"/>
+    <mesh name="largebox_cvx_002" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_002.obj"/>
+    <mesh name="largebox_cvx_003" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_003.obj"/>
+    <mesh name="largebox_cvx_004" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_004.obj"/>
+    <mesh name="largebox_cvx_005" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_005.obj"/>
+    <mesh name="largebox_cvx_006" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_006.obj"/>
+    <mesh name="largebox_cvx_007" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_007.obj"/>
+    <mesh name="largebox_cvx_008" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_008.obj"/>
+    <mesh name="largebox_cvx_009" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_009.obj"/>
+    <mesh name="largebox_cvx_010" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_010.obj"/>
+    <mesh name="largebox_cvx_011" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_011.obj"/>
+    <mesh name="largebox_cvx_012" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_012.obj"/>
+    <mesh name="largebox_cvx_013" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_013.obj"/>
+    <mesh name="largebox_cvx_014" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_014.obj"/>
+    <mesh name="largebox_cvx_015" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_015.obj"/>
+    <mesh name="largebox_cvx_016" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_016.obj"/>
+    <mesh name="largebox_cvx_017" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_017.obj"/>
+    <mesh name="largebox_cvx_018" file="/home/loki/drcl_projects/assets/source/omomo_objects/largebox/convex_decomp_meshes/largebox_cvx_018.obj"/>
+    <texture name="largebox_texture" type="2d" file="/home/loki/drcl_projects/assets/source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"/>
+    <material name="largebox_material" texture="largebox_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="largebox" pos="0.4499 -0.0090 0.1755" quat="0.0117 0.6111 -0.7877 0.0771">
+      <freejoint/>
+      <geom name="largebox_visual" type="mesh" mesh="largebox_visual" contype="0" conaffinity="0" material="largebox_material"/>
+      <geom type="mesh" mesh="largebox_cvx_000" mass="0.162593" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_001" mass="0.446035" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_002" mass="0.490403" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_003" mass="0.102355" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_004" mass="0.273358" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_005" mass="0.117433" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_006" mass="0.155674" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_007" mass="0.32943" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_008" mass="0.594885" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_009" mass="0.203369" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_010" mass="0.832254" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_011" mass="0.00258326" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_012" mass="0.0450255" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_013" mass="0.0579199" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_014" mass="0.277397" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_015" mass="0.0577525" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_016" mass="0.0584461" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_017" mass="0.170542" friction="0.6 0.6 0.0001" group="3"/>
+      <geom type="mesh" mesh="largebox_cvx_018" mass="0.122546" friction="0.6 0.6 0.0001" group="3"/>
+    </body>
+  </worldbody>
+</mujoco>
