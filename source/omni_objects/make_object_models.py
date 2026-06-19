@@ -45,20 +45,45 @@ def load_metadata(obj_dir: Path) -> dict:
     return meta
 
 
-def resolve_obj(path: Path) -> Path:
-    """Accept an .obj file or an object dir holding <name>/<name>.obj."""
+def resolve_obj(path: Path) -> Path | None:
+    """Accept an .obj file or an object dir holding <name>/<name>.obj.
+
+    Returns None for primitive-geometry objects (no mesh file).
+    """
     if path.is_file() and path.suffix.lower() == ".obj":
         return path
     if path.is_dir():
         cand = path / f"{path.name}.obj"
         if cand.is_file():
             return cand
-    raise FileNotFoundError(f"No <name>.obj found for: {path}")
+    return None
 
 
 # ── Inertia computation ─────────────────────────────────────────────────────
 
-def compute_inertia(obj_path: Path, mass: float) -> dict:
+def compute_inertia_primitive(mass: float, collider: dict) -> dict:
+    """Analytical inertia for primitive geometries (sphere, box, cylinder)."""
+    geom = collider["geometry"]
+    if geom == "sphere":
+        r = collider["radius"]
+        I = 2.0 / 5.0 * mass * r ** 2
+        return dict(ixx=I, ixy=0.0, ixz=0.0, iyy=I, iyz=0.0, izz=I)
+    elif geom == "box":
+        x, y, z = collider["x"], collider["y"], collider["z"]
+        return dict(
+            ixx=mass / 12.0 * (y**2 + z**2), ixy=0.0, ixz=0.0,
+            iyy=mass / 12.0 * (x**2 + z**2), iyz=0.0,
+            izz=mass / 12.0 * (x**2 + y**2))
+    elif geom == "cylinder":
+        r, h = collider["radius"], collider["height"]
+        Iax = 0.5 * mass * r ** 2
+        Itr = mass / 12.0 * (3 * r**2 + h**2)
+        return dict(ixx=Itr, ixy=0.0, ixz=0.0, iyy=Itr, iyz=0.0, izz=Iax)
+    else:
+        raise ValueError(f"Unknown primitive geometry: {geom}")
+
+
+def compute_inertia_mesh(obj_path: Path, mass: float) -> dict:
     """Compute inertia tensor assuming homogeneous density.
 
     Uses trimesh: sets density = mass / volume, reads moment_inertia.
@@ -91,13 +116,13 @@ URDF_TEMPLATE = """\
 
     <visual>
       <geometry>
-        <mesh filename="{name}.obj"/>
+        {geom_tag}
       </geometry>
     </visual>
 
     <collision>
       <geometry>
-        <mesh filename="{name}.obj"/>
+        {geom_tag}
       </geometry>
       <surface>
         <friction>
@@ -122,11 +147,26 @@ URDF_TEMPLATE = """\
 """
 
 
+def _urdf_geom_tag(name: str, collider: dict | None) -> str:
+    """Return the URDF <geometry> inner tag for mesh or primitive."""
+    if collider is None:
+        return f'<mesh filename="{name}.obj"/>'
+    geom = collider["geometry"]
+    if geom == "sphere":
+        return f'<sphere radius="{collider["radius"]}"/>'
+    elif geom == "box":
+        return f'<box size="{collider["x"]} {collider["y"]} {collider["z"]}"/>'
+    elif geom == "cylinder":
+        return f'<cylinder radius="{collider["radius"]}" length="{collider["height"]}"/>'
+    raise ValueError(f"Unknown geometry: {geom}")
+
+
 def write_urdf(obj_dir: Path, name: str, mass: float, inertia: dict,
-               friction: float) -> Path:
+               friction: float, collider: dict | None = None) -> Path:
+    geom_tag = _urdf_geom_tag(name, collider)
     out = obj_dir / f"{name}.urdf"
     out.write_text(URDF_TEMPLATE.format(name=name, mass=mass, friction=friction,
-                                        **inertia))
+                                        geom_tag=geom_tag, **inertia))
     return out
 
 
@@ -161,6 +201,58 @@ def write_cvx_hull_xml(obj_dir: Path, name: str, metadata: dict,
     out = obj_dir / f"{name}_cvx_hull.xml"
     out.write_text(xml)
     return out
+
+
+# ── MuJoCo XML: primitive geometry (sphere/box/cylinder) ─────────────────────
+
+PRIMITIVE_XML_TEMPLATE = """\
+<mujoco model="{name}_{variant}">
+  <asset>
+    <texture name="{name}_texture" type="2d" file="{texture_abs}"/>
+    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+  </asset>
+  <worldbody>
+    <body name="{name}" pos="{pos}" quat="{quat}">
+      <freejoint/>
+      <geom {geom_attrs} mass="{mass}" friction="{friction} {friction} 0.0001" material="{name}_material"/>
+    </body>
+  </worldbody>
+</mujoco>
+"""
+
+
+def _mjcf_geom_attrs(collider: dict) -> str:
+    """Return MuJoCo geom type + size attributes for a primitive."""
+    geom = collider["geometry"]
+    if geom == "sphere":
+        return f'type="sphere" size="{collider["radius"]}"'
+    elif geom == "box":
+        hx = collider["x"] / 2
+        hy = collider["y"] / 2
+        hz = collider["z"] / 2
+        return f'type="box" size="{hx} {hy} {hz}"'
+    elif geom == "cylinder":
+        return f'type="cylinder" size="{collider["radius"]} {collider["height"] / 2}"'
+    raise ValueError(f"Unknown geometry: {geom}")
+
+
+def write_primitive_xmls(obj_dir: Path, name: str, metadata: dict,
+                         collider: dict, friction: float) -> tuple[Path, Path]:
+    """Write both _cvx_hull.xml and _cvx_dcmp.xml for a primitive (identical content)."""
+    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
+    geom_attrs = _mjcf_geom_attrs(collider)
+
+    paths = []
+    for variant in ("cvx_hull", "cvx_dcmp"):
+        xml = PRIMITIVE_XML_TEMPLATE.format(
+            name=name, variant=variant, geom_attrs=geom_attrs,
+            texture_abs=texture_abs, mass=metadata["mass"], friction=friction,
+            pos=metadata["initial_pos"], quat=metadata["initial_quat"],
+        )
+        out = obj_dir / f"{name}_{variant}.xml"
+        out.write_text(xml)
+        paths.append(out)
+    return paths[0], paths[1]
 
 
 # ── MuJoCo XML: convex decomposition (multi-geom body) ─────────────────────
@@ -240,8 +332,21 @@ def write_cvx_dcmp_xml(obj_dir: Path, name: str, metadata: dict,
 from object_groups import OBJECT_GROUP_PATTERNS
 
 
+def _has_object_source(obj_dir: Path) -> bool:
+    """True if dir has a .obj mesh or a metadata with simple_collider."""
+    name = obj_dir.name
+    if (obj_dir / f"{name}.obj").is_file():
+        return True
+    meta_path = obj_dir / "metadata.json"
+    if meta_path.is_file():
+        meta = json.loads(meta_path.read_text())
+        if "simple_collider" in meta:
+            return True
+    return False
+
+
 def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path]]:
-    """Returns list of (name, object_dir) for objects that have a .obj mesh."""
+    """Returns list of (name, object_dir) for objects with mesh or primitive collider."""
     objects: list[tuple[str, Path]] = []
     seen: set[str] = set()
 
@@ -249,7 +354,7 @@ def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path]]:
         if pattern.endswith(".urdf"):
             obj_dir = (ASSETS_DIR / pattern).parent
             name = obj_dir.name
-            if name not in seen and (obj_dir / f"{name}.obj").is_file():
+            if name not in seen and _has_object_source(obj_dir):
                 seen.add(name)
                 objects.append((name, obj_dir))
             continue
@@ -258,7 +363,7 @@ def discover_objects(filter_name: str | None = None) -> list[tuple[str, Path]]:
             if not match.is_dir() or match.name.startswith("__"):
                 continue
             name = match.name
-            if name not in seen and (match / f"{name}.obj").is_file():
+            if name not in seen and _has_object_source(match):
                 seen.add(name)
                 objects.append((name, match))
 
@@ -273,24 +378,36 @@ def process(obj_dir: Path, *, force: bool, do_decompose: bool,
             threshold: float, max_hulls: int, preprocess_resolution: int,
             seed: int, quiet: bool):
     name = obj_dir.name
-    obj_path = resolve_obj(obj_dir)
     metadata = load_metadata(obj_dir)
     mass = metadata["mass"]
     friction = metadata.get("friction", 0.6)
+    collider = metadata.get("simple_collider")
+    obj_path = resolve_obj(obj_dir)
 
-    # 1. Inertia
-    inertia = compute_inertia(obj_path, mass)
+    if collider is not None:
+        # ── Primitive geometry path ──
+        inertia = compute_inertia_primitive(mass, collider)
+        urdf_path = write_urdf(obj_dir, name, mass, inertia, friction, collider)
+        print(f"  [urdf] {urdf_path.name}  (mass={mass}, {collider['geometry']})")
 
-    # 2. URDF
+        hull_path, dcmp_path = write_primitive_xmls(obj_dir, name, metadata,
+                                                     collider, friction)
+        print(f"  [hull] {hull_path.name}")
+        print(f"  [dcmp] {dcmp_path.name}  (primitive — no decomposition needed)")
+        return
+
+    # ── Mesh geometry path ──
+    if obj_path is None:
+        raise FileNotFoundError(f"No .obj mesh and no simple_collider in {obj_dir}")
+
+    inertia = compute_inertia_mesh(obj_path, mass)
     urdf_path = write_urdf(obj_dir, name, mass, inertia, friction)
     print(f"  [urdf] {urdf_path.name}  (mass={mass}, "
           f"Ixx={inertia['ixx']:.6f} Iyy={inertia['iyy']:.6f} Izz={inertia['izz']:.6f})")
 
-    # 3. Convex-hull XML
     hull_path = write_cvx_hull_xml(obj_dir, name, metadata, friction)
     print(f"  [hull] {hull_path.name}")
 
-    # 4. Convex-decomposition XML (optional)
     if do_decompose:
         dcmp_path = obj_dir / f"{name}_cvx_dcmp.xml"
         if dcmp_path.exists() and not force:

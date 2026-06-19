@@ -10,7 +10,6 @@ Each pattern is relative to SIM_ASSETS_PATH / ASSETS_DIR and is either a direct
 """
 
 OBJECT_GROUP_PATTERNS = [
-    "basketball/basketball.urdf",
     "omomo_objects/*",
     "sugar_objects/*",
     "custom_objects/*",

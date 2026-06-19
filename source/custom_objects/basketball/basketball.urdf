@@ -2,10 +2,10 @@
 <robot name="basketball">
 
   <link name="base_link">
-    
+
     <inertial>
       <mass value="0.62369"/>
-      <inertia ixx="0.002347" ixy="0.0" ixz="0.0" iyy="0.002347" iyz="0.0" izz="0.002347"/>
+      <inertia ixx="0.003592" ixy="0.000000" ixz="0.000000" iyy="0.003592" iyz="0.000000" izz="0.003592"/>
     </inertial>
 
     <visual>
@@ -35,6 +35,6 @@
         </contact>
       </surface>
     </collision>
-    
+
   </link>
 </robot>
