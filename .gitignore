@@ -8,3 +8,14 @@ __pycache__/
 !.vscode
 
 source/omni_objects/scenes/
+
+# Generated OBJECT models — per-machine build products (bake absolute paths for training + sim2sim).
+# Regenerate on each clone:  python source/omni_objects/make_object_models.py --all
+# Source-of-truth that STAYS tracked: <name>.obj, metadata.json, textures, and the CoACD parts under
+# convex_decomp_meshes/*.obj (geometry, coacd-free reuse). Robot models under source/<robot>/ stay tracked.
+source/omomo_objects/*/*.urdf
+source/omomo_objects/*/*_cvx_*.xml
+source/sugar_objects/*/*.urdf
+source/sugar_objects/*/*_cvx_*.xml
+source/custom_objects/*/*.urdf
+source/custom_objects/*/*_cvx_*.xml

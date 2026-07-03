@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ #!/usr/bin/env python3
 """Auto-generate object model files (URDF + MuJoCo XMLs) from mesh + metadata.
 
 Given an object directory containing:
@@ -32,6 +32,13 @@ import trimesh
 SCRIPT_DIR = Path(__file__).resolve().parent       # .../source/omni_objects
 ASSETS_DIR = SCRIPT_DIR.parent                     # .../source
 WORKSPACE_ROOT = ASSETS_DIR.parent                 # .../assets
+
+
+def _asset_abs(p: Path) -> str:
+    """Absolute path for THIS machine. The generated URDF/XMLs bake absolute paths (training +
+    sim2sim loaders need global paths and don't localize) — which is exactly why these files are
+    git-IGNORED build products: each machine runs make_object_models.py once to (re)bake locally."""
+    return str(p.resolve())
 
 # ── Metadata ─────────────────────────────────────────────────────────────────
 
@@ -175,8 +182,8 @@ def write_urdf(obj_dir: Path, name: str, mass: float, inertia: dict,
 CVX_HULL_TEMPLATE = """\
 <mujoco model="{name}_cvx_hull">
   <asset>
-    <mesh name="{name}" file="{mesh_abs}"/>
-    <texture name="{name}_texture" type="2d" file="{texture_abs}"/>
+    <mesh name="{name}" file="{mesh_file}"/>
+    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
     <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
   </asset>
   <worldbody>
@@ -191,10 +198,10 @@ CVX_HULL_TEMPLATE = """\
 
 def write_cvx_hull_xml(obj_dir: Path, name: str, metadata: dict,
                        friction: float) -> Path:
-    mesh_abs = str((obj_dir / f"{name}.obj").resolve())
-    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
+    mesh_file = _asset_abs(obj_dir / f"{name}.obj")
+    texture_file = _asset_abs(WORKSPACE_ROOT / metadata["texture"])
     xml = CVX_HULL_TEMPLATE.format(
-        name=name, mesh_abs=mesh_abs, texture_abs=texture_abs,
+        name=name, mesh_file=mesh_file, texture_file=texture_file,
         mass=metadata["mass"], friction=friction,
         pos=metadata["initial_pos"], quat=metadata["initial_quat"],
     )
@@ -208,7 +215,7 @@ def write_cvx_hull_xml(obj_dir: Path, name: str, metadata: dict,
 PRIMITIVE_XML_TEMPLATE = """\
 <mujoco model="{name}_{variant}">
   <asset>
-    <texture name="{name}_texture" type="2d" file="{texture_abs}"/>
+    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
     <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
   </asset>
   <worldbody>
@@ -239,14 +246,14 @@ def _mjcf_geom_attrs(collider: dict) -> str:
 def write_primitive_xmls(obj_dir: Path, name: str, metadata: dict,
                          collider: dict, friction: float) -> tuple[Path, Path]:
     """Write both _cvx_hull.xml and _cvx_dcmp.xml for a primitive (identical content)."""
-    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
+    texture_file = _asset_abs(WORKSPACE_ROOT / metadata["texture"])
     geom_attrs = _mjcf_geom_attrs(collider)
 
     paths = []
     for variant in ("cvx_hull", "cvx_dcmp"):
         xml = PRIMITIVE_XML_TEMPLATE.format(
             name=name, variant=variant, geom_attrs=geom_attrs,
-            texture_abs=texture_abs, mass=metadata["mass"], friction=friction,
+            texture_file=texture_file, mass=metadata["mass"], friction=friction,
             pos=metadata["initial_pos"], quat=metadata["initial_quat"],
         )
         out = obj_dir / f"{name}_{variant}.xml"
@@ -260,9 +267,9 @@ def write_primitive_xmls(obj_dir: Path, name: str, metadata: dict,
 CVX_DCMP_TEMPLATE = """\
 <mujoco model="{name}_cvx_dcmp">
   <asset>
-    <mesh name="{name}_visual" file="{mesh_abs}"/>
+    <mesh name="{name}_visual" file="{mesh_file}"/>
 {part_assets}
-    <texture name="{name}_texture" type="2d" file="{texture_abs}"/>
+    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
     <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
   </asset>
   <worldbody>
@@ -291,34 +298,44 @@ def decompose_mesh(obj_path: Path, threshold: float, max_hulls: int,
 
 
 def write_cvx_dcmp_xml(obj_dir: Path, name: str, metadata: dict,
-                       parts: list[trimesh.Trimesh], friction: float,
+                       parts: list[trimesh.Trimesh] | None, friction: float,
                        subdir: str = "convex_decomp_meshes") -> Path:
+    """Emit the decomposed-collision XML. `parts` = fresh CoACD meshes → (re)export them;
+    `parts is None` → REUSE the committed part .objs on disk (no CoACD needed). Part meshes are
+    tracked geometry; only this XML (with abs paths) is a git-ignored, per-machine build product."""
     coll_dir = obj_dir / subdir
-    coll_dir.mkdir(exist_ok=True)
-    for old in coll_dir.glob(f"{name}_cvx_*.obj"):
-        old.unlink()
+
+    if parts is None:  # reuse committed parts — coacd-free regen
+        part_paths = sorted(coll_dir.glob(f"{name}_cvx_*.obj"))
+        meshes = [trimesh.load(p, force="mesh") for p in part_paths]
+    else:              # fresh decomposition — (re)export the part meshes
+        coll_dir.mkdir(exist_ok=True)
+        for old in coll_dir.glob(f"{name}_cvx_*.obj"):
+            old.unlink()
+        part_paths = [coll_dir / f"{name}_cvx_{i:03d}.obj" for i in range(len(parts))]
+        for part, pp in zip(parts, part_paths):
+            part.export(pp)
+        meshes = parts
 
     total_mass = metadata["mass"]
-    vols = np.array([max(p.volume, 1e-9) for p in parts], dtype=np.float64)
+    vols = np.array([max(m.volume, 1e-9) for m in meshes], dtype=np.float64)
     mass_frac = vols / vols.sum()
 
     part_assets, part_geoms = [], []
-    for i, part in enumerate(parts):
-        part_path = coll_dir / f"{name}_cvx_{i:03d}.obj"
-        part.export(part_path)
+    for i, (part_path, m_vol) in enumerate(zip(part_paths, mass_frac)):
         mname = f"{name}_cvx_{i:03d}"
         part_assets.append(
-            f'    <mesh name="{mname}" file="{part_path.resolve()}"/>')
-        m = total_mass * mass_frac[i]
+            f'    <mesh name="{mname}" file="{_asset_abs(part_path)}"/>')
+        m = total_mass * m_vol
         part_geoms.append(
             f'      <geom type="mesh" mesh="{mname}" mass="{m:.6g}" '
             f'friction="{friction} {friction} 0.0001" group="3"/>')
 
-    mesh_abs = str((obj_dir / f"{name}.obj").resolve())
-    texture_abs = str((WORKSPACE_ROOT / metadata["texture"]).resolve())
+    mesh_file = _asset_abs(obj_dir / f"{name}.obj")
+    texture_file = _asset_abs(WORKSPACE_ROOT / metadata["texture"])
 
     xml = CVX_DCMP_TEMPLATE.format(
-        name=name, mesh_abs=mesh_abs, texture_abs=texture_abs,
+        name=name, mesh_file=mesh_file, texture_file=texture_file,
         part_assets="\n".join(part_assets), part_geoms="\n".join(part_geoms),
         pos=metadata["initial_pos"], quat=metadata["initial_quat"],
     )
@@ -409,14 +426,18 @@ def process(obj_dir: Path, *, force: bool, do_decompose: bool,
     print(f"  [hull] {hull_path.name}")
 
     if do_decompose:
-        dcmp_path = obj_dir / f"{name}_cvx_dcmp.xml"
-        if dcmp_path.exists() and not force:
-            print(f"  [skip] {dcmp_path.name} exists (--force to redo)")
+        # Part meshes are tracked geometry; the XML is a per-machine build product. On a fresh
+        # clone (or coacd-less box) reuse the committed parts to re-emit the XML with local abs
+        # paths — no coacd. Only a first-time decomposition or --force actually runs coacd.
+        existing_parts = sorted((obj_dir / "convex_decomp_meshes").glob(f"{name}_cvx_*.obj"))
+        if existing_parts and not force:
+            out = write_cvx_dcmp_xml(obj_dir, name, metadata, None, friction)
+            print(f"  [dcmp] {out.name}  ({len(existing_parts)} parts reused — no coacd)")
         else:
             try:
                 import coacd  # noqa: F811
             except ImportError:
-                print("  [skip] coacd not installed — run: pip install coacd")
+                print("  [skip] coacd not installed (and no committed parts) — pip install coacd")
                 return
             if quiet:
                 coacd.set_log_level("error")
