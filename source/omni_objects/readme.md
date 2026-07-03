@@ -2,8 +2,11 @@
 
 Two-script workflow for generating consistent object models usable in both IsaacLab and MuJoCo sim2sim.
 
-> **Note:** Generated files contain absolute paths and are **not portable** across machines.
-> Re-generate locally after cloning.
+> **Generated files are git-ignored, per-machine build products.** URDF + `_cvx_*.xml` + `scenes/`
+> bake **absolute paths** (IsaacLab + MuJoCo sim2sim need global paths, don't localize) → regenerate
+> locally after cloning (see below).
+> **Tracked source of truth:** `<name>.obj`, `metadata.json`, textures, and the CoACD parts under
+> `convex_decomp_meshes/*.obj` (frozen collision geometry). Robot models stay tracked too.
 
 ## Workflow
 
@@ -16,7 +19,7 @@ metadata.json + .obj mesh
         +-- <name>.urdf                 (auto-computed inertia)
         +-- <name>_cvx_hull.xml         (MuJoCo body: single convex hull)
         +-- <name>_cvx_dcmp.xml         (MuJoCo body: CoACD decomposed)
-        +-- collision/<name>_cvx_*.obj  (convex parts)
+        +-- convex_decomp_meshes/<name>_cvx_*.obj  (convex parts — TRACKED, reused)
         |
         v
  generate_uolm_scene_xmls.py   # Step 2: robot + object scene
@@ -36,9 +39,15 @@ python make_object_models.py ../custom_objects/tire
 # Hull only (skip CoACD decomposition):
 python make_object_models.py --all --no-decompose
 
-# Tighter decomposition:
+# Re-decompose from scratch (overwrites the tracked parts — re-freezes geometry):
 python make_object_models.py ../omomo_objects/*/ --threshold 0.03 --force
 ```
+
+**CoACD runs only when needed.** If the `convex_decomp_meshes/` parts already exist (they're tracked),
+the script **reuses them** to re-emit the dcmp XML — no CoACD, no re-decomposition (it only *reads* the
+parts for per-part mass fractions). CoACD runs *only* for a brand-new object (no parts yet) or `--force`.
+So a fresh clone regenerates every URDF/XML **without CoACD installed** — only re-freezing geometry needs it.
+(LFS caveat: `git lfs pull` the real parts before regen, else the reuse step chokes on pointer stubs.)
 
 Each object directory needs:
 - `<name>.obj` — visual/collision mesh
@@ -59,10 +68,12 @@ Each object directory needs:
 |---|---|---|
 | `--all` | off | Process every object in `OBJECT_GROUP_PATTERNS` |
 | `--object` | *(all)* | Process a single object by name (with `--all`) |
-| `--force` | off | Regenerate even if outputs exist |
+| `--force` | off | Re-run CoACD and **overwrite the tracked parts** (re-freeze geometry); else parts are reused |
 | `--no-decompose` | off | Skip CoACD decomposition (only URDF + hull) |
 | `--threshold` | `0.05` | CoACD concavity threshold (0.02..0.1) |
-| `--max-hulls` | `-1` | Cap on convex parts (-1 = none) |
+| `--max-hulls` | `32` | Cap on convex parts (-1 = no cap) |
+| `--preprocess-resolution` | `50` | Voxel resolution for watertight pre-remesh |
+| `--seed` | `0` | CoACD RNG seed |
 | `--quiet` | off | Silence CoACD logging |
 
 ## Step 2: generate scene XMLs
@@ -91,7 +102,9 @@ Scene XMLs use `<include>` for both robot and object — no inlined bodies. The 
 
 1. Create `source/<group>/<name>/` with `<name>.obj` and `metadata.json`
 2. Add the group pattern to `object_groups.py` (if new group)
-3. Run `make_object_models.py` then `generate_uolm_scene_xmls.py`
+3. Run `make_object_models.py` — a new object has no parts yet, so this **first run needs CoACD**.
+   **Commit** the resulting `convex_decomp_meshes/*.obj` (the frozen geometry); the URDF/XMLs stay ignored.
+4. Run `generate_uolm_scene_xmls.py` for scenes.
 
 ## Interactive drop test (`view_drop_test.py`)
 
