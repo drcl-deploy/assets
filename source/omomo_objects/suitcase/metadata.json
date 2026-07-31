@@ -2,5 +2,7 @@
   "initial_pos": "0.4803 -0.0100 0.0175",
   "initial_quat": "0.6488 0.6423 0.2996 0.2771",
   "texture": "source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png",
-  "mass": 3.265
+  "inertial": {
+    "mass": 3.265
+  }
 }

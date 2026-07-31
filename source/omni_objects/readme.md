@@ -16,7 +16,7 @@ metadata.json + .obj mesh
         v
  make_object_models.py          # Step 1: per-object model files
         |
-        +-- <name>.urdf                 (auto-computed inertia)
+        +-- <name>.urdf                 (inertial from metadata / auto-computed)
         +-- <name>_cvx_hull.xml         (MuJoCo body: single convex hull)
         +-- <name>_cvx_dcmp.xml         (MuJoCo body: CoACD decomposed)
         +-- convex_decomp_meshes/<name>_cvx_*.obj  (convex parts — TRACKED, reused)
@@ -44,25 +44,59 @@ python make_object_models.py ../omomo_objects/*/ --threshold 0.03 --force
 ```
 
 **CoACD runs only when needed.** If the `convex_decomp_meshes/` parts already exist (they're tracked),
-the script **reuses them** to re-emit the dcmp XML — no CoACD, no re-decomposition (it only *reads* the
-parts for per-part mass fractions). CoACD runs *only* for a brand-new object (no parts yet) or `--force`.
+the script **reuses them** to re-emit the dcmp XML — no CoACD, no re-decomposition, no mesh loading
+(mass is body-level now, so the parts are referenced by path only). CoACD runs *only* for a
+brand-new object (no parts yet) or `--force`.
 So a fresh clone regenerates every URDF/XML **without CoACD installed** — only re-freezing geometry needs it.
 (LFS caveat: `git lfs pull` the real parts before regen, else the reuse step chokes on pointer stubs.)
 
 Each object directory needs:
 - `<name>.obj` — visual/collision mesh
-- `metadata.json` — with fields: `mass`, `initial_pos`, `initial_quat`, `texture`
+- `metadata.json` — with fields: `inertial`, `initial_pos`, `initial_quat`, `texture`
 
 ```json
 {
-  "mass": 0.8,
   "initial_pos": "1.0 0.0 0.3",
   "initial_quat": "1 0 0 0",
-  "texture": "source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png"
+  "texture": "source/textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png",
+  "inertial": {
+    "mass": 0.8,
+    "com": [0.0, 0.0, 0.075],
+    "inertia": {"ixx": 0.159524, "iyy": 0.148608, "izz": 0.098411,
+                "ixy": 0.000017, "ixz": 0.000100, "iyz": 0.024594}
+  }
 }
 ```
 
-**Inertia** is auto-computed from mesh geometry assuming homogeneous density (trimesh). Non-watertight meshes fall back to convex hull for volume estimation.
+### The `inertial` block
+
+The **single mass/inertia authority**: it is written body-level into the URDF *and* every MJCF
+variant, and geoms carry no mass at all. So `_cvx_hull` and `_cvx_dcmp` of one object are
+dynamically identical, and mjlab's per-world variant merge sees one inertial representation
+(`fullinertia`) on every object — it rejects a mix of fullinertia / diagonal / mesh-derived
+across variants.
+
+| key | required | default |
+|---|---|---|
+| `mass` | **yes** | — |
+| `com` | no | mesh COM (trimesh), or the origin for a `simple_collider` |
+| `inertia` | no | mesh tensor at homogeneous density; off-diagonals default to `0` when the key is given |
+
+Override is **per field**: give `com` alone to shift the COM and keep the computed tensor; give
+`{ixx, iyy, izz}` alone for a diagonal tensor. `[inrt]` in the run log tags each field
+`<metadata>` or `<computed>`, so a regen shows at a glance which objects are hand-pinned.
+
+**Convention** (identical in both formats): `com` [m] is in the **mesh frame** (before
+`initial_pos`/`initial_quat`); the tensor is [kg·m²] **about the COM**, in **mesh axes** — so URDF
+`rpy` is always `0 0 0` and MJCF needs no inertial quat. A principal-axis tensor goes in as a
+full tensor, never as axes + a rotation. Named keys, never a 6-list: URDF's order
+(`ixx ixy ixz iyy iyz izz`) and MJCF `fullinertia`'s (`ixx iyy izz ixy ixz iyz`) differ, and each
+lives in exactly one formatter. A tensor that is not positive definite, or whose principal
+moments break the triangle inequality, is rejected here rather than at MuJoCo compile time.
+
+**Defaults** come from mesh geometry at homogeneous density (trimesh). Every mesh shipped here is
+non-watertight, so the default is computed on the **convex hull** — an overestimate of the spread
+for open shapes (chairs, tables). That is what the override is for.
 
 | Flag | Default | Description |
 |---|---|---|
