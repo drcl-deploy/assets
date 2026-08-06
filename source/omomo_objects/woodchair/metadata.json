@@ -1,8 +1,0 @@
-{
-  "initial_pos": "0.460 0.064 0.264",
-  "initial_quat": "0.7056 0.7066 -0.0381 -0.0376",
-  "texture": "source/textures/Wood/Oak/Oak_BaseColor.png",
-  "inertial": {
-    "mass": 4.5
-  }
-}

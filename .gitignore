@@ -1,21 +1,25 @@
 *.usd
 *.egg-info/
 *.dist-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
 __pycache__/
 *.py[cod]
 *$py.class
 
 !.vscode
 
-source/omni_objects/scenes/
+src/assets/omni_objects/scenes/
 
 # Generated OBJECT models — per-machine build products (bake absolute paths for training + sim2sim).
-# Regenerate on each clone:  python source/omni_objects/make_object_models.py --all
+# Regenerate on each machine: assets generate
 # Source-of-truth that STAYS tracked: <name>.obj, metadata.json, textures, and the CoACD parts under
-# convex_decomp_meshes/*.obj (geometry, coacd-free reuse). Robot models under source/<robot>/ stay tracked.
-source/omomo_objects/*/*.urdf
-source/omomo_objects/*/*_cvx_*.xml
-source/sugar_objects/*/*.urdf
-source/sugar_objects/*/*_cvx_*.xml
-source/custom_objects/*/*.urdf
-source/custom_objects/*/*_cvx_*.xml
+# convex_decomp_meshes/*.obj (geometry, coacd-free reuse). Robot models under src/assets/<robot>/ stay tracked.
+src/assets/omomo_objects/*/*.urdf
+src/assets/omomo_objects/*/*_cvx_*.xml
+src/assets/sugar_objects/*/*.urdf
+src/assets/sugar_objects/*/*_cvx_*.xml
+src/assets/custom_objects/*/*.urdf
+src/assets/custom_objects/*/*_cvx_*.xml

@@ -1,8 +1,0 @@
-{
-  "initial_pos": "1.0 0.0 0.3",
-  "initial_quat": "1 0 0 0",
-  "texture": "source/textures/Wood/Cherry/Cherry_BaseColor.png",
-  "inertial": {
-    "mass": 0.8
-  }
-}

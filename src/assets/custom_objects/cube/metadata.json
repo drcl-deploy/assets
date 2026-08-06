@@ -1,0 +1,14 @@
+{
+  "initial_pos": "1.0 0.0 0.3",
+  "initial_quat": "1 0 0 0",
+  "texture": "textures/Wood/Oak/Oak_BaseColor.png",
+  "inertial": {
+    "mass": 0.62369
+  },
+  "simple_collider": {
+    "geometry": "box",
+    "x": 0.6096,
+    "y": 0.6096,
+    "z": 0.6096
+  }
+}

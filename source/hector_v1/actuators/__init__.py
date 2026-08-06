@@ -1,2 +1,0 @@
-from .actuator_cfg import HectorV1IdealPDActuatorCfg, HectorV1ImplicitPDActuatorCfg
-from .actuator_pd import HectorV1ImplicitPDActuator, HectorV1IdealPDActuator

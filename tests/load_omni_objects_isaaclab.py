@@ -2,7 +2,6 @@
 This script loads all omomo objects and simulates them in isaaclab in a grid layout.
 """
 
-import os
 import argparse
 
 from isaaclab.app import AppLauncher
@@ -25,9 +24,8 @@ parser.add_argument(
     help="Subset of object folder names to retain (default: all). e.g. --object_names suitcase trashcan",
 )
 
-# append AppLauncher cli args
+# append AppLauncher cli args and parse once
 AppLauncher.add_app_launcher_args(parser)
-# parse the arguments
 args_cli = parser.parse_args()
 
 # launch omniverse app
@@ -36,15 +34,12 @@ simulation_app = app_launcher.app
 
 """Rest everything follows."""
 
-import sys
 import isaaclab.sim as sim_utils
 from isaaclab.scene import InteractiveScene, InteractiveSceneCfg
 from isaaclab.sim import SimulationContext
 from isaaclab.utils import configclass
 
-sys.path.append("./")
-
-from source.multi_objects.multi_objects import MULTI_OBJECTS_CFG
+from assets.omni_objects.isaaclab import OMNI_OBJECTS_CFG
 
 
 def filter_objects(object_cfg, object_names):
@@ -82,7 +77,7 @@ class OmomoObjectsSceneCfg(InteractiveSceneCfg):
 
     # the object cfg uses prim_path="{ENV_REGEX_NS}/Object" which is what
     # triggers MultiAssetSpawnerCfg's round-robin distribution across envs
-    object = MULTI_OBJECTS_CFG
+    object = OMNI_OBJECTS_CFG
 
 
 def main():
@@ -112,25 +107,21 @@ def main():
     # NOTE: replicate_physics MUST be False — otherwise the cloner only spawns
     # into env_0 and physics-replicates the same prim to all other envs, so
     # MultiAssetSpawnerCfg sees a single prim_path and can't round-robin.
-    scene_cfg = OmomoObjectsSceneCfg(
-        num_envs=n_objects, env_spacing=1.5, replicate_physics=False
-    )
+    scene_cfg = OmomoObjectsSceneCfg(num_envs=n_objects, env_spacing=1.5, replicate_physics=False)
     scene_cfg.object = filter_objects(scene_cfg.object, args_cli.object_names)
     scene = InteractiveScene(scene_cfg)
 
     sim.reset()
     print("[INFO]: Setup complete...")
-    os.system("clear")
-
     obj = scene["object"]
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"Spawned {scene.num_envs} object instances")
     print(f"env_spacing: {scene_cfg.env_spacing}m")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"Object body_names: {obj.body_names}")
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print("Simulation running. Close the window to exit.")
-    print(f"{'='*60}\n")
+    print(f"{'=' * 60}\n")
 
     sim_dt = sim.get_physics_dt()
     sim_time = 0.0

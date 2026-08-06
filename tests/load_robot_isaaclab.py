@@ -4,21 +4,18 @@ This script loads model simulates in isaaclab
 """
 
 # TODO (lkrajan): currently simulates zero ctrl input, should add joint trajectory tracking
-import os
 import argparse
+import os
 
 from isaaclab.app import AppLauncher
 
 # add argparse arguments
-parser = argparse.ArgumentParser(
-    description="This script loads model simulates in isaaclab"
-)
+parser = argparse.ArgumentParser(description="This script loads model simulates in isaaclab")
 parser.add_argument(
-    "--robot", required=True, help="module path, e.g. assets.hector_v2.feet"
+    "--robot", required=True, help="module path, e.g. assets.hector_v2.feet.isaaclab"
 )
 parser.add_argument("--cfg", required=True, help="config name, e.g. WITH_COUPLING_CFG")
 parser.add_argument("--n_robots", type=int, default=25, help="number of robots to load")
-args = parser.parse_args()
 
 # append AppLauncher cli args
 AppLauncher.add_app_launcher_args(parser)
@@ -31,14 +28,12 @@ simulation_app = app_launcher.app
 
 """Rest everything follows."""
 
-import sys
-import torch
-import isaaclab.sim as sim_utils
-from isaaclab.assets import Articulation
-from isaaclab.sim import SimulationContext
 import importlib
 
-sys.path.append("./")
+import isaaclab.sim as sim_utils
+import torch
+from isaaclab.assets import Articulation
+from isaaclab.sim import SimulationContext
 
 
 def main():
@@ -64,17 +59,13 @@ def main():
     # Lights
     cfg = sim_utils.DomeLightCfg(intensity=2000.0, color=(0.75, 0.75, 0.75))
     cfg.func("/World/Light", cfg)
-    N_ROBOTS = args.n_robots
+    N_ROBOTS = args_cli.n_robots
     # split N_ROBOTS into a rectangle closest to a square
     n_cols = int(N_ROBOTS**0.5)
     n_rows = int(N_ROBOTS / n_cols)
 
     origins = torch.tensor(
-        [
-            [i - n_cols / 2, j - n_rows / 2, 0.0]
-            for i in range(n_cols)
-            for j in range(n_rows)
-        ],
+        [[i - n_cols / 2, j - n_rows / 2, 0.0] for i in range(n_cols) for j in range(n_rows)],
         device=sim.device,
     )
 
@@ -82,8 +73,8 @@ def main():
 
     # load N_ROBOTS and append to robots
     try:
-        robot_module = importlib.import_module(args.robot)
-        robot_cfg = getattr(robot_module, args.cfg)
+        robot_module = importlib.import_module(args_cli.robot)
+        robot_cfg = getattr(robot_module, args_cli.cfg)
     except (ImportError, AttributeError) as e:
         print(f"[ERROR]: robot cfg not found: {e}")
         exit(1)
@@ -102,17 +93,12 @@ def main():
 
     # print robot information of the first instance
     robot = robots[0]
-    print(f"Robot 0")
-
-    # make a tensor of N_ROBOTS copies of HECTOR_V2_DEFAULT_MOTOR_POS
-    default_motor_pos = torch.zeros_like(robots[0].data.default_joint_pos)
+    print("Robot 0")
 
     # print bodies and masses
     print("robot bodies")
     total_mass = 0.0
-    for i, (body, mass) in enumerate(
-        zip(robot.body_names, robot.data.default_mass.flatten())
-    ):
+    for i, (body, mass) in enumerate(zip(robot.body_names, robot.data.default_mass.flatten())):
         print(f"\tbody {i}: {body} with mass: {mass}")
         total_mass += mass
     print(f"Total mass: {total_mass}")
@@ -134,7 +120,6 @@ def main():
             robot.data.default_joint_limits[0],
         )
     ):
-
         print(
             "\tjnt",
             joint_id,
@@ -152,7 +137,6 @@ def main():
             actuator.stiffness.flatten(),
             actuator.damping.flatten(),
         ):
-
             print(
                 "\tact",
                 i,
@@ -166,15 +150,10 @@ def main():
     sim_dt = sim.get_physics_dt()
     sim_time = 0.0
     count = 0
-    mode = -1
-
     count_per_dof = 100
 
     joint_positions = []
     joint_velocities = []
-    motor_commands = []
-    joint_pos_target = None
-
     while simulation_app.is_running():
         # reset
         if count % count_per_dof == 0:

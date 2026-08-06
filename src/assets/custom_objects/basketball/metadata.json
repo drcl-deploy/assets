@@ -1,0 +1,12 @@
+{
+  "initial_pos": "1.0 0.0 0.3",
+  "initial_quat": "1 0 0 0",
+  "texture": "textures/basketball.png",
+  "inertial": {
+    "mass": 0.62369
+  },
+  "simple_collider": {
+    "geometry": "sphere",
+    "radius": 0.12
+  }
+}

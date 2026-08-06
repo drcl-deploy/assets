@@ -1,78 +1,39 @@
 # assets
 
-contains simulation assets in various file formats for different entities like robots, objects, etc.
+Simulation assets for Python training and ROS 2 sim-to-sim workflows.
 
-## usage
+## Install
 
-    git clone https://github.com/drcl-deploy/assets.git
-    cd ./assets/
-    git lfs pull # to download mesh files
-    pip install -e . # so local changes can take effect 
+```bash
+git lfs pull
+pip install -e .
+assets generate
+```
 
-then add a global variable `SIM_ASSETS_PATH`
+## Python
 
-    cd ./assets/source/
-    pwd # copy the output of this command
-    sudo nano ~/.bashrc
-    export SIM_ASSETS_PATH=<copied path> # add this to the end, save file, and restart terminal 
+```python
+from assets.paths import asset_path
+from assets.g1.isaaclab import G1_BM_CFG
 
-to load as file: `SIM_ASSETS_PATH/<entity name>/.../<file_name>`
+robot_xml = asset_path("g1", "g1_bm.xml")
+```
 
-to load as python module  `from assets.<entity_name>.<variant_name> import CFG, CONSTANT...`
+Isaac Lab modules are optional and imported explicitly.
 
-> [!NOTE]
-> use assets as a python module in virtual environment only (load as module).                 
-> only use global python for ros2 deployments with `SIM_ASSETS_PATH`  (load as file)
+## Paths
 
-## test
+```bash
+assets path
+assets generated-path
+```
 
-### Isaaclab
+Use these paths from ROS 2 or sim-to-sim configuration.
 
-for loading and simulationg a model with zero ctrl, run
+## More
 
-    python3 tests/load_robot_isaaclab.py --robot <robot moudle> --cfg <config name>
-
-for example,
-
-    python3 tests/load_robot_isaaclab.py --robot assets.hector_v2.feet --cfg IMPLICIT_WO_COUPLING_CFG
-
-
-### MuJoCo
-
-run,
-    
-    python -m mujoco.viewer
-
-then drag and drop the `.xml` model to be tested
-
-## guide
-
-1. every new entity should be at one level depth:: `assets/source/<entity name>/` 
-2. add folder for each variant: `assets/source/<entity name>/<variant name>`
-3. share meshes across variants, avoid duplication
-4. add configs in `.py` for each variant and register in `__init__.py` for easy access. 
-5. add any entity-specific constants that can be resused in a seperate `constants.py` and register in `__init__.py`
-6. resuse `isaaclab_assets` by simply importing it in `__init__.py` and augment with `constants` you want (refer [g1](source/g1) for example). Do not make redundant copies inside this repo. 
-7. while making `.xml`s to work with [mj_sim](https://github.com/drcl-deploy/mj_sim), ensure the following are followed
-    1. `<option timestep='0.001'>`
-    2. armature and damping are added for joints `<default>` 
-    3. actuators are off type `<general>` with 
-        * `biastype="affine" gainprm="0.0 0 0 0 0 0 0 0 0 0" biasprm="0 0.0 0.0 0 0 0 0 0 0 0"` 
-        * no `ctrlrange`
-        * has `frcrange` (or has `actuatorfrcrange` in the corresponding joint)
-        * add a name to the actuator
-    4. has the following sensors for each actuator named `<actuator_name>`, with the naming convention:
-        * `<actuator_name>_pos`  for actuator position 
-        * `<actuator_name>_vel`  for actuator velocity
-        * `<actuator_name>_frc`  for actuator force
-    5. has the following sensors for the `root`  link
-        * `<framepos name="root_pos"  ..../>`
-        * `<framequat name="root_quat"  ..../>`
-        * `<framelinvel name="root_linvel"  ..../>`
-        * `<frameangvel name="root_angvel"  ..../>`
-    6.  has the following sensors for the `imu`  link
-        * `<framequat name="torso_imu_quat" ... />`
-        * `<accelerometer name="torso_imu_acc" ... />`
-        * `<gyro name="torso_imu_gyro" ... />`
-    7. has the equality constraint `<weld name="world_root" active="true" ... />` , set to **true** by default.
-8. resuse or add `actuator parameters` by simply importing it in `actuator_params.py` and augment with `constants` you want. Do not make redundant copies inside this repo. 
+- [Python imports](docs/python.md)
+- [Generating object models](docs/generation.md)
+- [ROS 2 paths](docs/ros2.md)
+- [Adding assets](docs/adding-assets.md)
+- [Licensing and acknowledgements](docs/licensing.md)
