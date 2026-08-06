@@ -275,14 +275,40 @@ def write_urdf(obj_dir: Path, name: str, inertial: dict,
     return out
 
 
+
+def _material_block(name: str, metadata: dict) -> str:
+    """The object's `<asset>` material: a TEXTURE by default, a flat colour if asked.
+
+    `metadata["rgba"]` (4 floats) WINS over `metadata["texture"]` — some objects
+    are a solid colour in life, and a wood texture on a plastic bin is a lie the
+    policy has to unlearn before it can transfer onto the real one.
+
+    **ALPHA IS NOT RENDERED.** mujoco_warp's rasterizer shades a hit with
+    `vec3(color[0], color[1], color[2])` and never reads `color[3]`: there is no
+    blending and no second-hit traversal, so a translucent material renders fully
+    opaque in the POLICY's camera. (The interactive viewer is a different, OpenGL
+    renderer and WILL show it translucent — which is the trap: it would look
+    right and train wrong.) Keep alpha at 1 and pick the colour a camera actually
+    sees; for a clear bin that is a light neutral, not a hue.
+    """
+    rgba = metadata.get("rgba")
+    if rgba is None:
+        tex = _asset_abs(WORKSPACE_ROOT / metadata["texture"])
+        return (f'<texture name="{name}_texture" type="2d" file="{tex}"/>\n'
+                f'    <material name="{name}_material" texture="{name}_texture"'
+                f' specular="0.25" shininess="0.6" reflectance="0.1"/>')
+    assert len(rgba) == 4, f"{name}: metadata 'rgba' wants 4 floats, got {rgba}"
+    vals = " ".join(f"{v:g}" for v in rgba)
+    return (f'<material name="{name}_material" rgba="{vals}"'
+            f' specular="0.25" shininess="0.6" reflectance="0.1"/>')
+
 # ── MuJoCo XML: convex hull (single-geom body) ─────────────────────────────
 
 CVX_HULL_TEMPLATE = """\
 <mujoco model="{name}_cvx_hull">
   <asset>
     <mesh name="{name}" file="{mesh_file}"/>
-    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
-    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+    {material}
   </asset>
   <worldbody>
     <body name="{name}" pos="{pos}" quat="{quat}">
@@ -298,9 +324,9 @@ CVX_HULL_TEMPLATE = """\
 def write_cvx_hull_xml(obj_dir: Path, name: str, metadata: dict, inertial: dict,
                        friction: float) -> Path:
     mesh_file = _asset_abs(obj_dir / f"{name}.obj")
-    texture_file = _asset_abs(WORKSPACE_ROOT / metadata["texture"])
+    material = _material_block(name, metadata)
     xml = CVX_HULL_TEMPLATE.format(
-        name=name, mesh_file=mesh_file, texture_file=texture_file,
+        name=name, mesh_file=mesh_file, material=material,
         inertial=_mjcf_inertial(inertial), friction=friction,
         pos=metadata["initial_pos"], quat=metadata["initial_quat"],
     )
@@ -314,8 +340,7 @@ def write_cvx_hull_xml(obj_dir: Path, name: str, metadata: dict, inertial: dict,
 PRIMITIVE_XML_TEMPLATE = """\
 <mujoco model="{name}_{variant}">
   <asset>
-    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
-    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+    {material}
   </asset>
   <worldbody>
     <body name="{name}" pos="{pos}" quat="{quat}">
@@ -346,14 +371,14 @@ def _mjcf_geom_attrs(collider: dict) -> str:
 def write_primitive_xmls(obj_dir: Path, name: str, metadata: dict, inertial: dict,
                          collider: dict, friction: float) -> tuple[Path, Path]:
     """Write both _cvx_hull.xml and _cvx_dcmp.xml for a primitive (identical content)."""
-    texture_file = _asset_abs(WORKSPACE_ROOT / metadata["texture"])
+    material = _material_block(name, metadata)
     geom_attrs = _mjcf_geom_attrs(collider)
 
     paths = []
     for variant in ("cvx_hull", "cvx_dcmp"):
         xml = PRIMITIVE_XML_TEMPLATE.format(
             name=name, variant=variant, geom_attrs=geom_attrs,
-            texture_file=texture_file, inertial=_mjcf_inertial(inertial), friction=friction,
+            material=material, inertial=_mjcf_inertial(inertial), friction=friction,
             pos=metadata["initial_pos"], quat=metadata["initial_quat"],
         )
         out = obj_dir / f"{name}_{variant}.xml"
@@ -369,8 +394,7 @@ CVX_DCMP_TEMPLATE = """\
   <asset>
     <mesh name="{name}_visual" file="{mesh_file}"/>
 {part_assets}
-    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
-    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+    {material}
   </asset>
   <worldbody>
     <body name="{name}" pos="{pos}" quat="{quat}">
@@ -430,10 +454,10 @@ def write_cvx_dcmp_xml(obj_dir: Path, name: str, metadata: dict, inertial: dict,
             f'friction="{friction} {friction} 0.0001" group="3"/>')
 
     mesh_file = _asset_abs(obj_dir / f"{name}.obj")
-    texture_file = _asset_abs(WORKSPACE_ROOT / metadata["texture"])
+    material = _material_block(name, metadata)
 
     xml = CVX_DCMP_TEMPLATE.format(
-        name=name, mesh_file=mesh_file, texture_file=texture_file,
+        name=name, mesh_file=mesh_file, material=material,
         inertial=_mjcf_inertial(inertial),
         part_assets="\n".join(part_assets), part_geoms="\n".join(part_geoms),
         pos=metadata["initial_pos"], quat=metadata["initial_quat"],
