@@ -348,14 +348,36 @@ def write_urdf(
     return out
 
 
+def _material_block(name: str, metadata: dict) -> str:
+    """Build a textured material, or a flat material when metadata supplies RGBA.
+
+    RGBA wins over texture because some real objects are solid-colored. Alpha
+    must remain opaque for the policy renderer, which does not blend it.
+    """
+    rgba = metadata.get("rgba")
+    if rgba is None:
+        texture_file = _asset_abs(_metadata_asset_path(metadata["texture"]))
+        return (
+            f'<texture name="{name}_texture" type="2d" file="{texture_file}"/>\n'
+            f'    <material name="{name}_material" texture="{name}_texture" '
+            'specular="0.25" shininess="0.6" reflectance="0.1"/>'
+        )
+    if len(rgba) != 4:
+        raise ValueError(f"{name}: metadata 'rgba' wants 4 floats, got {rgba}")
+    values = " ".join(f"{value:g}" for value in rgba)
+    return (
+        f'<material name="{name}_material" rgba="{values}" '
+        'specular="0.25" shininess="0.6" reflectance="0.1"/>'
+    )
+
+
 # ── MuJoCo XML: convex hull (single-geom body) ─────────────────────────────
 
 CVX_HULL_TEMPLATE = """\
 <mujoco model="{name}_cvx_hull">
   <asset>
     <mesh name="{name}" file="{mesh_file}"/>
-    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
-    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+    {material}
   </asset>
   <worldbody>
     <body name="{name}" pos="{pos}" quat="{quat}">
@@ -372,11 +394,11 @@ def write_cvx_hull_xml(
     source_dir: Path, output_dir: Path, name: str, metadata: dict, inertial: dict, friction: float
 ) -> Path:
     mesh_file = _asset_abs(source_dir / f"{name}.obj")
-    texture_file = _asset_abs(_metadata_asset_path(metadata["texture"]))
+    material = _material_block(name, metadata)
     xml = CVX_HULL_TEMPLATE.format(
         name=name,
         mesh_file=mesh_file,
-        texture_file=texture_file,
+        material=material,
         inertial=_mjcf_inertial(inertial),
         friction=friction,
         pos=metadata["initial_pos"],
@@ -392,8 +414,7 @@ def write_cvx_hull_xml(
 PRIMITIVE_XML_TEMPLATE = """\
 <mujoco model="{name}_{variant}">
   <asset>
-    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
-    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+    {material}
   </asset>
   <worldbody>
     <body name="{name}" pos="{pos}" quat="{quat}">
@@ -425,7 +446,7 @@ def write_primitive_xmls(
     output_dir: Path, name: str, metadata: dict, inertial: dict, collider: dict, friction: float
 ) -> tuple[Path, Path]:
     """Write both _cvx_hull.xml and _cvx_dcmp.xml for a primitive (identical content)."""
-    texture_file = _asset_abs(_metadata_asset_path(metadata["texture"]))
+    material = _material_block(name, metadata)
     geom_attrs = _mjcf_geom_attrs(collider)
 
     paths = []
@@ -434,7 +455,7 @@ def write_primitive_xmls(
             name=name,
             variant=variant,
             geom_attrs=geom_attrs,
-            texture_file=texture_file,
+            material=material,
             inertial=_mjcf_inertial(inertial),
             friction=friction,
             pos=metadata["initial_pos"],
@@ -453,8 +474,7 @@ CVX_DCMP_TEMPLATE = """\
   <asset>
     <mesh name="{name}_visual" file="{mesh_file}"/>
 {part_assets}
-    <texture name="{name}_texture" type="2d" file="{texture_file}"/>
-    <material name="{name}_material" texture="{name}_texture" specular="0.25" shininess="0.6" reflectance="0.1"/>
+    {material}
   </asset>
   <worldbody>
     <body name="{name}" pos="{pos}" quat="{quat}">
@@ -526,12 +546,12 @@ def write_cvx_dcmp_xml(
         )
 
     mesh_file = _asset_abs(source_dir / f"{name}.obj")
-    texture_file = _asset_abs(_metadata_asset_path(metadata["texture"]))
+    material = _material_block(name, metadata)
 
     xml = CVX_DCMP_TEMPLATE.format(
         name=name,
         mesh_file=mesh_file,
-        texture_file=texture_file,
+        material=material,
         inertial=_mjcf_inertial(inertial),
         part_assets="\n".join(part_assets),
         part_geoms="\n".join(part_geoms),

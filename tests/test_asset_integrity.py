@@ -2,12 +2,24 @@ import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from assets.paths import PACKAGE_ROOT
+from assets.paths import PACKAGE_ROOT, asset_path
 
 
 def test_python_sources_do_not_reference_legacy_environment_variable():
     for path in PACKAGE_ROOT.rglob("*.py"):
         assert "SIM_ASSETS_PATH" not in path.read_text()
+
+
+def test_metadata_uses_existing_package_relative_textures():
+    for path in PACKAGE_ROOT.rglob("metadata.json"):
+        metadata = json.loads(path.read_text())
+        value = metadata.get("texture")
+        if value is None:
+            continue
+        texture = Path(value)
+        assert not texture.is_absolute(), path
+        assert not texture.parts or texture.parts[0] not in {"assets", "source"}, path
+        assert asset_path(*texture.parts).is_file(), path
 
 
 def test_tracked_json_and_xml_parse():

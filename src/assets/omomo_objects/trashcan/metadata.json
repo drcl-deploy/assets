@@ -4,5 +4,11 @@
   "texture": "textures/Wood/Bamboo_Planks/Bamboo_Planks_BaseColor.png",
   "inertial": {
     "mass": 0.71
-  }
+  },
+  "rgba": [
+    1.0,
+    0.9569,
+    0.9059,
+    1.0
+  ]
 }

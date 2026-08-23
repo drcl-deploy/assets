@@ -24,6 +24,7 @@ Repository = "https://github.com/drcl-deploy/assets"
 assets = "assets.cli:main"
 
 [project.optional-dependencies]
+authoring = ["Pillow"]
 decompose = ["coacd"]
 test = ["build", "pytest"]
 
