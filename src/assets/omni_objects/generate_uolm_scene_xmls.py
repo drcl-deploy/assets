@@ -17,7 +17,7 @@ from pathlib import Path
 
 from assets.paths import GENERATED_ROOT, PACKAGE_ROOT
 
-from .object_groups import OBJECT_GROUP_PATTERNS
+from assets.omni_objects.object_groups import OBJECT_GROUP_PATTERNS
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 

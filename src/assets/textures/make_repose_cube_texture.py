@@ -5,8 +5,10 @@ from pathlib import Path
 from PIL import Image
 
 # Keep this in the canonical FACE_COLORS order from src/vibe/assets/repose.py:
-# +X, -X, +Y, -Y, +Z, -Z. MuJoCo's cube-map axes are R/L = +/-X,
-# U/D = +/-Y, F/B = +/-Z, so metadata.json maps these tiles to RLUDFB.
+# +X, -X, +Y, -Y, +Z, -Z. MuJoCo's cube-map axes are R/L = +/-X, U/D = +/-Y,
+# F/B = +/-Z, so the strip is a 1x6 cube map and cube/metadata.json declares it
+# as "texture_grid": ["RLUDFB"] -- without that key a box geom repeats the whole
+# strip on every face (six stripes, not six colors).
 FACE_RGB = (
     (230, 51, 51),  # +X red
     (242, 115, 26),  # -X orange

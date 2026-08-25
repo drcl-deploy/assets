@@ -33,7 +33,7 @@ import trimesh
 
 from assets.paths import GENERATED_ROOT, PACKAGE_ROOT
 
-from .object_groups import OBJECT_GROUP_PATTERNS
+from assets.omni_objects.object_groups import OBJECT_GROUP_PATTERNS
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 
@@ -348,6 +348,32 @@ def write_urdf(
     return out
 
 
+_CUBE_FACES = ".RLUDFB"  # mjspec.h: R/L = +/-X, U/D = +/-Y, F/B = +/-Z, "." = unused slot
+
+
+def _texture_block(name: str, metadata: dict) -> str:
+    """A flat 2d texture, or a cube map when metadata carries a `texture_grid`.
+
+    The grid is the image's tile layout as row strings (["RLUDFB"], or a cross
+    ["..U.", "LFRB", "..D."]); without it a box geom repeats the WHOLE image per
+    face, which is how a per-face color map renders as stripes.
+    """
+    texture_file = _asset_abs(_metadata_asset_path(metadata["texture"]))
+    rows = metadata.get("texture_grid")
+    if not rows:
+        return f'<texture name="{name}_texture" type="2d" file="{texture_file}"/>'
+    widths = {len(row) for row in rows}
+    if len(widths) != 1:
+        raise ValueError(f"{name}: metadata 'texture_grid' rows differ in width: {rows}")
+    layout = "".join(rows)
+    if set(layout) - set(_CUBE_FACES):
+        raise ValueError(f"{name}: metadata 'texture_grid' wants chars from {_CUBE_FACES!r}")
+    return (
+        f'<texture name="{name}_texture" type="cube" file="{texture_file}" '
+        f'gridsize="{len(rows)} {widths.pop()}" gridlayout="{layout}"/>'
+    )
+
+
 def _material_block(name: str, metadata: dict) -> str:
     """Build a textured material, or a flat material when metadata supplies RGBA.
 
@@ -356,9 +382,8 @@ def _material_block(name: str, metadata: dict) -> str:
     """
     rgba = metadata.get("rgba")
     if rgba is None:
-        texture_file = _asset_abs(_metadata_asset_path(metadata["texture"]))
         return (
-            f'<texture name="{name}_texture" type="2d" file="{texture_file}"/>\n'
+            f'{_texture_block(name, metadata)}\n'
             f'    <material name="{name}_material" texture="{name}_texture" '
             'specular="0.25" shininess="0.6" reflectance="0.1"/>'
         )

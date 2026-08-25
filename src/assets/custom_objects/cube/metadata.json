@@ -1,7 +1,8 @@
 {
   "initial_pos": "1.0 0.0 0.3",
   "initial_quat": "1 0 0 0",
-  "texture": "textures/Wood/Oak/Oak_BaseColor.png",
+  "texture": "textures/repose_cube.png",
+  "texture_grid": ["RLUDFB"],
   "inertial": {
     "mass": 0.62369
   },
