@@ -12,5 +12,27 @@
   "source_export_sha256": "1a37677e675413a57f3cadef2775b847e6b9dc2c56a8deea3c698c0278e6f457",
   "license": "CC-BY-4.0",
   "attribution": "Alex Brandes and co-authors, ETH Zurich. EgoHTR: Egocentric 4D Demonstrations of Human Terrain Traversal (2026).",
-  "modifications": "Cropped scene; prepared convex decomposition. Mesh scales and tile framing are stored in tile.json. Exact collision files used for the ORCS 03/05 policy; no new decomposition for release."
+  "modifications": "Cropped scene; prepared convex decomposition. Mesh scales and tile framing are stored in tile.json. Exact collision files used for the ORCS 03/05 policy; no new decomposition for release.",
+  "source_notice": {
+    "attribution": "Alex Brandes and co-authors, ETH Zurich. EgoHTR: Egocentric 4D Demonstrations of Human Terrain Traversal (2026).",
+    "paper_url": "https://arxiv.org/abs/2607.13472",
+    "source_url": "https://huggingface.co/datasets/leggedrobotics/egohtr",
+    "source_revision": "a2f3b16b6ceda7f4a378e6bb5af241ee6d408faf",
+    "source_terms_url": "https://huggingface.co/datasets/leggedrobotics/egohtr/blob/a2f3b16b6ceda7f4a378e6bb5af241ee6d408faf/README.md",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "modifications": {
+      "motion": "Temporal cropping, scene-aware G1 retargeting with UMR, reviewed contact/posture corrections, and 50 Hz native export.",
+      "terrain": "Scene cropping, convex decomposition, and per-crop scaling; exact descriptors and meshes used for the ORCS 03/05 policy."
+    },
+    "conditions_apply": {
+      "redistribution": "Attribute EgoHTR, link the license, retain notices and identify changes. Commercial reuse is permitted. Do not imply endorsement or restrict recipients' licensed rights.",
+      "access_agreement_scope": "The following summarizes obligations accepted when downloading the original EgoHTR dataset; it adds no downstream license restrictions.",
+      "attribution_and_publicity": "Cite EgoHTR in publications, product documentation and services using it. ETH Zurich may disclose dataset use.",
+      "privacy": "Do not identify participants or deanonymize the dataset.",
+      "updates_and_removals": "If requested, update the local dataset copy and delete specified data points.",
+      "warranty": "Source data is supplied as is, without warranties; its authors, ETH Zurich and licensors disclaim liability arising from its use.",
+      "jurisdiction": "The original access agreement specifies Swiss law."
+    }
+  }
 }
