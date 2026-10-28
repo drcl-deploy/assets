@@ -1,0 +1,16 @@
+{
+  "source_url": "https://huggingface.co/datasets/leggedrobotics/egohtr",
+  "source_sequence": "rocky-path_s7_bzb_01",
+  "source_start_frame": 1200,
+  "source_end_frame": 1500,
+  "source_fps": 30.0,
+  "scene_scale": 0.7162528038024902,
+  "coordinates": "review world; scaled terrain, unmodified G1 root",
+  "review_run": "0009_natural-step-v3",
+  "source_terrain_xml_sha256": "f4dab65cb5d5a1dc7895a4afdd2a3983b047fa4bbb0b020073e6ccb23a9dd327",
+  "tile_sha256": "c9b44ffe4bbb986ac61135e183947ec207b8afee063a28861c966fd6b0b06de1",
+  "source_export_sha256": "1a37677e675413a57f3cadef2775b847e6b9dc2c56a8deea3c698c0278e6f457",
+  "license": "CC-BY-4.0",
+  "attribution": "Alex Brandes and co-authors, ETH Zurich. EgoHTR: Egocentric 4D Demonstrations of Human Terrain Traversal (2026).",
+  "modifications": "Cropped scene; prepared convex decomposition. Mesh scales and tile framing are stored in tile.json. Exact collision files used for the ORCS 03/05 policy; no new decomposition for release."
+}

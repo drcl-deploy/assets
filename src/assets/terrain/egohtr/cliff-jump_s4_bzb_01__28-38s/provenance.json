@@ -1,0 +1,16 @@
+{
+  "source_url": "https://huggingface.co/datasets/leggedrobotics/egohtr",
+  "source_sequence": "cliff-jump_s4_bzb_01",
+  "source_start_frame": 840,
+  "source_end_frame": 1140,
+  "source_fps": 30.0,
+  "scene_scale": 0.7840067148208618,
+  "coordinates": "review world; scaled terrain, unmodified G1 root",
+  "review_run": "0006_native-manifold",
+  "source_terrain_xml_sha256": "1346731e5806479ed07004c8b158aa45c5f453243c41119340d4498e6165c7a7",
+  "tile_sha256": "bc99c2533ac10e478394722708963170debddc1609d4bfcc90cce1580b8f4fab",
+  "source_export_sha256": "35ec2d3222ba595ed247c62da333c72ef824a3248e51266cb420929a023f8ad8",
+  "license": "CC-BY-4.0",
+  "attribution": "Alex Brandes and co-authors, ETH Zurich. EgoHTR: Egocentric 4D Demonstrations of Human Terrain Traversal (2026).",
+  "modifications": "Cropped scene; prepared convex decomposition. Mesh scales and tile framing are stored in tile.json. Exact collision files used for the ORCS 03/05 policy; no new decomposition for release."
+}

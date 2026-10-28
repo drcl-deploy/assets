@@ -6,6 +6,7 @@ respective upstream terms.
 
 | Local content | Source | License / notice |
 |---|---|---|
+| `src/assets/terrain/egohtr/` | [EgoHTR, Alex Brandes and co-authors, ETH Zurich](https://huggingface.co/datasets/leggedrobotics/egohtr) | CC-BY-4.0; cropped and convex-decomposed scene derivatives. Per-crop provenance and attribution in that directory. |
 | `src/assets/go1/go1.xml` and related Go1 model data | [MuJoCo Menagerie: Unitree Go1](https://github.com/google-deepmind/mujoco_menagerie/tree/main/unitree_go1) | BSD-3-Clause; see `LICENSES/unitree-go1-BSD-3-Clause.txt` |
 | Isaac Lab-derived configuration code | [Isaac Lab](https://github.com/isaac-sim/IsaacLab) | BSD-3-Clause; see `LICENSES/IsaacLab-BSD-3-Clause.txt`; individual upstream assets can carry separate terms |
 | `src/assets/g1/isaaclab.py` and related BeyondMimic-derived configuration | [whole_body_tracking](https://github.com/HybridRobotics/whole_body_tracking) | MIT |
